@@ -1,8 +1,110 @@
 <% include partials/header %>
 <title>Home</title>
 </head>
-<body >
-    <h1 class="text-blue">hello <%= title %></h1>
+<body class="bg-grey">
+    <% include partials/nav %>
+        <div class="modal fixed pin-x pin-y hidden items-center justify-center" style="background-color: rgba(0, 0, 0, 0.5);">
+            <div class="login modal-body w-1/2 bg-white rounded flex overflow-hidden">
+                <div class="w-1/2 bg-blue">
+
+                </div>
+                <div class="px-16 pb-8">
+                    <h2 class="text-blue my-4">
+                        Login
+                        <span>
+                            <a href="#"><i class="close fas fa-times float-right text-blue"></i></a>
+                        </span>
+                    </h2>
+                    <form action="" class="flex-col">
+                        <input type="email" class="my-3 p-2 border-b border-blue w-full" name="email" placeholder="Enter your email">
+                        <input type="password" class="my-3 p-2 border-b border-blue w-full" name="password" placeholder="Enter your password">
+                        <div class="flex items-center mt-6 justify-between">
+                            <button type="submit" class="px-4 py-1 block rounded-full border border-blue text-blue">Login</button>
+                            <div>
+                                <p class="inline text-grey-dark mx-2">or login with</p>
+                                <span class="fb inline-flex justify-center items-center h-8 w-8 rounded-full mx-1"><i class="fab fa-facebook-f"></i></span>
+                                <span class="twitter inline-flex justify-center items-center h-8 w-8 rounded-full mx-1"><i class="fab fa-twitter"></i></span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="signup modal-body w-1/2 bg-white rounded flex overflow-hidden">
+                <div class="w-1/2 bg-blue">
+
+                </div>
+                <div class="px-16 pb-8">
+                    <h2 class="text-blue my-4">
+                        Signup
+                        <span>
+                            <a href="#"><i class="close fas fa-times float-right text-blue"></i></a>
+                        </span>
+                    </h2>
+                    <form action="" class="flex-col">
+                        <input type="email" class="my-3 p-2 border-b border-blue w-full" name="email" placeholder="Enter your email">
+                        <input type="password" class="my-3 p-2 border-b border-blue w-full" name="password" placeholder="Enter your password">
+                        <input type="password" class="my-3 p-2 border-b border-blue w-full" name="password" placeholder="confirm password">
+                        <div class="flex items-center mt-6 justify-between">
+                            <button type="submit" class="px-4 py-1 block rounded-full border border-blue text-blue">Signup</button>
+                            <div>
+                                <p class="inline text-grey-dark mx-2">or signup with</p>
+                                <span class="fb inline-flex justify-center items-center h-8 w-8 rounded-full mx-1"><i class="fab fa-facebook-f"></i></span>
+                                <span class="twitter inline-flex justify-center items-center h-8 w-8 rounded-full mx-1"><i class="fab fa-twitter"></i></span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     <% include partials/footer %>
 </body>
+<script>
+    let modal = document.querySelector('.modal');
+    let modalBody = document.querySelector('.modal-body');
+    let openModalLogin = document.querySelector('#login');
+    let closeModalLogin = document.querySelector('.close');
+    let openModalSignup = document.querySelector('#signup');
+    let closeModalSignup = document.querySelector('.close');
+    
+    openModalLogin.addEventListener('click', function(event) {
+        console.log('hello');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        event.preventDefault();
+        event.stopPropagation();
+    });
+
+    closeModalLogin.addEventListener('click', function(event){
+        event.preventDefault();
+        event.stopPropagation();    
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+    });
+
+    openModalSignup.addEventListener('click', function(event) {
+        console.log('hello');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        event.preventDefault();
+        event.stopPropagation();
+    });
+
+    closeModalSignup.addEventListener('click', function(event){
+        event.preventDefault();
+        event.stopPropagation();    
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+    });
+
+    modalBody.addEventListener('click', function(event){
+        event.stopPropagation();
+    });
+
+    window.addEventListener('click', function(event){
+        // console.log(event.target == modal);
+        event.preventDefault();
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+    })
+</script>
 </html>

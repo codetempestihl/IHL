@@ -19,7 +19,17 @@ router.post('/', function(req, res){
 	}
 	else
 	{
-		console.log('for login');
+		var email=req.body.email;
+		var password=String(req.body.password);
+		// get hashed password from database and verify
+		if (passwordhash.verify(password,hashedpassword)==true)
+		{
+			console.log("succesfull logged in");
+		}
+		else
+		{
+			console.log("wrong password");
+		}
 	}
 })
 

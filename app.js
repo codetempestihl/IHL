@@ -1,7 +1,7 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var path = require("path");
-
+var routes = require('./routes.js');
 
 var app = express();
 
@@ -26,11 +26,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 
 // route
-app.get('/', function(req, res){
-    res.render('index',{
-        title: 'world'
-    });
-})
+app.use('/', routes);
 
 app.use(express.static(path.join(__dirname, 'public')));
 

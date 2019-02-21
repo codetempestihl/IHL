@@ -8,13 +8,16 @@
     "staging": "cross-env NODE_ENV=staging node_modules/webpack/bin/webpack.js --progress --hide-modules --env=staging --config=node_modules/laravel-mix/setup/webpack.config.js",
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --env=production --config=node_modules/laravel-mix/setup/webpack.config.js",
     "dev": "npm run local",
-    "watch": "npm run local --watch"
+    "watch": "npm run local --watch",
+    "devstart": "nodemon ./bin/www",
+    "start": "node ./bin/www"
   },
   "dependencies": {
     "body-parser": "*",
     "cross-env": "^5.2.0",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
+    "nodemon": "^1.18.10",
     "validator": "^10.11.0"
   },
   "author": "code-tempest",

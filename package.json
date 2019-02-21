@@ -18,8 +18,8 @@
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "nodemon": "^1.18.10",
-    "validator": "^10.11.0"
-    "password-hash": "*"
+    "validator": "^10.11.0",
+    "password-hash" : "^1.2.2"
   },
   "author": "code-tempest",
   "license": "ISC",

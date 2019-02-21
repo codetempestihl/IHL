@@ -3,7 +3,7 @@
 </head>
 <body class="bg-grey">
     <% include partials/nav %>
-        <div class="modal fixed pin-x pin-y hidden items-center justify-center" style="background-color: rgba(0, 0, 0, 0.5);">
+        <div id="login-modal" class="fixed pin-x pin-y hidden items-center justify-center" style="background-color: rgba(0, 0, 0, 0.5);">
             <div class="login modal-body w-1/2 bg-white rounded flex overflow-hidden">
                 <div class="w-1/2 bg-blue">
 
@@ -29,6 +29,8 @@
                     </form>
                 </div>
             </div>
+        </div>
+        <div id="signup-modal" class="fixed pin-x pin-y hidden items-center justify-center" style="background-color: rgba(0, 0, 0, 0.5);">
             <div class="signup modal-body w-1/2 bg-white rounded flex overflow-hidden">
                 <div class="w-1/2 bg-blue">
 
@@ -59,52 +61,43 @@
     <% include partials/footer %>
 </body>
 <script>
-    let modal = document.querySelector('.modal');
-    let modalBody = document.querySelector('.modal-body');
-    let openModalLogin = document.querySelector('#login');
-    let closeModalLogin = document.querySelector('.close');
-    let openModalSignup = document.querySelector('#signup');
-    let closeModalSignup = document.querySelector('.close');
-    
-    openModalLogin.addEventListener('click', function(event) {
-        console.log('hello');
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-        event.preventDefault();
-        event.stopPropagation();
-    });
+    let modalToggles = document.querySelectorAll('[data-toggle-modal]');
 
-    closeModalLogin.addEventListener('click', function(event){
-        event.preventDefault();
-        event.stopPropagation();    
-        modal.classList.remove('flex');
-        modal.classList.add('hidden');
-    });
+    modalToggles.forEach(function(button) {
+        let modalSelector = button.dataset.toggleModal;
+        let modal = document.querySelector(modalSelector);
+        let modalBody = modal.querySelector('.modal-body');
+        let closeBtn = modal.querySelector('.close');
 
-    openModalSignup.addEventListener('click', function(event) {
-        console.log('hello');
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-        event.preventDefault();
-        event.stopPropagation();
-    });
+        button.addEventListener('click', function(event) {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            event.preventDefault();
+            event.stopPropagation();
+        });
+        
+        let closeModal = function() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        if(closeBtn) {
+            closeBtn.addEventListener('click', function(event) {
+                event.preventDefault();
+                closeModal();
+            });
+        }
 
-    closeModalSignup.addEventListener('click', function(event){
-        event.preventDefault();
-        event.stopPropagation();    
-        modal.classList.remove('flex');
-        modal.classList.add('hidden');
-    });
+        if(modalBody) {
+            modalBody.addEventListener('click', function(event){
+                event.stopPropagation();
+            });
 
-    modalBody.addEventListener('click', function(event){
-        event.stopPropagation();
+            window.addEventListener('click', function(event) {
+                console.log('closing Modal');
+                event.preventDefault();
+                closeModal();
+            });
+        }
     });
-
-    window.addEventListener('click', function(event){
-        // console.log(event.target == modal);
-        event.preventDefault();
-        modal.classList.remove('flex');
-        modal.classList.add('hidden');
-    })
 </script>
 </html>

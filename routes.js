@@ -14,6 +14,7 @@ router.post('/', function(req, res){
 		var pass=String(req.body.password[0]);
 		//uses bscrypt or scrypt
 		var hashedpassword=passwordhash.generate(pass);
+		console.log(passwordhash.verify(pass,hashedpassword));//returns true
 		
 	}
 	else

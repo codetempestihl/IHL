@@ -1,60 +1,62 @@
 <% include partials/header %>
 <title>IHL</title>
 </head>
-<body class="bg-grey">
+<body class="bg-grey min-h-screen flex-col">
     <% include partials/nav %>
-        <div id="login-modal" class="fixed pin-x pin-y hidden items-center justify-center" style="background-color: rgba(0, 0, 0, 0.5);">
-            <div class="login modal-body w-1/2 bg-white rounded flex overflow-hidden">
-                <div class="w-1/2 bg-blue">
-
-                </div>
-                <div class="px-16 pb-8">
-                    <h2 class="text-blue my-4">
-                        Login
-                        <span>
-                            <a href="#"><i class="close fas fa-times float-right text-blue"></i></a>
-                        </span>
-                    </h2>
-                    <form action="" class="flex-col">
-                        <input type="email" class="my-3 p-2 border-b border-blue w-full" name="email" placeholder="Enter your email">
-                        <input type="password" class="my-3 p-2 border-b border-blue w-full" name="password" placeholder="Enter your password">
-                        <div class="flex items-center mt-6 justify-between">
-                            <button type="submit" class="px-4 py-1 block rounded-full border border-blue text-blue">Login</button>
-                            <div>
-                                <p class="inline text-grey-dark mx-2">or login with</p>
-                                <span class="fb inline-flex justify-center items-center h-8 w-8 rounded-full mx-1"><i class="fab fa-facebook-f"></i></span>
-                                <span class="twitter inline-flex justify-center items-center h-8 w-8 rounded-full mx-1"><i class="fab fa-twitter"></i></span>
+        <div class="flex-1 min-h-screen">
+            <div id="login-modal" class="fixed pin-x pin-y hidden items-center justify-center" style="background-color: rgba(0, 0, 0, 0.5);">
+                <div class="login modal-body w-1/2 bg-white rounded flex overflow-hidden">
+                    <div class="w-1/2 bg-blue">
+    
+                    </div>
+                    <div class="px-16 pb-8">
+                        <h2 class="text-blue my-4">
+                            Login
+                            <span>
+                                <a href="#"><i class="close fas fa-times float-right text-blue"></i></a>
+                            </span>
+                        </h2>
+                        <form action="" class="flex-col">
+                            <input type="email" class="my-3 p-2 border-b border-blue w-full" name="email" placeholder="Enter your email">
+                            <input type="password" class="my-3 p-2 border-b border-blue w-full" name="password" placeholder="Enter your password">
+                            <div class="flex items-center mt-6 justify-between">
+                                <button type="submit" class="px-4 py-1 block rounded-full border border-blue text-blue">Login</button>
+                                <div>
+                                    <p class="inline text-grey-dark mx-2">or login with</p>
+                                    <span class="fb inline-flex justify-center items-center h-8 w-8 rounded-full mx-1"><i class="fab fa-facebook-f"></i></span>
+                                    <span class="twitter inline-flex justify-center items-center h-8 w-8 rounded-full mx-1"><i class="fab fa-twitter"></i></span>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div id="signup-modal" class="fixed pin-x pin-y hidden items-center justify-center" style="background-color: rgba(0, 0, 0, 0.5);">
-            <div class="signup modal-body w-1/2 bg-white rounded flex overflow-hidden">
-                <div class="w-1/2 bg-blue">
-
-                </div>
-                <div class="px-16 pb-8">
-                    <h2 class="text-blue my-4">
-                        Signup
-                        <span>
-                            <a href="#"><i class="close fas fa-times float-right text-blue"></i></a>
-                        </span>
-                    </h2>
-                    <form action="" class="flex-col">
-                        <input type="email" class="my-3 p-2 border-b border-blue w-full" name="email" placeholder="Enter your email">
-                        <input type="password" class="my-3 p-2 border-b border-blue w-full" name="password" placeholder="Enter your password">
-                        <input type="password" class="my-3 p-2 border-b border-blue w-full" name="password" placeholder="confirm password">
-                        <div class="flex items-center mt-6 justify-between">
-                            <button type="submit" class="px-4 py-1 block rounded-full border border-blue text-blue">Signup</button>
-                            <div>
-                                <p class="inline text-grey-dark mx-2">or signup with</p>
-                                <span class="fb inline-flex justify-center items-center h-8 w-8 rounded-full mx-1"><i class="fab fa-facebook-f"></i></span>
-                                <span class="twitter inline-flex justify-center items-center h-8 w-8 rounded-full mx-1"><i class="fab fa-twitter"></i></span>
+            <div id="signup-modal" class="fixed pin-x pin-y hidden items-center justify-center" style="background-color: rgba(0, 0, 0, 0.5);">
+                <div class="signup modal-body w-1/2 bg-white rounded flex overflow-hidden">
+                    <div class="w-1/2 bg-blue">
+    
+                    </div>
+                    <div class="px-16 pb-8">
+                        <h2 class="text-blue my-4">
+                            Signup
+                            <span>
+                                <a href="#"><i class="close fas fa-times float-right text-blue"></i></a>
+                            </span>
+                        </h2>
+                        <form action="" class="flex-col">
+                            <input type="email" class="my-3 p-2 border-b border-blue w-full" name="email" placeholder="Enter your email">
+                            <input type="password" class="my-3 p-2 border-b border-blue w-full" name="password" placeholder="Enter your password">
+                            <input type="password" class="my-3 p-2 border-b border-blue w-full" name="password" placeholder="confirm password">
+                            <div class="flex items-center mt-6 justify-between">
+                                <button type="submit" class="px-4 py-1 block rounded-full border border-blue text-blue">Signup</button>
+                                <div>
+                                    <p class="inline text-grey-dark mx-2">or signup with</p>
+                                    <span class="fb inline-flex justify-center items-center h-8 w-8 rounded-full mx-1"><i class="fab fa-facebook-f"></i></span>
+                                    <span class="twitter inline-flex justify-center items-center h-8 w-8 rounded-full mx-1"><i class="fab fa-twitter"></i></span>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

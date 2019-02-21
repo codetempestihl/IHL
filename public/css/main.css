@@ -507,7 +507,7 @@ a {
   color: #3490dc;
 }
 
-.navigation img {
+.brand img {
   height: 40px;
 }
 
@@ -519,6 +519,20 @@ a {
 .twitter {
   background: #1da1f2;
   color: #fff;
+}
+
+.card {
+  padding: 1rem;
+  display: flex;
+  border-radius: .25rem;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+}
+
+.dash {
+  width: 100%;
+  border-bottom-width: 1px;
+  border-width: 2px;
+  border-color: #3490dc;
 }
 
 .container {

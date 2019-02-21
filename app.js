@@ -31,6 +31,9 @@ app.get('/', function(req, res){
         title: 'world'
     });
 })
+app.get('/home', function(req, res){
+    res.render('home');
+})
 
 app.use(express.static(path.join(__dirname, 'public')));
 

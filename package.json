@@ -19,6 +19,7 @@
     "express": "^4.16.4",
     "nodemon": "^1.18.10",
     "validator": "^10.11.0"
+    "password-hash": "*"
   },
   "author": "code-tempest",
   "license": "ISC",

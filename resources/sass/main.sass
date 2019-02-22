@@ -1,4 +1,5 @@
 @tailwind preflight
+@import "home"
 a
     text-decoration: none
     color: #3490dc
@@ -13,9 +14,10 @@ a
     background: #1da1f2
     color: #fff
 .card
-    @apply  p-4 flex rounded shadow
-.dash
-    @apply w-full border-b border-2 border-blue
+    // &:hover
+    //     @apply shadow-lg
+    @apply  p-4 flex rounded shadow  
+    @apply border border-grey-lighter
 @tailwind components
 
 @tailwind utilities

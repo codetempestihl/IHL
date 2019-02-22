@@ -25,6 +25,10 @@ router.post('/', function(req, res){
     // hanlde signup and login process
 })
 
+router.get('/home', function(req, res){
+    res.render('home');
+})
+
 router.get('/fitbit', function(req, res){
     res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'http://localhost:8080/callback'));
 })
@@ -34,7 +38,7 @@ router.get("/callback", (req, res) => {
 	// exchange the authorization code we just received for an access token
 	client.getAccessToken(req.query.code, 'http://localhost:8080/callback').then(result => {
 		// use the access token to fetch the user's profile information
-		client.get("/profile.json", result.access_token).then(results => {
+		client.get("/profile.json", result.access_token, '7BWXP7').then(results => {
 			res.send(results[0]);
 		}).catch(err => {
 			res.status(err.status).send(err);

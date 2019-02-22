@@ -515,6 +515,22 @@ table {
   border-color: #3490dc;
 }
 
+.running {
+  background: #ffb0c1;
+}
+
+.walking {
+  background: #9ad0f5;
+}
+
+.sleeping {
+  background: #ffe6aa;
+}
+
+.cardio {
+  background: #b3b198;
+}
+
 a {
   text-decoration: none;
   color: #3490dc;
@@ -5759,6 +5775,10 @@ a {
 
 .focus\:text-pink-lightest:focus {
   color: #ffebef;
+}
+
+.text-xss {
+  font-size: .5rem;
 }
 
 .text-xs {
@@ -11336,6 +11356,10 @@ a {
 
   .sm\:focus\:text-pink-lightest:focus {
     color: #ffebef;
+  }
+
+  .sm\:text-xss {
+    font-size: .5rem;
   }
 
   .sm\:text-xs {
@@ -16916,6 +16940,10 @@ a {
     color: #ffebef;
   }
 
+  .md\:text-xss {
+    font-size: .5rem;
+  }
+
   .md\:text-xs {
     font-size: .75rem;
   }
@@ -22494,6 +22522,10 @@ a {
     color: #ffebef;
   }
 
+  .lg\:text-xss {
+    font-size: .5rem;
+  }
+
   .lg\:text-xs {
     font-size: .75rem;
   }
@@ -28070,6 +28102,10 @@ a {
 
   .xl\:focus\:text-pink-lightest:focus {
     color: #ffebef;
+  }
+
+  .xl\:text-xss {
+    font-size: .5rem;
   }
 
   .xl\:text-xs {

@@ -502,6 +502,19 @@ table {
   border-collapse: collapse;
 }
 
+.title {
+  color: #8795a1;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.dash {
+  width: 100%;
+  border-bottom-width: 1px;
+  border-width: 2px;
+  border-color: #3490dc;
+}
+
 a {
   text-decoration: none;
   color: #3490dc;
@@ -526,13 +539,8 @@ a {
   display: flex;
   border-radius: .25rem;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
-}
-
-.dash {
-  width: 100%;
-  border-bottom-width: 1px;
-  border-width: 2px;
-  border-color: #3490dc;
+  border-width: 1px;
+  border-color: #f1f5f8;
 }
 
 .container {
@@ -3110,6 +3118,10 @@ a {
 
 .h-32 {
   height: 8rem;
+}
+
+.h-40 {
+  height: 10rem;
 }
 
 .h-48 {
@@ -8701,6 +8713,10 @@ a {
     height: 8rem;
   }
 
+  .sm\:h-40 {
+    height: 10rem;
+  }
+
   .sm\:h-48 {
     height: 12rem;
   }
@@ -14273,6 +14289,10 @@ a {
 
   .md\:h-32 {
     height: 8rem;
+  }
+
+  .md\:h-40 {
+    height: 10rem;
   }
 
   .md\:h-48 {
@@ -19849,6 +19869,10 @@ a {
     height: 8rem;
   }
 
+  .lg\:h-40 {
+    height: 10rem;
+  }
+
   .lg\:h-48 {
     height: 12rem;
   }
@@ -25421,6 +25445,10 @@ a {
 
   .xl\:h-32 {
     height: 8rem;
+  }
+
+  .xl\:h-40 {
+    height: 10rem;
   }
 
   .xl\:h-48 {

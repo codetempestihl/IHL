@@ -1,0 +1,1 @@
+<script src="averageactivity.js"></script> 

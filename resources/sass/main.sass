@@ -1,8 +1,9 @@
 @tailwind preflight
+@import "home"
 a
     text-decoration: none
     color: #3490dc
-.navigation
+.brand
     img
         height: 40px
 
@@ -12,6 +13,11 @@ a
 .twitter
     background: #1da1f2
     color: #fff
+.card
+    // &:hover
+    //     @apply shadow-lg
+    @apply  p-4 flex rounded shadow  
+    @apply border border-grey-lighter
 @tailwind components
 
 @tailwind utilities

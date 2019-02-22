@@ -502,12 +502,41 @@ table {
   border-collapse: collapse;
 }
 
+.title {
+  color: #8795a1;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.dash {
+  width: 100%;
+  border-bottom-width: 1px;
+  border-width: 2px;
+  border-color: #3490dc;
+}
+
+.running {
+  background: #ffb0c1;
+}
+
+.walking {
+  background: #9ad0f5;
+}
+
+.sleeping {
+  background: #ffe6aa;
+}
+
+.cardio {
+  background: #b3b198;
+}
+
 a {
   text-decoration: none;
   color: #3490dc;
 }
 
-.navigation img {
+.brand img {
   height: 40px;
 }
 
@@ -519,6 +548,15 @@ a {
 .twitter {
   background: #1da1f2;
   color: #fff;
+}
+
+.card {
+  padding: 1rem;
+  display: flex;
+  border-radius: .25rem;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+  border-width: 1px;
+  border-color: #f1f5f8;
 }
 
 .container {
@@ -3096,6 +3134,10 @@ a {
 
 .h-32 {
   height: 8rem;
+}
+
+.h-40 {
+  height: 10rem;
 }
 
 .h-48 {
@@ -5733,6 +5775,10 @@ a {
 
 .focus\:text-pink-lightest:focus {
   color: #ffebef;
+}
+
+.text-xss {
+  font-size: .5rem;
 }
 
 .text-xs {
@@ -8687,6 +8733,10 @@ a {
     height: 8rem;
   }
 
+  .sm\:h-40 {
+    height: 10rem;
+  }
+
   .sm\:h-48 {
     height: 12rem;
   }
@@ -11306,6 +11356,10 @@ a {
 
   .sm\:focus\:text-pink-lightest:focus {
     color: #ffebef;
+  }
+
+  .sm\:text-xss {
+    font-size: .5rem;
   }
 
   .sm\:text-xs {
@@ -14261,6 +14315,10 @@ a {
     height: 8rem;
   }
 
+  .md\:h-40 {
+    height: 10rem;
+  }
+
   .md\:h-48 {
     height: 12rem;
   }
@@ -16880,6 +16938,10 @@ a {
 
   .md\:focus\:text-pink-lightest:focus {
     color: #ffebef;
+  }
+
+  .md\:text-xss {
+    font-size: .5rem;
   }
 
   .md\:text-xs {
@@ -19835,6 +19897,10 @@ a {
     height: 8rem;
   }
 
+  .lg\:h-40 {
+    height: 10rem;
+  }
+
   .lg\:h-48 {
     height: 12rem;
   }
@@ -22454,6 +22520,10 @@ a {
 
   .lg\:focus\:text-pink-lightest:focus {
     color: #ffebef;
+  }
+
+  .lg\:text-xss {
+    font-size: .5rem;
   }
 
   .lg\:text-xs {
@@ -25409,6 +25479,10 @@ a {
     height: 8rem;
   }
 
+  .xl\:h-40 {
+    height: 10rem;
+  }
+
   .xl\:h-48 {
     height: 12rem;
   }
@@ -28028,6 +28102,10 @@ a {
 
   .xl\:focus\:text-pink-lightest:focus {
     color: #ffebef;
+  }
+
+  .xl\:text-xss {
+    font-size: .5rem;
   }
 
   .xl\:text-xs {

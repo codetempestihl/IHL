@@ -252,6 +252,7 @@ module.exports = {
   */
 
   textSizes: {
+    'xss': '.5rem',
     'xs': '.75rem',     // 12px
     'sm': '.875rem',    // 14px
     'base': '1rem',     // 16px
@@ -543,6 +544,7 @@ module.exports = {
     '16': '4rem',
     '24': '6rem',
     '32': '8rem',
+    '40': '10rem',
     '48': '12rem',
     '64': '16rem',
     'full': '100%',

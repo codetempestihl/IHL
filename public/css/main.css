@@ -531,6 +531,11 @@ table {
   background: #b3b198;
 }
 
+.blog-cover img {
+  background-size: cover;
+  width: 1200px;
+}
+
 a {
   text-decoration: none;
   color: #3490dc;

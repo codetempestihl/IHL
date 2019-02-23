@@ -1,5 +1,5 @@
-var canvas = document.getElementById('dailyActivity');
-var myRadarChart = new Chart(canvas, {
+var canvas1 = document.getElementById('dailyActivity');
+var dailyActivityChart = new Chart(canvas1, {
     type: 'doughnut',
     data: {
         datasets: [{
@@ -23,5 +23,53 @@ var myRadarChart = new Chart(canvas, {
         legend: {
             display: false,
         }
+    }
+});
+
+var canvas2 = document.getElementById('stepsActivity');
+var stepsActivityChart = new Chart(canvas2, {
+    type: 'doughnut',
+    data: {
+        datasets: [{
+            data: [10,20],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.5)',
+            ],
+        }],
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+            'Steps',
+        ]
+    },
+    options: {
+        legend: {
+            display: false,
+        },
+        circumference: Math.PI,
+        rotation: Math.PI,
+    }
+});
+
+var canvas3 = document.getElementById('caloriesBurned');
+var stepsActivityChart = new Chart(canvas2, {
+    type: 'doughnut',
+    data: {
+        datasets: [{
+            data: [10,20],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.5)',
+            ],
+        }],
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: [
+            'Steps',
+        ]
+    },
+    options: {
+        legend: {
+            display: false,
+        },
+        circumference: Math.PI,
+        rotation: Math.PI,
     }
 });

@@ -1,0 +1,65 @@
+<% include partials/header %>
+<title>IHL</title>
+</head>
+
+<body class="min-h-screen flex-col bg-grey-light">
+    <% include partials/nav %>
+    <main class="flex flex-col flex-1 min-h-screen mb-8">
+        <div class="blog-cover flex justify-center">
+            <img class="w-full h-64 my-8 bg-grey-dark">
+        </div>
+        <div class="main-content flex flex-col flex-1 items-center mx-12">
+            <div class="w-full flex flex-1">
+                <div class="main-posts w-full sm:w-2/3">
+                    <% for(var i=0; i<3 ;i++) { %>
+                        <div class="posts bg-white mb-16">
+                            <div class="post-header p-4 flex">
+                                <div class="post-title w-5/6">
+                                    <h3 class="text-grey-darker">Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, repellat!</h3>
+                                    <p class="text-grey mt-2"><small>written by</small><strong class="text-blue mx-2">author</strong></p>
+                                </div>
+                                <div class="post-date flex-1 text-center text-grey-darkest">
+                                    <h2>07</h2>
+                                    <h5>Nov</h5>
+                                    <h4>2019</h4>
+                                </div>
+                            </div>
+                            <div class="post-body flex flex-col">
+                                <div class="post-img w-full h-64 bg-grey-dark my-4">
+
+                                </div>
+                                <div class="post-details m-4 pb-4">
+                                    <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae inventore reiciendis iure modi ad aperiam pariatur adipisci blanditiis esse distinctio.</p>
+                                    <a href="#" class="p-2 bg-blue text-white">read more</a>
+                                </div>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="recent-posts flex flex-col w-1/3 ml-8">
+                    <div class="search bg-white p-2">
+                        <form action="#">
+                            <input type="text" class="p-2 bg-grey-lighter w-full" name="searchQuery" placeholder="search any posts">
+                        </form>
+                    </div>
+                    <div class="side-posts mt-8">
+                        <h2 class="text-grey-darker font-light">Recent posts</h2>
+                        <% for(var i=0; i<5; i++){ %>
+                            <div class="side-post flex my-4 bg-white">
+                                <div class="post-img p-2">
+                                    <div class="bg-grey w-32 h-full"></div>
+                                </div>
+                                <div class="post-details py-2">
+                                    <h3 class="text-grey-darker">title of the post</h3>
+                                    <p class="text-grey-dark text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, temporibus.</p>
+                                </div>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <% include partials/footer %>
+</body>
+</html>

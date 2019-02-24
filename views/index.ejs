@@ -15,9 +15,10 @@
                             <a href="#"><i class="close fas fa-times float-right text-blue"></i></a>
                         </span>
                     </h2>
-                    <form action="/" method = "post" class="flex-col">
-                        <input type="email" class="my-3 p-2 border-b border-blue w-full" name="email" placeholder="Enter your email">
+                    <form action="/" method = "post" id="loginform"  class="flex-col">
+                        <input type="email" class="my-3 p-2 border-b border-blue w-full" name="email" placeholder="Enter your email" id="loginmail">
                         <input type="password" class="my-3 p-2 border-b border-blue w-full" name="password" placeholder="Enter your password">
+						<input style="display:none" type="text" value="false" name="fblinklogin" id="f2" >
                         <div class="flex items-center mt-6 justify-between">
                             <button type="submit" class="px-4 py-1 block rounded-full border border-blue text-blue" name = "login" value = "true">Login</button>
                             <div>
@@ -42,15 +43,16 @@
                             <a href="#"><i class="close fas fa-times float-right text-blue"></i></a>
                         </span>
                     </h2>
-                    <form action="/" method = "post" class="flex-col">
+                    <form action="/" method = "post"  class="flex-col">
                         <input type="email" class="my-3 p-2 border-b border-blue w-full" name="email" placeholder="Enter your email" id = "signUpEmail">
                         <input type="password" class="my-3 p-2 border-b border-blue w-full" name="password" placeholder="Enter your password">
                         <input type="password" class="my-3 p-2 border-b border-blue w-full" name="password" placeholder="confirm password">
-                        <div class="flex items-center mt-6 justify-between">
+                        <input style="display:none" type="text" value="false" name="fblinksignup" id="f1" >
+						<div class="flex items-center mt-6 justify-between">
                             <button type="submit" class="px-4 py-1 block rounded-full border border-blue text-blue" name = "signup" value = "true">Signup</button>
                             <div>
                                 <p class="inline text-grey-dark mx-2">or signup with</p>
-                                <span class="fb inline-flex justify-center items-center h-8 w-8 rounded-full mx-1" onclick = "loginWithFacebook()"><i class="fab fa-facebook-f"></i></span>
+                                <span class="fb inline-flex justify-center items-center h-8 w-8 rounded-full mx-1" onclick = "signupWithFacebook()"><i class="fab fa-facebook-f"></i></span>
                                 <span class="twitter inline-flex justify-center items-center h-8 w-8 rounded-full mx-1"><i class="fab fa-twitter"></i></span>
                             </div>
                         </form>

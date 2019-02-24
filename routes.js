@@ -71,7 +71,7 @@ router.post('/', function(req, res){
 					console.log("user created");
 				});
 				const user=User.find({email:req.body.email});
-				req.session.userid=user[0]._id;
+				req.session.userid=1;
 				res.redirect('/home');
 				}
 				else
@@ -88,7 +88,8 @@ router.post('/', function(req, res){
 			if (Object.keys(user).length==0)
 			{console.log("user doessnt exist sign up please");}
 			else if( user[0].fblinked!=true)
-			{	user.fblink=true;
+			{	User.updateOne({email:req.body.email},{$set:{fblinked:true}},{ upsert: true },function(err){});
+				console.log(user[0]);
 				req.session.userid=user[0]._id;
 				res.redirect('/home');}
 			else

@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+  <head>
+    <title></title>
+  </head>
+  <body>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+      var socket = io();
+      socket.on('data', function(data){
+        console.log(data);
+      });
+      setInterval(function(){
+        socket.emit('getData');
+      }, 5000)
+    </script>
+  </body>
+</html>

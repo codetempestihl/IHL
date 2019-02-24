@@ -4,14 +4,8 @@ var path = require("path");
 var routes = require('./routes.js');
 
 var app = express();
-
-/*
-var logger = function(req, res, next){
-    console.log("logging...");
-    next();
-}
-app.use(logger);
-*/
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
 // body parser middleware
 app.use(bodyParser.json());
@@ -24,12 +18,15 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-
 // route
 app.use('/', routes);
 
-app.use(express.static(path.join(__dirname, 'public')));
+io.on('connection', function(socket){
+    socket.on('getData', function(){
+      io.emit('data', 'This is data');
+    });
+});
 
-app.listen(8080, function(){
+http.listen(8080, function(){
     console.log("server started at port 8080...");
-})
+});

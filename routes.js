@@ -52,9 +52,8 @@ router.get('/',redirecthome, function(req, res){
 })
 
 router.post('/', function(req, res){
-    
     // hanlde signup and login process
-	if (req.body.signup=='true')
+	if (req.body.fblinksignup=='true')
 	{
 		 var pass=String(req.body.password[0]);
 		 hashedpassword=passwordhash.generate(pass);
@@ -62,18 +61,17 @@ router.post('/', function(req, res){
 			 if (err) throw err;
 			 
 			 if (Object.keys(user).length==0){
-				 console.log("hey");
 					userdata=new User({
 					email:req.body.email,
 					password:hashedpassword,
-					fblinked:true	
+					fblinked:true
 				});
 				userdata.save(function(err){
 					if(err) throw err; 
 					console.log("user created");
 				});
 				const user=User.find({email:req.body.email});
-				req.session.userid=1;
+				req.session.userid=user[0]._id;
 				res.redirect('/home');
 				}
 				else
@@ -83,31 +81,79 @@ router.post('/', function(req, res){
 		 });
 		 
 	}
-	else if(req.body.login=="true")
+	else if(req.body.fblinklogin=="true")
 	{
 		User.find({email:req.body.email},function(err,user){
 			if (err) throw err;
 			if (Object.keys(user).length==0)
 			{console.log("user doessnt exist sign up please");}
-			else if( user.fblink!=true)
+			else if( user[0].fblinked!=true)
 			{	user.fblink=true;
-				console.log(user,"logged in");
-				req.session.userid=2;
-				console.log(user,"logged in");
+				req.session.userid=user[0]._id;
 				res.redirect('/home');}
 			else
 			{
-				req.session.userid=2;
+				req.session.userid=user[0]._id;
 				console.log(user,"logged in");
 				res.redirect('/home');
 			}
 		})
 	}
+	else if(req.body.fblinksignup=="false"){
+		var pass=String(req.body.password[0]);
+		 hashedpassword=passwordhash.generate(pass);
+		 User.find({ email: req.body.email }, function(err, user){
+			 if (err) throw err;
+			 
+			 if (Object.keys(user).length==0){
+					userdata=new User({
+					email:req.body.email,
+					password:hashedpassword,
+					fblinked:false
+				});
+				userdata.save(function(err){
+					if(err) throw err; 
+					console.log("user created");
+				});
+				const user=User.find({email:req.body.email});
+				req.session.userid=user[0]._id;
+				res.redirect('/home');
+				}
+				else
+				{
+					console.log("user already exist");
+				}
+	});}
+		else{
+			var emailadd=req.body.email;
+			var pass=req.body.password;
+			User.find({email:emailadd},function(err,user){
+				if (err) console.log(error);
+				if(Object.keys(user).length!=0){
+				if(passwordhash.verify(pass,user[0].password)==true){
+					req.session.userid=user[0]._id;
+					res.redirect('/home');
+				}
+				else{
+					console.log("wrong password");
+					res.end('/index');
+				}
+				}
+				else
+				{
+					console.log("user doesnt exist");
+					res.render('/index');
+				}
+			})
+		}
+		
+	
 })
 
 router.get('/home',redirectlogin, function(req, res){
 	res.render('home');
 })
+
 router.get('/logout',function(req,res){
 	req.session.destroy();
 	res.redirect('/');

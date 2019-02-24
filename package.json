@@ -23,6 +23,7 @@
     "mongoose": "^5.4.14",
     "nodemon": "^1.18.10",
     "socket.io": "^2.2.0",
+    "password-hash": "^1.2.2",
     "validator": "^10.11.0"
   },
   "author": "code-tempest",

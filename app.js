@@ -4,6 +4,7 @@ var path = require("path");
 var routes = require('./routes.js');
 var session=require('express-session')({secret:'key',saveUninitialized:false ,resave:true});
 var sharedsession = require("express-socket.io-session");
+var client = require('./fitbit.js')
 
 var app = express();
 var http = require('http').Server(app);
@@ -25,13 +26,6 @@ app.set('views', path.join(__dirname, 'views'));
 
 // route
 app.use('/', routes);
-
-const FitbitApiClient = require("fitbit-node");
-const client = new FitbitApiClient({
-    clientId: "22DJKT",
-    clientSecret: "035c49af103fcf40103a5191b88a3381",
-    apiVersion: '1.2' // 1.2 is the default
-});
 
 io.on('connection', function(socket){
     socket.on('getData', function(){

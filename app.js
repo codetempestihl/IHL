@@ -38,7 +38,7 @@ io.on('connection', function(socket){
         user = socket.handshake.session.user
         if(socket.handshake.session.user){
             access_token = user[0].fitbit.access_token;
-            client.get('/profile.json', access_token).then(results => {
+            client.get('/activities.json', access_token).then(results => {
                 io.emit('data', results[0])
             }).catch(err => {
                 io.emit('data', "couldn't fetch")

@@ -2,10 +2,15 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var path = require("path");
 var routes = require('./routes.js');
+var session=require('express-session')({secret:'key',saveUninitialized:false ,resave:true});
+var sharedsession = require("express-socket.io-session");
 
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+
+app.use(session)
+io.use(sharedsession(session))
 
 // body parser middleware
 app.use(bodyParser.json());
@@ -30,7 +35,15 @@ const client = new FitbitApiClient({
 
 io.on('connection', function(socket){
     socket.on('getData', function(){
-      io.emit('data', 'This is data');
+        user = socket.handshake.session.user
+        if(socket.handshake.session.user){
+            access_token = user[0].fitbit.access_token;
+            client.get('/profile.json', access_token).then(results => {
+                io.emit('data', results[0])
+            }).catch(err => {
+                io.emit('data', "couldn't fetch")
+            });
+        }
     });
 });
 

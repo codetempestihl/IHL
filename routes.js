@@ -135,5 +135,4 @@ router.get("/callback", (req, res) => {
 });
 });
 
-// module.exports = User;
 module.exports = router;

@@ -91,7 +91,6 @@ router.post('/', function(req, res){
 			else if( user[0].fblinked!=true)
 			{	
 				User.updateOne({email:req.body.email},{$set:{fblinked:true}},{ upsert: true },function(err){});
-				console.log(user[0]);
 				req.session.user=user;
 				res.redirect('/home');
 			}
@@ -139,7 +138,6 @@ router.post('/', function(req, res){
 			if(Object.keys(user).length!=0){
 				if(passwordhash.verify(pass,user[0].password)==true){
 					req.session.user=user;
-					console.log(user[0]);
 					res.redirect('/home');
 				}
 				else{
@@ -161,8 +159,6 @@ router.get('/home',redirectlogin, function(req, res){
 	if(req.session.user[0].fitbit.access_token != ''){
 		res.render('home')
 	}else{
-		console.log(req.session.user[0])
-		console.log('fitbit')
 		res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'http://localhost:8080/callback'));
 	}
 })
@@ -183,18 +179,10 @@ router.get("/callback", (req, res) => {
 	client.getAccessToken(req.query.code, 'http://localhost:8080/callback').then(result => {
 		req.session.user[0].fitbit.access_token = result.access_token
 		req.session.user[0].fitbit.refresh_token = result.refresh_token
-		// req.session.user[0].save(function(err){
-		// 	if(err){
-		// 		console.log('error')
-		// 		throw err;
-		// 	} 
-		// 	console.log("user created");
-		// })
 		res.redirect('/home')
 	}).catch(err => {
 		res.status(err.status).send(err);
 	});
 });
 
-// module.exports = User;
 module.exports = router;

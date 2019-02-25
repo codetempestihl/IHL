@@ -89,13 +89,13 @@ router.post('/', function(req, res){
 				}
 				else{
 					console.log("wrong password");
-					res.end('/index');
+					res.redirect('/');
 				}
 			}
 			else
 			{
 				console.log("user doesnt exist");
-				res.render('/index');
+				res.redirect('/');
 			}
 		})
 	}		
@@ -124,15 +124,15 @@ router.get('/logout',function(req,res){
 router.get("/callback", (req, res) => {
 	// exchange the authorization code we just received for an access token
 	client.getAccessToken(req.query.code, 'http://localhost:8080/callback').then(result => {
-	req.session.user[0].fitbit.access_token = result.access_token
-	req.session.user[0].fitbit.refresh_token = result.refresh_token
-	
-	User.updateOne({email: req.session.user[0].email},{$set:{fitbit: {access_token: result.access_token, refresh_token: result.refresh_token}}},{ upsert: true },function(err){});
+		req.session.user[0].fitbit.access_token = result.access_token
+		req.session.user[0].fitbit.refresh_token = result.refresh_token
+		
+		User.updateOne({email: req.session.user[0].email},{$set:{fitbit: {access_token: result.access_token, refresh_token: result.refresh_token}}},{ upsert: true },function(err){});
 
-	res.redirect('/home')
-}).catch(err => {
-	res.status(err.status).send(err);
-});
+		res.redirect('/home')
+	}).catch(err => {
+		res.status(err.status).send(err);
+	});
 });
 
 module.exports = router;

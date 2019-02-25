@@ -5,6 +5,7 @@ var routes = require('./routes.js');
 var session=require('express-session')({secret:'key',saveUninitialized:false ,resave:true});
 var sharedsession = require("express-socket.io-session");
 var client = require('./fitbit.js')
+var User = require('./user.js')
 
 var app = express();
 var http = require('http').Server(app);
@@ -32,11 +33,44 @@ io.on('connection', function(socket){
         user = socket.handshake.session.user
         if(socket.handshake.session.user){
             access_token = user[0].fitbit.access_token;
-            client.get('/activities.json', access_token).then(results => {
-                io.emit('data', results[0])
+            refresh_token = user[0].fitbit.refresh_token;
+
+            var data = {}
+            client.get('/devices.json', access_token).then(results => {
+                data['deviceName'] = results[0][0]['deviceVersion'];
+                client.get('/sleep/date/today.json', access_token).then(results => {
+                    data['sleep'] = results[0]['summary']['totalMinutesAsleep'];
+                    data['sleepLog'] = []
+                    results[0]['sleep'].forEach(element => {
+                        data['sleepLog'].push({startTime: element['startTime'], endTime:element['endTime']})
+                    });
+                    client.get('/profile.json', access_token).then(results => {
+                        data['weight'] = results[0]['user']['weight']
+                        client.get('/activities/date/today.json', access_token).then(results => {
+                            data['steps'] = results[0]['summary']['steps'];
+                            data['distance'] = results[0]['summary']['distance'];
+                            data['calories'] = results[0]['summary']['calories']['total'];
+                            io.emit('data', data);
+                        }).catch(err => {
+                            // client.refreshAccessToken(access_token, refreshAccessToken).then(result => {
+                            //     req.session.user[0].fitbit.access_token = result.access_token
+                            //     req.session.user[0].fitbit.refresh_token = result.refresh_token
+                                
+                            //     User.updateOne({email: req.session.user[0].email},{$set:{fitbit: {access_token: result.access_token, refresh_token: result.refresh_token}}},{ upsert: true },function(err){});
+                            // }).catch(err => {
+                            //     res.status(err.status).send(err);
+                            // });
+                            data['err'] = err
+                        });
+                    }).catch(err => {
+                        data['err'] = err
+                    });
+                }).catch(err => {
+                    data['err'] = err
+                })
             }).catch(err => {
-                io.emit('data', "couldn't fetch")
-            });
+                data['err'] = err
+            })
         }
     });
 });

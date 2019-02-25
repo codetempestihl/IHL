@@ -148,13 +148,13 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-      var socket = io();
-      socket.on('data', function(data){
-          console.log(data);
+        var socket = io();
+            socket.on('data', function(data){
+            console.log(data);
         });
         socket.emit('getData');
-      setInterval(function(){
-        socket.emit('getData');
-      }, 30000)
+        setInterval(function(){
+            socket.emit('getData');
+        }, 30000)
     </script>
 </html>

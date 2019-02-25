@@ -1,5 +1,5 @@
-var canvas = document.getElementById('dailyActivity');
-var myRadarChart = new Chart(canvas, {
+var dailyActivity = document.getElementById('dailyActivity');
+var dailyChart = new Chart(dailyActivity, {
     type: 'doughnut',
     data: {
         datasets: [{
@@ -25,3 +25,5 @@ var myRadarChart = new Chart(canvas, {
         }
     }
 });
+
+// var 

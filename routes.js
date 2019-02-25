@@ -49,69 +49,125 @@ const client = new FitbitApiClient({
 
 router.get('/',redirecthome, function(req, res){
     res.render('index');
+	
 })
 
 router.post('/', function(req, res){
-    
     // hanlde signup and login process
-	if (req.body.signup=='true')
+	if (req.body.fblinksignup=='true')
 	{
 		 var pass=String(req.body.password[0]);
 		 hashedpassword=passwordhash.generate(pass);
 		 User.find({ email: req.body.email }, function(err, user){
-			if (err) throw err;
-			if (Object.keys(user).length==0){
-				userdata=new User({
+			 if (err) throw err;
+			 
+			 if (Object.keys(user).length==0){
+					userdata=new User({
 					email:req.body.email,
 					password:hashedpassword,
-					fblinked:false,
+					fblinked:true,
 					fitbit:{
 						access_token: '',
-						refresh_token: '',
-					}	
+						refresh_token: ''
+					}
 				});
 				userdata.save(function(err){
-					if(err){
-						console.log('error')
-						throw err;
-					} 
+					if(err) throw err; 
 					console.log("user created");
 				});
-				req.session.user=user;
+				req.session.user = userdata;
 				res.redirect('/home');
-			}
-			else{
-				console.log("user already exist");
-			}
+				}
+				else
+				{
+					console.log("user already exist");
+				}
 		 });
 		 
 	}
-	else if(req.body.login=="true"){
+	else if(req.body.fblinklogin=="true")
+	{
 		User.find({email:req.body.email},function(err,user){
 			if (err) throw err;
-			if (Object.keys(user).length==0){
-				console.log("user doessnt exist sign up please");
-			}
-			else if( user.fblink!=true){	
-				user.fblink=true;
+			if (Object.keys(user).length==0)
+			{console.log("user doessnt exist sign up please");}
+			else if( user[0].fblinked!=true)
+			{	User.updateOne({email:req.body.email},{$set:{fblinked:true}},{ upsert: true },function(err){});
+				console.log(user[0]);
+				req.session.user=user[0];
+				res.redirect('/home');}
+			else
+			{
 				req.session.user=user;
-				res.redirect('/home');
-			}
-			else{
-				req.session.user=user;
+				console.log(user,"logged in");
 				res.redirect('/home');
 			}
 		})
 	}
+	else if(req.body.fblinksignup=="false"){
+		var pass=String(req.body.password[0]);
+		 hashedpassword=passwordhash.generate(pass);
+		 User.find({ email: req.body.email }, function(err, user){
+			 if (err) throw err;
+			 
+			 if (Object.keys(user).length==0){
+					userdata=new User({
+					email:req.body.email,
+					password:hashedpassword,
+					fblinked:false
+				});
+				userdata.save(function(err){
+					if(err) throw err; 
+					console.log("user created");
+				});
+				const user=User.find({email:req.body.email});
+				req.session.user=user[0];
+				res.redirect('/home');
+				}
+				else
+				{
+					console.log("user already exist");
+				}
+	});}
+		else{
+			var emailadd=req.body.email;
+			var pass=req.body.password;
+			User.find({email:emailadd},function(err,user){
+				if (err) console.log(error);
+				if(Object.keys(user).length!=0){
+				if(passwordhash.verify(pass,user[0].password)==true){
+					req.session.userid=user[0]._id;
+					res.redirect('/home');
+				}
+				else{
+					console.log("wrong password");
+					res.end('/index');
+				}
+				}
+				else
+				{
+					console.log("user doesnt exist");
+					res.render('/index');
+				}
+			})
+		}
+		
+	
 })
 
 router.get('/home',redirectlogin, function(req, res){
-	if(req.session.user[0].fitbit.access_token != ''){
-		res.render('home');
+	if(req.session.user.fitbit.access_token != ''){
+		res.render('/home')
 	}else{
-		res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'http://localhost:8080/callback'));	
+		res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'http://localhost:8080/callback'));
 	}
 })
+
+router.get('/logout',function(req,res){
+	req.session.destroy();
+	res.redirect('/');
+});
+
 router.get('/logout',function(req,res){
 	req.session.destroy();
 	res.redirect('/');

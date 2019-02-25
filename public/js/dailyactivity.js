@@ -12,7 +12,7 @@ var dailyChart = new Chart(dailyActivity, {
             ],
         }],
         // These labels appear in the legend and in the tooltips when hovering different arcs
-        labels: activities
+        labels: ['s', 'v', 'g', 'h']
     },
     options: {
         legend: {

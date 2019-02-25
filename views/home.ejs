@@ -55,7 +55,7 @@
                             </div>
                         </div>
                         <div class="device card ml-8 flex-col flex-1">
-                            <h4 class="text-grey-darker">Active <small class="ml-2 text-blue">Device name</small></h4>
+                            <h4 class="text-grey-darker">Active <small class="ml-2 text-blue" id = "deviceName"></small></h4>
                             <p class="text-grey-dark"> </p>
                         </div>
                     </div>
@@ -88,7 +88,7 @@
                             <canvas id="stepsCanvas" class="max-w-16">
                             </canvas>
                             <div class="flex flex-col items-center">
-                                <p class="text-xs text-center mb-1 text-grey-darker">1234 steps</p>
+                                <p class="text-xs text-center mb-1 text-grey-darker" id = "steps"></p>
                                 <div class="walking w-8 mx-2 h-1"></div>
                                     <p class="text-xss text-center mt-1 text-grey-darker">70% more to go</p>
                             </div>
@@ -110,7 +110,7 @@
                         </div>
                         <div class="weight flex-col card w-1/3 mx-4">
                             <h4 class="text-grey-dark">weight</h4>
-                            <p>56 kg</p>
+                            <p id = "weight"></p>
                         </div>
                         <div class="sleep card w-2/3">
                         </div>
@@ -158,15 +158,12 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-        activities = [];
-        deviceName = '';
-        steps = '';
-        data = [];
         var socket = io();
         socket.on('data', function(data){
             console.log(data);
-            activities = ['running', 'walking', 'sleeping', 'cardio'];
-            steps = 10;
+            $('#deviceName').text(data.deviceName)
+            $('#weight').text(data.weight)
+            $('#steps').text(data.steps)
         });
         socket.emit('getData');
         setInterval(function(){

@@ -1,6 +1,8 @@
 var express = require('express')
 var router = express.Router()
 var passwordhash=require('password-hash');
+var User = require('./user.js')
+var client = require('./fitbit.js')
 
 const redirecthome=(req,res,next)=>{
 	if(req.session.user)
@@ -20,54 +22,28 @@ const redirectlogin=(req,res,next)=>{
 		next();
 	}
 }
-//setup mongoose
-var mongoose = require('mongoose');
-mongoose.connect("mongodb://localhost:27017/ihl", { useNewUrlParser: true });
-var db=mongoose.connection;
-// db.once('open',()=>{
-// 	console.log("connected");
-// });
-//MongoDb schema and model
-var userSchema = new mongoose.Schema({
-	email: {type: String,required :true},
-	password: {type:String,required:true},
-	fblinked: Boolean,
-	fitbit: { 
-		access_token: String,
-		refresh_token: String
-	}
-});
-	
-var User = mongoose.model('User', userSchema, 'users');
-
-const FitbitApiClient = require("fitbit-node");
-const client = new FitbitApiClient({
-    clientId: "22DJKT",
-    clientSecret: "035c49af103fcf40103a5191b88a3381",
-    apiVersion: '1.2' // 1.2 is the default
-});
 
 router.get('/',redirecthome, function(req, res){
-    res.render('index');
+	res.render('index', {loggedIn: req.session.user});
 	
 })
 
 router.post('/', function(req, res){
 	// hanlde signup and login process
-	if (req.body.fblinksignup=='true'){
-		 var pass=String(req.body.password[0]);
-		 hashedpassword=passwordhash.generate(pass);
-		 User.find({ email: req.body.email }, function(err, user){
-			 if (err) throw err;
-			 
+	if (req.body.fblinksignup != null){
+		var pass=String(req.body.password[0]);
+		hashedpassword=passwordhash.generate(pass);
+		User.find({ email: req.body.email }, function(err, user){
+			if (err) throw err;
+			
 			if (Object.keys(user).length==0){
-					userdata=new User({
+				userdata=new User({
 					email:req.body.email,
 					password:hashedpassword,
-					fblinked:true,
+					fblinked: req.body.fblinksignup,
 					fitbit:{
-						access_token: '',
-						refresh_token: ''
+						access_token: null,
+						refresh_token: null
 					}
 				});
 				userdata.save(function(err){
@@ -79,8 +55,8 @@ router.post('/', function(req, res){
 			}else{
 				console.log("user already exist");
 			}
-		 });
-		 
+		});
+		
 	}
 	else if(req.body.fblinklogin=="true")
 	{
@@ -88,48 +64,18 @@ router.post('/', function(req, res){
 			if (err) throw err;
 			if (Object.keys(user).length==0)
 			{console.log("user doessnt exist sign up please");}
-			else if( user[0].fblinked!=true)
-			{	
+			else if( user[0].fblinked!=true){	
 				User.updateOne({email:req.body.email},{$set:{fblinked:true}},{ upsert: true },function(err){});
+				// console.log(user[0]);
 				req.session.user=user;
 				res.redirect('/home');
 			}
 			else{
 				req.session.user=user;
-				console.log(user,"logged in");
+				// console.log(user,"logged in");
 				res.redirect('/home');
 			}
 		})
-	}
-	else if(req.body.fblinksignup=="false"){
-		console.log('signup');
-		var pass=String(req.body.password[0]);
-			hashedpassword=passwordhash.generate(pass);
-			User.find({ email: req.body.email }, function(err, user){
-				if (err) throw err;
-
-				if (Object.keys(user).length==0){
-						userdata=new User({
-						email:req.body.email,
-						password:hashedpassword,
-						fblinked:false,
-						fitbit:{
-							access_token: '',
-							refresh_token: ''
-						}
-					});
-					userdata.save(function(err){
-						if(err) throw err; 
-						console.log("user created");
-					});
-					req.session.user=userdata;
-					res.redirect('/home');
-					}
-					else
-					{
-						console.log("user already exist");
-					}
-		});
 	}else{
 		var emailadd=req.body.email;
 		var pass=req.body.password;
@@ -138,6 +84,7 @@ router.post('/', function(req, res){
 			if(Object.keys(user).length!=0){
 				if(passwordhash.verify(pass,user[0].password)==true){
 					req.session.user=user;
+					// console.log(user[0]);
 					res.redirect('/home');
 				}
 				else{
@@ -156,8 +103,8 @@ router.post('/', function(req, res){
 })
 
 router.get('/home',redirectlogin, function(req, res){
-	if(req.session.user[0].fitbit.access_token != ''){
-		res.render('home')
+	if(req.session.user[0].fitbit.access_token != null){
+		res.render('home', {loggedIn: req.session.user})
 	}else{
 		res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'http://localhost:8080/callback'));
 	}
@@ -177,12 +124,15 @@ router.get('/logout',function(req,res){
 router.get("/callback", (req, res) => {
 	// exchange the authorization code we just received for an access token
 	client.getAccessToken(req.query.code, 'http://localhost:8080/callback').then(result => {
-		req.session.user[0].fitbit.access_token = result.access_token
-		req.session.user[0].fitbit.refresh_token = result.refresh_token
-		res.redirect('/home')
-	}).catch(err => {
-		res.status(err.status).send(err);
-	});
+	req.session.user[0].fitbit.access_token = result.access_token
+	req.session.user[0].fitbit.refresh_token = result.refresh_token
+	
+	User.updateOne({email: req.session.user[0].email},{$set:{fitbit: {access_token: result.access_token, refresh_token: result.refresh_token}}},{ upsert: true },function(err){});
+
+	res.redirect('/home')
+}).catch(err => {
+	res.status(err.status).send(err);
+});
 });
 
 module.exports = router;

@@ -107,8 +107,6 @@ router.post('/', function(req, res){
 
 router.get('/home',redirectlogin, function(req, res){
 	if(req.session.user[0].fitbit.access_token != ''){
-		access_token = req.session.user[0].fitbit.access_token
-		refresh_token = req.session.user[0].fitbit.refresh_token
 		res.render('home');
 	}else{
 		res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'http://localhost:8080/callback'));	

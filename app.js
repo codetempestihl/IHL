@@ -29,7 +29,24 @@ app.set('views', path.join(__dirname, 'views'));
 app.use('/', routes);
 
 io.on('connection', function(socket){
-    socket.on('getData', function(){
+    socket.on('getFastData', function(){
+        user = socket.handshake.session.user
+        if(socket.handshake.session.user){
+            access_token = user[0].fitbit.access_token;
+            refresh_token = user[0].fitbit.refresh_token;
+            var data = {}
+            client.get('/activities/date/today.json', access_token).then(results => {
+                data['steps'] = results[0]['summary']['steps'];
+                data['distance'] = results[0]['summary']['distance'];
+                data['calories'] = results[0]['summary']['calories']['total'];   
+                io.emit('fastData', data) 
+            }).catch(err => {
+                data['err'] = err
+                io.emit('data', data);
+            });
+        }
+    });
+    socket.on('getSlowData', function(){
         user = socket.handshake.session.user
         if(socket.handshake.session.user){
             access_token = user[0].fitbit.access_token;
@@ -46,15 +63,34 @@ io.on('connection', function(socket){
                     });
                     client.get('/profile.json', access_token).then(results => {
                         data['weight'] = results[0]['user']['weight']
-                        client.get('/activities/date/today.json', access_token).then(results => {
-                            data['steps'] = results[0]['summary']['steps'];
-                            data['distance'] = results[0]['summary']['distance'];
-                            data['calories'] = results[0]['summary']['calories']['total'];
-                            io.emit('data', data);
+                        client.get('/activities/recent.json', access_token).then(results => {
+                            data['recentActivities'] = [];
+                            results[0].forEach(element => {
+                                data['recentActivities'].push({name: element['name'], duration:element['duration']})
+                            });
+                            client.get('/activities/steps/date/today/7d.json', access_token).then(results => {
+                                data['pastSteps'] = results[0]['activities-steps'];
+                                client.get('/activities/distance/date/today/7d.json', access_token).then(results => {
+                                    data['pastDistance'] = results[0]['activities-distance'];
+                                    client.get('/activities/calories/date/today/7d.json', access_token).then(results => {
+                                        data['pastCalories'] = results[0]['activities-calories'];
+                                        io.emit('slowData', data)
+                                    }).catch(err => {
+                                        data['err'] = err
+                                        io.emit('data', data);
+                                    });
+                                }).catch(err => {
+                                    data['err'] = err
+                                    io.emit('data', data);
+                                });   
+                            }).catch(err => {
+                                data['err'] = err
+                                io.emit('data', data);
+                            });
                         }).catch(err => {
                             data['err'] = err
                             io.emit('data', data);
-                        });
+                        });    
                     }).catch(err => {
                         data['err'] = err
                         io.emit('data', data);

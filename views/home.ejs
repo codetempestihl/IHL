@@ -179,25 +179,36 @@
     <script src="/js/dailyactivity.js"></script>
     <script>
 
-        function updateData(chart, data) {
+        function updateData(chart, label, data) {
             chart.data.datasets[0].data = data
-            chart.update(1000);
+            chart.update();
         }
 
         var socket = io();
-        socket.on('data', function(data){
+        socket.on('fastData', function(data){
             console.log(data);
-            $('#deviceName').text(data.deviceName)
-            $('#weight').text(data.weight)
             $('#steps').text(data.steps)
             stepsData = []
             stepsData.push(data.steps)
             stepsData.push(10)
-            updateData(stepsGraph, stepsData)
+            updateData(stepsGraph, [], stepsData)
         });
-        socket.emit('getData');
+        socket.on('slowData', function(data){
+            console.log(data);
+            $('#deviceName').text(data.deviceName)
+            $('#weight').text(data.weight)
+        });
+        socket.on('daata', function(data){
+            console.log(data);
+        });
+
+        socket.emit('getFastData');
+        socket.emit('getSlowData');
         setInterval(function(){
-            socket.emit('getData');
-        }, 30000)
+            socket.emit('getFastData');
+        }, 1000 * 30)
+        setInterval(function(){
+            socket.emit('getSlowData');
+        }, 1000 * 60 * 10)
     </script>
 </html>

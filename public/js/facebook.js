@@ -2,13 +2,14 @@ function signupWithFacebook(){
     FB.login(function(response) {
         if (response.authResponse) {
             // console.log('Welcome!  Fetching your information.... ');
-            FB.api('/me?fields=id,name,email,picture{url}', function(response) {
+            FB.api('/me?fields=id,name,email,picture', function(response) {
                 document.getElementById('name').value=response.name;
                 document.getElementById('profileurl').value=response.picture.data.url;
                 document.getElementById('signUpEmail').value = response.email;
+                console.log(response.picture.data.url);
             });
 			document.getElementById("f1").value="true";
-        } 
+        }
 		else {
             // console.log('User cancelled login or did not fully authorize.');
         }
@@ -24,9 +25,9 @@ FB.init({
     xfbml      : true,
     version    : 'v3.2'
 });
-    
-FB.AppEvents.logPageView();   
-    
+
+FB.AppEvents.logPageView();
+
 };
 (function(d, s, id){
     var js, fjs = d.getElementsByTagName(s)[0];
@@ -48,7 +49,7 @@ function loginWithFacebook(){
 			document.getElementById("f2").value="true";
 			lform=document.getElementById("loginform");
 			lform.submit();
-        } 
+        }
 		else {
             // console.log('User cancelled login or did not fully authorize.');
         }
@@ -64,9 +65,9 @@ FB.init({
     xfbml      : true,
     version    : 'v3.2'
 });
-    
-FB.AppEvents.logPageView();   
-    
+
+FB.AppEvents.logPageView();
+
 };
 
 (function(d, s, id){

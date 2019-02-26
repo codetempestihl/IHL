@@ -25,7 +25,7 @@ const redirectlogin=(req,res,next)=>{
 
 router.get('/',redirecthome, function(req, res){
 	res.render('index', {loggedIn: req.session.user});
-	
+
 })
 
 router.post('/', function(req, res){
@@ -33,23 +33,25 @@ router.post('/', function(req, res){
 	if (req.body.fblinksignup != null){
 		var pass=String(req.body.password[0]);
 		hashedpassword=passwordhash.generate(pass);
+			console.log(req.body.profileUrl);
 		User.find({ email: req.body.email }, function(err, user){
 			if (err) throw err;
-			
+
 			if (Object.keys(user).length==0){
 				userdata=new User({
 					name:req.body.fullname,
 					email:req.body.email,
 					password:hashedpassword,
-					profilepic:req.body.profileurl,
+					profilepic:req.body.profileUrl,
 					fblinked: req.body.fblinksignup,
 					fitbit:{
 						access_token: null,
 						refresh_token: null
 					}
 				});
+
 				userdata.save(function(err){
-					if(err) throw err; 
+					if(err) throw err;
 					console.log("user created");
 				});
 				req.session.user = [userdata];
@@ -58,7 +60,7 @@ router.post('/', function(req, res){
 				console.log("user already exist");
 			}
 		});
-		
+
 	}
 	else if(req.body.fblinklogin=="true")
 	{
@@ -66,14 +68,14 @@ router.post('/', function(req, res){
 			if (err) throw err;
 			if (Object.keys(user).length==0)
 			{console.log("user doessnt exist sign up please");}
-			else if( user[0].fblinked!=true){	
+			else if( user[0].fblinked!=true){
 				User.updateOne({email:req.body.email},{$set:{fblinked:true}},{ upsert: true },function(err){});
 				// console.log(user[0]);
 				req.session.user=user;
 				res.redirect('/home');
 			}
 			else{
-				
+
 				req.session.user=user;
 				// console.log(user,"logged in");
 				res.redirect('/home');
@@ -101,8 +103,8 @@ router.post('/', function(req, res){
 				res.redirect('/');
 			}
 		})
-	}		
-	
+	}
+
 })
 
 router.get('/home',redirectlogin, function(req, res){
@@ -131,7 +133,7 @@ router.get("/callback", (req, res) => {
 	client.getAccessToken(req.query.code, 'http://localhost:8080/callback').then(result => {
 		req.session.user[0].fitbit.access_token = result.access_token
 		req.session.user[0].fitbit.refresh_token = result.refresh_token
-		
+
 		User.updateOne({email: req.session.user[0].email},{$set:{fitbit: {access_token: result.access_token, refresh_token: result.refresh_token}}},{ upsert: true },function(err){});
 
 		res.redirect('/home')

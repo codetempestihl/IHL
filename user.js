@@ -10,13 +10,12 @@ var userSchema = new mongoose.Schema({
 	name:{type: String,required :true},
 	email: {type: String,required :true},
 	password: {type:String,required:true},
-	profileurl:String,
+	profilepic:String,
 	fblinked: Boolean,
-	fitbit: { 
+	fitbit: {
 		access_token: String,
 		refresh_token: String
 	}
 });
 
 module.exports = mongoose.model('User', userSchema, 'users');
-

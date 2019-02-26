@@ -7,8 +7,10 @@ var db=mongoose.connection;
 // });
 //MongoDb schema and model
 var userSchema = new mongoose.Schema({
+	name:{type: String,required :true},
 	email: {type: String,required :true},
 	password: {type:String,required:true},
+	profileurl:String,
 	fblinked: Boolean,
 	fitbit: { 
 		access_token: String,

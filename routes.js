@@ -38,8 +38,10 @@ router.post('/', function(req, res){
 			
 			if (Object.keys(user).length==0){
 				userdata=new User({
+					name:req.body.fullname,
 					email:req.body.email,
 					password:hashedpassword,
+					profilepic:req.body.profileurl,
 					fblinked: req.body.fblinksignup,
 					fitbit:{
 						access_token: null,
@@ -50,7 +52,7 @@ router.post('/', function(req, res){
 					if(err) throw err; 
 					console.log("user created");
 				});
-				req.session.user = userdata;
+				req.session.user = [userdata];
 				res.redirect('/home');
 			}else{
 				console.log("user already exist");
@@ -71,6 +73,7 @@ router.post('/', function(req, res){
 				res.redirect('/home');
 			}
 			else{
+				
 				req.session.user=user;
 				// console.log(user,"logged in");
 				res.redirect('/home');
@@ -104,7 +107,9 @@ router.post('/', function(req, res){
 
 router.get('/home',redirectlogin, function(req, res){
 	if(req.session.user[0].fitbit.access_token != null){
-		res.render('home', {loggedIn: req.session.user})
+		res.render('home', {name:req.session.user[0].name,
+			profileimg:req.session.user[0].profilepic,
+			loggedIn: req.session.user})
 	}else{
 		res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'http://localhost:8080/callback'));
 	}

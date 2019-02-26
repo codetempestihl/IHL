@@ -20,7 +20,8 @@
                     <form action="/" method = "post" id="loginform"  class="flex-col">
                         <input type="email" class="my-3 p-2 border-b border-blue w-full" name="email" placeholder="Enter your email" id="loginmail">
                         <input type="password" class="my-3 p-2 border-b border-blue w-full" name="password" placeholder="Enter your password">
-						<input style="display:none" type="text" value="false" name="fblinklogin" id="f2" >
+                        <input style="display:none" type="text" value="false" name="fblinklogin" id="f2" >
+                        
                         <div class="flex items-center mt-6 justify-between">
                             <button type="submit" class="px-4 py-1 block rounded-full border border-blue text-blue" name = "login" value = "true">Login</button>
                             <div>
@@ -36,7 +37,7 @@
         <div id="signup-modal" class="fixed pin-x pin-y hidden items-center justify-center" style="background-color: rgba(0, 0, 0, 0.5);">
             <div class="signup modal-body w-1/2 bg-white rounded flex overflow-hidden">
                 <div class="w-1/2 bg-blue">
-
+s
                 </div>
                 <div class="px-16 pb-8">
                     <h2 class="text-blue my-4">
@@ -46,9 +47,11 @@
                         </span>
                     </h2>
                     <form action="/" method = "post"  class="flex-col">
+                        <input type="text" class="my-3 p-2 border-b border-blue w-full" name="fullname" placeholder="Enter your name" id="name">
                         <input type="email" class="my-3 p-2 border-b border-blue w-full" name="email" placeholder="Enter your email" id = "signUpEmail">
                         <input type="password" class="my-3 p-2 border-b border-blue w-full" name="password" placeholder="Enter your password">
                         <input type="password" class="my-3 p-2 border-b border-blue w-full" name="password" placeholder="confirm password">
+                        <input style="display:none" type="text" value="" name="profileurl" id="profileurl" >
                         <input style="display:none" type="text" value="false" name="fblinksignup" id="f1" >
 						<div class="flex items-center mt-6 justify-between">
                             <button type="submit" class="px-4 py-1 block rounded-full border border-blue text-blue" name = "signup" value = "true">Signup</button>

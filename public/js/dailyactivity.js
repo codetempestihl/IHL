@@ -26,14 +26,14 @@ var stepsGraph = new Chart(steps, {
     type: 'doughnut',
     data: {
         datasets: [{
-            data: [5, 10],
+            data: [7, 10],
             backgroundColor: [
                 'rgba(54, 162, 235, 0.5)',
                 'rgba(2, 10, 132, 0.5)',
                 ],
             }],
             // These labels appear in the legend and in the tooltips when hovering different arcs
-            labels: steps
+            labels: ['current', 'goal']
         },
         options: {
             circumference: Math.PI,

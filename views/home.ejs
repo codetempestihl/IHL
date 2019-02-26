@@ -157,19 +157,29 @@
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="/js/pastActivity.js"></script>
+    <script src="/js/dailyactivity.js"></script>
     <script>
+
+        function updateData(chart, data) {
+            chart.data.datasets[0].data = data
+            chart.update(1000);
+        }
+
         var socket = io();
         socket.on('data', function(data){
             console.log(data);
             $('#deviceName').text(data.deviceName)
             $('#weight').text(data.weight)
             $('#steps').text(data.steps)
+            stepsData = []
+            stepsData.push(data.steps)
+            stepsData.push(10)
+            updateData(stepsGraph, stepsData)
         });
         socket.emit('getData');
         setInterval(function(){
             socket.emit('getData');
         }, 30000)
     </script>
-    <script src="/js/pastActivity.js"></script>
-    <script src="/js/dailyactivity.js"></script>
 </html>

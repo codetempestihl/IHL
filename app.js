@@ -52,24 +52,31 @@ io.on('connection', function(socket){
                             data['calories'] = results[0]['summary']['calories']['total'];
                             io.emit('data', data);
                         }).catch(err => {
-                            // client.refreshAccessToken(access_token, refreshAccessToken).then(result => {
-                            //     req.session.user[0].fitbit.access_token = result.access_token
-                            //     req.session.user[0].fitbit.refresh_token = result.refresh_token
-                                
-                            //     User.updateOne({email: req.session.user[0].email},{$set:{fitbit: {access_token: result.access_token, refresh_token: result.refresh_token}}},{ upsert: true },function(err){});
-                            // }).catch(err => {
-                            //     res.status(err.status).send(err);
-                            // });
                             data['err'] = err
+                            io.emit('data', data);
                         });
                     }).catch(err => {
                         data['err'] = err
+                        io.emit('data', data);
                     });
                 }).catch(err => {
                     data['err'] = err
+                    io.emit('data', data);
                 })
             }).catch(err => {
+                console.log(err)
+                client.refreshAccessToken(access_token, refresh_token).then(result => {
+                    socket.handshake.session.user[0].fitbit.access_token = result.access_token
+                    socket.handshake.session.user[0].fitbit.refresh_token = result.refresh_token
+                    socket.handshake.session.save()
+
+                    User.updateOne({email: user[0].email},{$set:{fitbit: {access_token: result.access_token, refresh_token: result.refresh_token}}},{ upsert: true },function(err){});
+                    console.log("Refreshed")
+                }).catch(err => {
+                    // console.log(err)
+                });
                 data['err'] = err
+                io.emit('data', data);
             })
         }
     });

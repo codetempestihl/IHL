@@ -21,7 +21,7 @@
                         <input type="email" class="my-3 p-2 border-b border-blue w-full" name="email" placeholder="Enter your email" id="loginmail">
                         <input type="password" class="my-3 p-2 border-b border-blue w-full" name="password" placeholder="Enter your password">
                         <input style="display:none" type="text" value="false" name="fblinklogin" id="f2" >
-                        
+
                         <div class="flex items-center mt-6 justify-between">
                             <button type="submit" class="px-4 py-1 block rounded-full border border-blue text-blue" name = "login" value = "true">Login</button>
                             <div>
@@ -51,7 +51,7 @@ s
                         <input type="email" class="my-3 p-2 border-b border-blue w-full" name="email" placeholder="Enter your email" id = "signUpEmail">
                         <input type="password" class="my-3 p-2 border-b border-blue w-full" name="password" placeholder="Enter your password">
                         <input type="password" class="my-3 p-2 border-b border-blue w-full" name="password" placeholder="confirm password">
-                        <input style="display:none" type="text" value="" name="profileurl" id="profileurl" >
+                        <input style="display:none" type="text" value="" name="profileUrl" id="profileurl" >
                         <input style="display:none" type="text" value="false" name="fblinksignup" id="f1" >
 						<div class="flex items-center mt-6 justify-between">
                             <button type="submit" class="px-4 py-1 block rounded-full border border-blue text-blue" name = "signup" value = "true">Signup</button>
@@ -84,7 +84,7 @@ s
             event.preventDefault();
             event.stopPropagation();
         });
-        
+
         let closeModal = function() {
             modal.classList.add('hidden');
             modal.classList.remove('flex');

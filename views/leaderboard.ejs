@@ -38,7 +38,49 @@
 
         <!-- main-content -->
         <div class="main-content flex flex-col w-5/6 px-8 mb-8">
-            <h1 class="my-8 py-2 border-b border-t border-grey-light text-grey-darker">Leaderboard</h1>
+            <h1 class="my-8 py-2 border-b border-t border-grey-light font-normal text-grey-darker">Leaderboard</h1>
+            <div class="leaderboard flex">
+                <div class="global-board rounded shadow w-1/2 flex flex-col">
+                    <h2 class=" bg-grey-darker rounded-t p-3 font-normal tracking-wide text-white">
+                        Global Ranking
+                    </h2>
+                    <div class="">
+                        <table class="w-full">
+                            <tbody >
+                                <% for (var i = 0; i < 5; i++){ %>
+                                <tr class="py-4 border border-b">
+                                    <td class="px-4 py-1 text-center">1</td>
+                                    <td class="py-1 flex items-center">
+                                        <img src="http://lorempixel.com/80/80/people/" class="rounded-full w-10" alt="">
+                                        <p class="py-1 ml-4 capitalize">username</p>
+                                    </td>  
+                                    <td>3251</td>
+                                </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="friends-board w-1/2 ml-12">
+                    <h2 class=" bg-grey-darker tracking-wide rounded-t p-3 font-normal text-white">
+                            Friends Ranking
+                    </h2>
+                    <table class="w-full">
+                        <tbody >
+                            <% for (var i = 0; i < 5; i++){ %>
+                            <tr class="py-4 border border-b">
+                                <td class="px-4 py-1 text-center">1</td>
+                                <td class="py-1 flex items-center">
+                                    <img src="http://lorempixel.com/80/80/people/" class="rounded-full w-10" alt="">
+                                    <p class="py-1 ml-4 capitalize">username</p>
+                                </td>  
+                                <td>3251</td>
+                            </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </main>
     <% include partials/footer %>

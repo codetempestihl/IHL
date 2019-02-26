@@ -39,6 +39,40 @@
         <!-- main-content -->
         <div class="main-content flex flex-col w-5/6 px-8 mb-8">
             <h1 class="my-8 py-2 border-b border-t border-grey-light text-grey-darker">Friends</h1>
+            <div class="ihl-friends w-full flex flex-col">
+                <h3 class="text-grey-dark my-4">IHL Friends</h3>
+                <div class="profile-container w-full flex justify-around">
+                    <% for(var i = 0; i< 4; i++) { %>
+                        <div class="flex card flex-col">
+                            <div class="profile w-32 h-32 bg-blue rounded ">
+                                <img src="http://lorempixel.com/80/80/people/" class="w-32 rounded-lg" alt="">
+                            </div>
+                            <div class="flex flex-col items-center mt-4">
+                                <p>Username</p>
+                                <p class="text-blue">Rank</p>
+                                <p>Medals</p>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+            <div class="ihl-friends w-full flex flex-col mt-10">
+                <h3 class="text-grey-dark my-4">Facebook Friends</h3>
+                <div class="profile-container w-full flex justify-around">
+                    <% for(var i = 0; i< 4; i++) { %>
+                        <div class="flex card flex-col">
+                            <div class="profile w-32 h-32 bg-blue rounded ">
+                                <img src="http://lorempixel.com/80/80/people/" class="w-32 rounded-lg" alt="">
+                            </div>
+                            <div class="flex flex-col items-center mt-4">
+                                <p>Username</p>
+                                <p class="text-blue">Rank</p>
+                                <p>Medals</p>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
         </div>
     </main>
     <% include partials/footer %>

@@ -24,18 +24,19 @@ var myChart = new Chart(canvas, {
         ]
     },
     options: {
-        scales: {
-            yAxes: [{
-                scaleLabel: {
-                    display: true,
-                    labelString: 'hours'
-                  },
-                ticks: {
-                    beginAtZero:true
-                }
-            }],
-            xAxes: [{
-                scaleLabel: {
+      scales: {
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'hours'
+          },
+          ticks: {
+            beginAtZero:true
+          }
+        }],
+        xAxes: [{
+          barThickness: '10',
+          scaleLabel: {
                     display: true,
                     labelString: 'days'
                 }

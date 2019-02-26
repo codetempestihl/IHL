@@ -47,6 +47,11 @@ io.on('connection', function(socket){
         }
     });
     socket.on('getSlowData', function(){
+
+        var date = new Date()
+        var endDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getDate()
+        var startDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + (date.getDate() - 7)
+
         user = socket.handshake.session.user
         if(socket.handshake.session.user){
             access_token = user[0].fitbit.access_token;
@@ -55,12 +60,8 @@ io.on('connection', function(socket){
             var data = {}
             client.get('/devices.json', access_token).then(results => {
                 data['deviceName'] = results[0][0]['deviceVersion'];
-                client.get('/sleep/date/today.json', access_token).then(results => {
-                    data['sleep'] = results[0]['summary']['totalMinutesAsleep'];
-                    data['sleepLog'] = []
-                    results[0]['sleep'].forEach(element => {
-                        data['sleepLog'].push({startTime: element['startTime'], endTime:element['endTime']})
-                    });
+                client.get('/sleep/date/' + startDate + '/' + endDate + '.json', access_token).then(results => {
+                    data['sleep'] = results[0]['sleep']
                     client.get('/profile.json', access_token).then(results => {
                         data['weight'] = results[0]['user']['weight']
                         client.get('/activities/recent.json', access_token).then(results => {

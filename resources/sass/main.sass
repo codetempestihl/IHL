@@ -1,8 +1,10 @@
 @tailwind preflight
 @import "home"
+@import "challenges"
 a
     text-decoration: none
     color: #3490dc
+    @apply cursor-pointer
 .brand
     img
         height: 40px
@@ -18,6 +20,9 @@ a
     //     @apply shadow-lg
     @apply  p-4 flex rounded shadow  
     @apply border border-grey-lighter
+
+.tab-active
+    @apply bg-blue
 @tailwind components
 
 @tailwind utilities

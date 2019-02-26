@@ -1,0 +1,49 @@
+<% include partials/header %>
+<title>IHL | Friends</title>
+</head>
+<body class="min-h-screen flex-col">
+    <% include partials/nav %>
+    <main class="flex flex-1 min-h-screen">
+        <!-- side bar -->
+        <div class="sidebar w-1/6 bg-blue">
+            <div class="cover text-white flex flex-col justify-center items-center px-4 pt-8">
+                <div class="flex justify-center">
+                    <img src="http://lorempixel.com/80/80/people/" alt="" class="rounded-full">
+                </div>
+                <p class="text-center my-3">Person name</p>
+                <div class="w-full border-grey">
+                    <p class="block mb-4">Rank <span class="float-right">#1</span></p>
+                </div>
+                <div class="w-full border-b">
+                    <div class="h-5 rounded-full bg-white p-1">
+                        <div class="w-1/2 bg-blue h-3 rounded-full"> 
+                        </div>
+                    </div>
+                    <p class=" mb-4 mt-1"><small><strong>145</strong> more points to level up</small></p>
+                </div>
+            </div>
+            <div class="side-links flex">
+                <ul class="list-reset flex-1">
+                    <a class="text-white" href="/home"><li class="py-4 px-4 hover:bg-blue-dark"> Home</li></a>
+                    <a class="text-white" href="#"><li class="py-4 px-4 hover:bg-blue-dark"> Friends</li></a>
+                    <a class="text-white" href="/challenges"><li class="py-4 px-4 hover:bg-blue-dark"> Challenges</li></a>
+                    <a class="text-white" href="/achievements"><li class="py-4 px-4 hover:bg-blue-dark"> Achievements</li></a>
+                    <a class="text-white" href="/leaderboard"><li class="py-4 px-4 hover:bg-blue-dark"> Leaderboard</li></a>
+                    <a class="text-white" href="/settings"><li class="py-4 px-4 hover:bg-blue-dark"> Settings</li></a>
+                    <a class="text-white" href="/logout"><li class="py-4 px-4 hover:bg-blue-dark"> Logout</li></a>
+                </ul>
+            </div>
+        </div>
+
+
+        <!-- main-content -->
+        <div class="main-content flex flex-col w-5/6 px-8 mb-8">
+            <h1 class="my-8 py-2 border-b border-t border-grey-light text-grey-darker">Friends</h1>
+        </div>
+    </main>
+    <% include partials/footer %>
+</body>
+<style>
+    
+</style>
+</html>

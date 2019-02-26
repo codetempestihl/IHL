@@ -105,6 +105,7 @@ router.post('/', function(req, res){
 	
 })
 
+// route for home
 router.get('/home',redirectlogin, function(req, res){
 	if(req.session.user[0].fitbit.access_token != null){
 		res.render('home', {name:req.session.user[0].name,
@@ -113,6 +114,31 @@ router.get('/home',redirectlogin, function(req, res){
 	}else{
 		res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'http://localhost:8080/callback'));
 	}
+})
+
+// route for friends
+router.get('/friends', redirectlogin, function(req, res){
+	res.render('friends', {loggedIn: req.session.user});
+})
+
+// route for challenges
+router.get('/challenges', redirectlogin, function(req, res){
+	res.render('challenges', {loggedIn: req.session.user});
+})
+
+// route for achievements
+router.get('/achievements', redirectlogin, function(req, res){
+	res.render('achievements', {loggedIn: req.session.user});
+})
+
+// route for leaderboard
+router.get('/leaderboard', redirectlogin, function(req, res){
+	res.render('leaderboard', {loggedIn: req.session.user});
+})
+
+// route for settings
+router.get('/settings', redirectlogin, function(req, res){
+	res.render('settings', {loggedIn: req.session.user});
 })
 
 router.get('/logout',function(req,res){

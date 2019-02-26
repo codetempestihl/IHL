@@ -531,9 +531,14 @@ table {
   background: #b3b198;
 }
 
+.challenge-box .challenge-img {
+  max-height: 200px;
+}
+
 a {
   text-decoration: none;
   color: #3490dc;
+  cursor: pointer;
 }
 
 .brand img {
@@ -557,6 +562,10 @@ a {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
   border-width: 1px;
   border-color: #f1f5f8;
+}
+
+.tab-active {
+  background-color: #3490dc;
 }
 
 .container {

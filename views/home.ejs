@@ -11,7 +11,7 @@
                 <div class="flex justify-center">
                     <img src="http://lorempixel.com/80/80/people/" alt="" class="rounded-full">
                 </div>
-                <p class="text-center my-3">Person name</p>
+                <p class="text-center my-3 capitalize"><%= name %></p>
                 <div class="w-full border-grey">
                     <p class="block mb-4">Rank <span class="float-right">#1</span></p>
                 </div>
@@ -49,14 +49,22 @@
                                 <img class="rounded-full" src="<%= profileimg %>" alt="">
                             </div>
                             <div class="px-4">
-                                <h3 class="text-grey-darker"><%= name %></h3>
+                                <h4 class="text-grey-darker capitalize"><%= name %></h4>
                                 <p><small class="text-grey-dark">Latest badge won name</small></p>
                                 <p class="mt-1 text-grey-darker">Lorem, ipsum dolor sit amet consectetur adipisicing elit</p>
                             </div>
                         </div>
                         <div class="device card ml-8 flex-col flex-1">
-                            <h4 class="text-grey-darker">Active <small class="ml-2 text-blue" id = "deviceName"></small></h4>
-                            <p class="text-grey-dark"> </p>
+                            <h4 class="text-grey-darker">Device</h4>
+                            <!-- <div class="addDevice mt-2 flex flex-col justify-center">
+                                <p class="text-grey-dark text-sm">No device Connected</p>
+                                <div class="flex justify-end mt-2">
+                                    <a href="" class="bg-blue px-2 py-1 text-white rounded">Add Device</a>
+                                </div>
+                            </div> -->
+                            <div class="device">
+                                <p class="text-blue" id = "deviceName"></p>
+                            </div>
                         </div>
                     </div>
                     <div class="flex my-8 justify-between">
@@ -119,7 +127,7 @@
                                     </div>
                                 </div>
                                 <div class="flex flex-col items-center">
-                                    <p class="text-xs text-center mb-1 text-grey-darker" id = "steps"></p>
+                                    <p class="text-xs text-center mb-1 text-grey-darker" id = "calories"></p>
                                     <p class="text-xss text-center mt-1 text-grey-darker">20 Kcal more to loose  </p>
                                 </div>
                             </div>
@@ -174,7 +182,6 @@
 </body>
 
     <script src="/socket.io/socket.io.js"></script>
-    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="/js/pastActivity.js"></script>
     <script src="/js/dailyactivity.js"></script>
     <script>
@@ -187,7 +194,8 @@
         var socket = io();
         socket.on('fastData', function(data){
             console.log(data);
-            $('#steps').text(data.steps)
+            $('#steps').text(data.steps);
+            $('#calories').text(data.calories);
             stepsData = []
             stepsData.push(data.steps)
             stepsData.push(10)
@@ -198,7 +206,7 @@
             $('#deviceName').text(data.deviceName)
             $('#weight').text(data.weight)
         });
-        socket.on('daata', function(data){
+        socket.on('data', function(data){
             console.log(data);
         });
 

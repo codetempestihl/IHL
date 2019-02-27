@@ -70,7 +70,7 @@
                     <div class="flex my-8 justify-between">
                         <div class="card w-1/3 flex flex-col justify-center items-center">
                             <h4 class="text-grey-dark">Today activity</h4>
-                            <canvas id="dailyActivity">
+                            <canvas id="recentActivity">
                             </canvas>
                             <div class="flex mt-2">
                                 <div>
@@ -191,20 +191,61 @@
             chart.update();
         }
 
+        function updateRecentActivity(chart, activities){
+            chart.data.labels = []
+            chart.data.datasets[0].data = []
+            activities.forEach(activity => {
+                chart.data.labels.push(activity.name)
+                chart.data.datasets[0].data.push(activity.duration / (1000 * 60 * 60))
+            });
+            chart.update()
+        }
+
+        function updateSleep(chart, activities){
+            chart.data.labels = []
+            chart.data.datasets[0].data = []
+            activities.forEach(activity => {
+                chart.data.labels.push(activity.dateOfSleep)
+                chart.data.datasets[0].data.push(activity.duration/(1000 * 60 * 60))
+            });
+            chart.update()
+        }
+
+        function updatePastActivity(chart, data){
+            data.forEach((item, key) => {
+                chart.data.labels = []
+                chart.data.datasets[key].data = []
+                item.forEach(value => {
+                    chart.data.labels.push(value.dateTime)
+                    chart.data.datasets[key].data.push(value.value)
+                })
+            })
+            chart.update()
+        }
+
         var socket = io();
         socket.on('fastData', function(data){
             console.log(data);
-            $('#steps').text(data.steps);
-            $('#calories').text(data.calories);
+            $('#steps').text(data.steps)
+            
             stepsData = []
             stepsData.push(data.steps)
             stepsData.push(10)
             updateData(stepsGraph, [], stepsData)
+            
+            calorieData = []
+            calorieData.push(data.calories)
+            calorieData.push(2000)
+            updateData(calorieGraph, [], calorieData)
         });
         socket.on('slowData', function(data){
             console.log(data);
             $('#deviceName').text(data.deviceName)
             $('#weight').text(data.weight)
+
+            updateRecentActivity(recentChart, data['recentActivities'])
+            updateSleep(sleepGraph, data['sleep'])
+            updatePastActivity(myChart, [data['pastCalories'], data['pastSteps'], data['pastDistance']])
         });
         socket.on('data', function(data){
             console.log(data);

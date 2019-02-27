@@ -2,6 +2,7 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var path = require("path");
 var routes = require('./routes.js');
+//var settings=require('./setting.js');
 var session=require('express-session')({secret:'key',saveUninitialized:false ,resave:true});
 var sharedsession = require("express-socket.io-session");
 var client = require('./fitbit.js')
@@ -27,6 +28,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 // route
 app.use('/', routes);
+//app.use('/settings',settings);
 
 io.on('connection', function(socket){
     socket.on('getFastData', function(){
@@ -38,8 +40,8 @@ io.on('connection', function(socket){
             client.get('/activities/date/today.json', access_token).then(results => {
                 data['steps'] = results[0]['summary']['steps'];
                 data['distance'] = results[0]['summary']['distance'];
-                data['calories'] = results[0]['summary']['calories']['total'];   
-                io.emit('fastData', data) 
+                data['calories'] = results[0]['summary']['calories']['total'];
+                io.emit('fastData', data)
             }).catch(err => {
                 data['err'] = err
                 io.emit('data', data);
@@ -83,7 +85,7 @@ io.on('connection', function(socket){
                                 }).catch(err => {
                                     data['err'] = err
                                     io.emit('data', data);
-                                });   
+                                });
                             }).catch(err => {
                                 data['err'] = err
                                 io.emit('data', data);
@@ -91,7 +93,7 @@ io.on('connection', function(socket){
                         }).catch(err => {
                             data['err'] = err
                             io.emit('data', data);
-                        });    
+                        });
                     }).catch(err => {
                         data['err'] = err
                         io.emit('data', data);
@@ -101,7 +103,6 @@ io.on('connection', function(socket){
                     io.emit('data', data);
                 })
             }).catch(err => {
-                console.log(err)
                 client.refreshAccessToken(access_token, refresh_token).then(result => {
                     socket.handshake.session.user[0].fitbit.access_token = result.access_token
                     socket.handshake.session.user[0].fitbit.refresh_token = result.refresh_token
@@ -110,7 +111,7 @@ io.on('connection', function(socket){
                     User.updateOne({email: user[0].email},{$set:{fitbit: {access_token: result.access_token, refresh_token: result.refresh_token}}},{ upsert: true },function(err){});
                     console.log("Refreshed")
                 }).catch(err => {
-                    // console.log(err)
+                    data['err'] = err
                 });
                 data['err'] = err
                 io.emit('data', data);

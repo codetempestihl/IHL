@@ -1,5 +1,5 @@
-var dailyActivity = document.getElementById('dailyActivity');
-var dailyChart = new Chart(dailyActivity, {
+var recentActivity = document.getElementById('recentActivity');
+var recentChart = new Chart(recentActivity, {
     type: 'doughnut',
     data: {
         datasets: [{
@@ -66,7 +66,7 @@ var calorieGraph = new Chart(calorie,{
 })
 
 var sleepCanvas = document.getElementById('sleepCanvas');
-new Chart(sleepCanvas, {
+var sleepGraph = new Chart(sleepCanvas, {
     type: 'line',
     data: {
       labels: ['sun', 'mon', 'tue', 'wed', 'thur', 'fri', 'sat', ''],

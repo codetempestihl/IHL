@@ -101,7 +101,6 @@ io.on('connection', function(socket){
                     io.emit('data', data);
                 })
             }).catch(err => {
-                console.log(err)
                 client.refreshAccessToken(access_token, refresh_token).then(result => {
                     socket.handshake.session.user[0].fitbit.access_token = result.access_token
                     socket.handshake.session.user[0].fitbit.refresh_token = result.refresh_token
@@ -110,7 +109,7 @@ io.on('connection', function(socket){
                     User.updateOne({email: user[0].email},{$set:{fitbit: {access_token: result.access_token, refresh_token: result.refresh_token}}},{ upsert: true },function(err){});
                     console.log("Refreshed")
                 }).catch(err => {
-                    // console.log(err)
+                    data['err'] = err
                 });
                 data['err'] = err
                 io.emit('data', data);

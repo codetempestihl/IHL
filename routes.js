@@ -25,7 +25,6 @@ const redirectlogin=(req,res,next)=>{
 
 router.get('/',redirecthome, function(req, res){
 	res.render('index', {loggedIn: req.session.user});
-
 })
 
 router.post('/', function(req, res){
@@ -144,11 +143,9 @@ router.get('/settings', redirectlogin, function(req, res){
 })
 
 router.get('/logout',function(req,res){
-	req.session.destroy();
-	res.redirect('/');
-});
-
-router.get('/logout',function(req,res){
+	req.session.user[0].access_token = null
+	req.session.user[0].refresh_token = null
+	User.updateOne({email: req.session.user[0].email},{$set:{fitbit: {access_token: null, refresh_token: null}}},{ upsert: true },function(err){});
 	req.session.destroy();
 	res.redirect('/');
 });

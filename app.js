@@ -2,6 +2,7 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var path = require("path");
 var routes = require('./routes.js');
+//var settings=require('./setting.js');
 var session=require('express-session')({secret:'key',saveUninitialized:false ,resave:true});
 var sharedsession = require("express-socket.io-session");
 var client = require('./fitbit.js')
@@ -27,6 +28,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 // route
 app.use('/', routes);
+//app.use('/settings',settings);
 
 io.on('connection', function(socket){
     socket.on('getFastData', function(){
@@ -38,8 +40,8 @@ io.on('connection', function(socket){
             client.get('/activities/date/today.json', access_token).then(results => {
                 data['steps'] = results[0]['summary']['steps'];
                 data['distance'] = results[0]['summary']['distance'];
-                data['calories'] = results[0]['summary']['calories']['total'];   
-                io.emit('fastData', data) 
+                data['calories'] = results[0]['summary']['calories']['total'];
+                io.emit('fastData', data)
             }).catch(err => {
                 data['err'] = err
                 io.emit('data', data);
@@ -83,7 +85,7 @@ io.on('connection', function(socket){
                                 }).catch(err => {
                                     data['err'] = err
                                     io.emit('data', data);
-                                });   
+                                });
                             }).catch(err => {
                                 data['err'] = err
                                 io.emit('data', data);
@@ -91,7 +93,7 @@ io.on('connection', function(socket){
                         }).catch(err => {
                             data['err'] = err
                             io.emit('data', data);
-                        });    
+                        });
                     }).catch(err => {
                         data['err'] = err
                         io.emit('data', data);

@@ -39,11 +39,13 @@ router.post('/', function(req, res){
 
 			if (Object.keys(user).length==0){
 				userdata=new User({
-					name:req.body.fullname,
+					first_name:req.body.firstname,
+					last_name:req.body.lastname,
 					email:req.body.email,
 					password:hashedpassword,
 					profilepic:req.body.profileUrl,
 					fblinked: req.body.fblinksignup,
+					bio:'',
 					fitbit:{
 						access_token: null,
 						refresh_token: null
@@ -110,13 +112,14 @@ router.post('/', function(req, res){
 // route for home
 router.get('/home',redirectlogin, function(req, res){
 	if(req.session.user[0].fitbit.access_token != null){
-		res.render('home', {name:req.session.user[0].name,
+		res.render('home', {name:req.session.user[0].first_name,
 			profileimg:req.session.user[0].profilepic,
 			loggedIn: req.session.user})
 	}else{
 		res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'http://localhost:8080/callback'));
 	}
 })
+
 
 // route for friends
 router.get('/friends', redirectlogin, function(req, res){
@@ -140,7 +143,12 @@ router.get('/leaderboard', redirectlogin, function(req, res){
 
 // route for settings
 router.get('/settings', redirectlogin, function(req, res){
-	res.render('settings', {loggedIn: req.session.user});
+	res.render('settings', {
+		firstname:req.session.user[0].first_name,
+		lastname:req.session.user[0].last_name,
+		profileimg:req.session.user[0].profilepic,
+		bio:req.session.user[0].bio,
+		loggedIn: req.session.user});
 })
 
 router.get('/logout',function(req,res){

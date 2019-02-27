@@ -2,8 +2,9 @@ function signupWithFacebook(){
     FB.login(function(response) {
         if (response.authResponse) {
             // console.log('Welcome!  Fetching your information.... ');
-            FB.api('/me?fields=id,name,email,picture', function(response) {
-                document.getElementById('name').value=response.name;
+            FB.api('/me?fields=id,first_name,last_name,email,picture,username', function(response) {
+                document.getElementById('fname').value=response.first_name;
+                document.getElementById('lname').value=response.last_name;
                 document.getElementById('profileurl').value=response.picture.data.url;
                 document.getElementById('signUpEmail').value = response.email;
                 console.log(response.picture.data.url);

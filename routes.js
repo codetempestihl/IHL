@@ -220,8 +220,8 @@ router.post('/settings',function(req,res){
 			steps:req.body.Steps
 		}}*/
 		//client.post('activities/goals/daily.json',req.session.user[0].fitbit.access_token,data).catch(err =>{
-			console.log("not updated");
-		});
+		// 	console.log("not updated");
+		// });
 	}
 res.redirect('/settings');
 }

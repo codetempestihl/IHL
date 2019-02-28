@@ -1,10 +1,27 @@
 <% include partials/header %>
 <title>Home</title>
-    <meta name="google-signin-client_id" content="827647037742-3ss7nkv2ocsh008el3n6ecgisivlulpn.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="google-signin-client_id" content="827647037742-3ss7nkv2ocsh008el3n6ecgisivlulpn.apps.googleusercontent.com">
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
-<body class="bg-grey" >
+<body class="bg-grey flex flex-col min-h-screen" >
     <% include partials/nav %>
+        <div class="flex-1">
+            <div class="carousel-container flex flex-col w-full relative">
+                <div class="carousel w-full">
+                    <div id="item1" class="carousel-item w-full bg-red">
+                    </div>
+                    <div id="item2" class="carousel-item w-full bg-blue">
+                    </div>
+                    <div id="item3" class="carousel-item w-full bg-yellow">
+                    </div>
+                </div>
+                
+                <div class="carousel-controls flex justify-between w-full absolute px-8">
+                    <a href="#" class="text-grey-darker" onclick="showSlide(true); return false;"><i class="fa fa-chevron-left"></i> prev</a>
+                    <a href="#" class="text-grey-darker" onclick="showSlide(false); return false;">next <i class="fa fa-chevron-right"></i></a>
+                </div>
+            </div>
+        </div>
         <div id="login-modal" class="fixed pin-x pin-y hidden items-center justify-center" style="background-color: rgba(0, 0, 0, 0.5);">
             <div class="login modal-body w-1/2 bg-white rounded flex overflow-hidden">
                 <div class="w-1/2 bg-blue">
@@ -27,7 +44,7 @@
                             <div>
                                 <p class="inline text-grey-dark mx-2">or login with</p>
                                 <span class="fb inline-flex justify-center items-center h-8 w-8 rounded-full mx-1" onclick="loginWithFacebook()"><i class="fab fa-facebook-f"></i></span>
-                                <span class="twitter inline-flex justify-center items-center h-8 w-8 rounded-full mx-1" id="q" onclick="onsignin()"><i class="fab fa-google-plus"></i></span>
+                                <span class="bg-orange-dark text-white inline-flex justify-center items-center h-8 w-8 rounded-full mx-1" id="q" onclick="onsignin()"><i class="fab fa-google"></i></span>
                             </div>
                         </form>
                     </div>
@@ -46,9 +63,10 @@
                         </span>
                     </h2>
                     <form action="/" method = "post"  class="flex-col">
-                        <div class="flex items-center mt-6 justify-between">
-                          <input type="text" class="my-3 p-2 border-b border-blue w-full" name="firstname" placeholder="Enter your first name" id="fname"><p>  </p>
-                          <input type="text" class="my-3 p-2 border-b border-blue w-full" name="lastname" placeholder="Enter your last name" id="lname"></div>
+                        <div class="w-full flex">
+                            <input type="text" class="p-2 border-b border-blue w-1/2" name="firstname" placeholder="Firstname" id="fname">
+                            <input type="text" class="p-2 border-b border-blue ml-4 w-1/2" name="lastname" placeholder="Lastname" id="lname">
+                        </div>
                         <input type="email" class="my-3 p-2 border-b border-blue w-full" name="email" placeholder="Enter your email" id = "signUpEmail">
                         <input type="password" class="my-3 p-2 border-b border-blue w-full" name="password" placeholder="Enter your password">
                         <input type="password" class="my-3 p-2 border-b border-blue w-full" name="password" placeholder="confirm password">
@@ -59,7 +77,7 @@
                             <div>
                                 <p class="inline text-grey-dark mx-2">or signup with</p>
                                 <span class="fb inline-flex justify-center items-center h-8 w-8 rounded-full mx-1" onclick = "signupWithFacebook()"><i class="fab fa-facebook-f"></i></span>
-                                <span class="twitter inline-flex justify-center items-center h-8 w-8 rounded-full mx-1"><i class="fab fa-google-plus"></i></span>
+                                <span class="bg-orange-dark text-white inline-flex justify-center items-center h-8 w-8 rounded-full mx-1"><i class="fab fa-google"></i></span>
                             </div>
                         </form>
                     </div>
@@ -109,5 +127,79 @@
             });
         }
     });
+</script>
+<script>
+// Variables:
+var nItems = 0;
+var iCurrentSlide = 1;
+var iNextSlide = 2;
+var iSlideInterval = 3; // in seconds
+var looper = null;
+
+$(document).ready(function () {
+  // Show the first slide and start the slide show:
+  $('.carousel > #item1').show();
+  startSlider();
+
+  // Make the slide show stop on slide hover:
+  $('.carousel > div').hover(
+    function() {
+      // onmouseover
+      window.clearInterval(looper);
+      document.getElementById('status-indicator').innerText = 'stopped';
+    },
+    function() {
+      // onmouseout
+      startSlider();
+      document.getElementById('status-indicator').innerText = 'started';
+    });
+
+});
+
+
+function startSlider() {
+  nItems = $('.carousel > div').length;
+
+  looper = setInterval(function() {
+    if(iNextSlide > nItems) {
+      iCurrentSlide = 1;
+      iNextSlide = 1;
+    }
+
+    $('.carousel > div').hide();
+    $('.carousel > #item' + iNextSlide).show();
+
+    iCurrentSlide = iNextSlide;
+    iNextSlide++;
+  }, iSlideInterval * 1000);
+}
+
+function showSlide(isPrev) {
+  window.clearInterval(looper);
+
+  var iNewSlide = 0;
+
+  if(isPrev) {
+    // Show previous slide:
+    iNewSlide = --iCurrentSlide;
+  }
+  else {
+    // Show next slide:
+    iNewSlide = ++iCurrentSlide;
+  }
+
+  if(iNewSlide > nItems)
+    iNewSlide = 1;
+  else if(iNewSlide < 1)
+    iNewSlide = nItems;
+
+  $('.carousel > div').hide();
+  $('.carousel > #item' + iNewSlide).show();
+
+  iCurrentSlide = iNewSlide;
+  iNextSlide = iNewSlide + 1;
+
+  startSlider();
+}
 </script>
 </html>

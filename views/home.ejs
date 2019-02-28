@@ -202,12 +202,12 @@
         socket.on('fastData', function(data){
             console.log(data);
             $('#steps').text(data.steps)
-            
+
             stepsData = []
             stepsData.push(data.steps)
             stepsData.push(10)
             updateData(stepsGraph, [], stepsData)
-            
+
             calorieData = []
             calorieData.push(data.calories)
             calorieData.push(2000)

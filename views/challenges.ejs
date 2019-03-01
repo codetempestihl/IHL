@@ -38,26 +38,42 @@
 
         <!-- main-content -->
         <div class="main-content flex flex-col w-5/6 px-8 mb-8">
-            <h1 class="my-8 py-2 border-b border-t border-grey-light text-grey-darker">Challenges</h1>
+            <h1 class="my-8 py-2 border-b border-t border-grey-light font-normal text-grey-darker">Challenges</h1>
             <div id="challenge-modal" class="fixed pin-x pin-y hidden items-center justify-center" style="background-color: rgba(0, 0, 0, 0.5);">
                     <div class="modal-body bg-white rounded flex">
-                        <div class="recent flex flex-col m-4 border-b">
-                            <h3 class="text-blue font-normal mb-2">Recents
-                                <span>
-                                    <a href="#"><i class="close fas fa-times float-right text-blue"></i></a>
-                                </span>
-                            </h3>
-                            <ul class="list-reset flex">
-                                <% for(var i=0; i < 5; i++) {%>
-                                    <li class="w-16 mr-4">
-                                        <input type="checkbox" id="myCheckbox1" />
-                                        <label for="myCheckbox1"><img src="/images/achieve.png" class="rounded-full" /></label>
-                                    </li>
-                                <% } %>
-                            </ul>
-                        </div>
-                        <div class="invite">
-
+                        <div class="flex flex-col">
+                            <div class="recent flex flex-col m-4 border-b">
+                                <h3 class="text-blue font-normal mb-2">Recents
+                                    <span>
+                                        <a href="#"><i class="close fas fa-times float-right text-blue"></i></a>
+                                    </span>
+                                </h3>
+                                <ul class="list-reset flex">
+                                    <% for(var i=0; i < 5; i++) {%>
+                                        <div class="flex flex-col justify-center">
+                                            <li class="w-16 mr-4">
+                                                <input type="checkbox" id="myCheckbox1" />
+                                                <label for="myCheckbox1"><img src="/images/achieve.png" class="rounded-full" /></label>
+                                            </li>
+                                            <p class="text-grey-darker ml-2 my-1">name</p>
+                                        </div>
+                                    <% } %>
+                                </ul>
+                            </div>
+                            <div class="invite flex flex-col ml-4">
+                                <h3 class="text-blue font-normal mt-4">Recents</h3>
+                                <ul class="list-reset flex flex-col h-64 overflow-auto pb-4">
+                                    <% for(var i=0; i < 5; i++) {%>
+                                        <li class="mr-4 flex justify-between items-center mt-3">
+                                            <div class="flex items-center">
+                                                <img src="/images/achieve.png" class="rounded-full w-16" />
+                                                <p class="text-grey-darker ml-4">name</p>
+                                            </div>
+                                            <a id="chbtn" class="px-2 py-1 bg-blue text-white rounded" onclick="challenge()">Challenge</a>
+                                        </li>
+                                    <% } %>
+                                </ul>
+                            </div>
                         </div>
                     </div>
             </div>

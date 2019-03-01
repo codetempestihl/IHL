@@ -151,6 +151,7 @@ router.get('/settings', redirectlogin, function(req, res){
 	client.get('/activities/goals/daily.json', req.session.user[0].fitbit.access_token).then(result =>{
 			var steps=result[0].goals.steps;
 			var calories=result[0].goals.caloriesOut;
+			console.log(req.session.user[0].bio);
 			client.get('/profile.json', req.session.user[0].fitbit.access_token).then(results =>{
 				 var weight=results[0]['user']['weight'];
 				 res.render('settings', {
@@ -197,7 +198,7 @@ router.post('/settings',function(req,res){
 	}
 	if (req.session.user[0].bio!=req.body.bio){
 		User.updateOne({email:req.session.user[0].email},{$set:{bio:req.body.bio}},{ upsert: true },function(err){});
-		req.session.user[0].first_name=req.body.firstName;
+		req.session.user[0].bio=req.body.bio;
 	}
 	if (req.body.new_pass!='') {
 		if(passwordhash.verify(req.body.old_pass,req.session.user[0].password)==true){

@@ -8,6 +8,7 @@ function edit(event){
     $('#old-pass').prop('readonly', false);
     $('#new-pass').prop('readonly', false);
     $('#confirm-new-pass').prop('readonly', false);
+    $('#bio').prop('readonly', false);
 
     event.preventDefault();
     event.stopPropagation();

@@ -1,5 +1,5 @@
 <% include partials/header %>
-<title>IHL | Achievements</title>
+<title>IHL</title>
 </head>
 <body class="min-h-screen flex-col">
     <% include partials/nav %>
@@ -16,7 +16,7 @@
                 </div>
                 <div class="w-full border-b">
                     <div class="h-5 rounded-full bg-white p-1">
-                        <div class="w-1/2 bg-blue h-3 rounded-full"> 
+                        <div class="w-1/2 bg-blue h-3 rounded-full">
                         </div>
                     </div>
                     <p class=" mb-4 mt-1"><small><strong>145</strong> more points to level up</small></p>
@@ -26,8 +26,8 @@
                 <ul class="list-reset flex-1">
                     <a class="text-white" href="/home"><li class="py-4 px-4 hover:bg-blue-dark"> Home</li></a>
                     <a class="text-white" href="/friends"><li class="py-4 px-4 hover:bg-blue-dark"> Friends</li></a>
-                    <a class="text-white" href="/challenges"><li class="py-4 px-4 hover:bg-blue-dark"> Challenges</li></a>
-                    <a class="text-white" href="#"><li class="py-4 px-4 hover:bg-blue-dark"> Achievements</li></a>
+                    <a class="text-white" href="#"><li class="py-4 px-4 hover:bg-blue-dark"> Challenges</li></a>
+                    <a class="text-white" href="/achievements"><li class="py-4 px-4 hover:bg-blue-dark"> Achievements</li></a>
                     <a class="text-white" href="/leaderboard"><li class="py-4 px-4 hover:bg-blue-dark"> Leaderboard</li></a>
                     <a class="text-white" href="/settings"><li class="py-4 px-4 hover:bg-blue-dark"> Settings</li></a>
                     <a class="text-white" href="/logout"><li class="py-4 px-4 hover:bg-blue-dark"> Logout</li></a>
@@ -37,29 +37,24 @@
 
 
         <!-- main-content -->
-        <div class="main-content flex flex-col w-full    w-5/6 px-8 mb-8">
-            <h1 class="my-8 py-2 border-bborder-grey-light font-normal text-grey-darker">Achievements</h1>
-            <div class="achieve w-full flex flex-wrap">
-                <% for(var i = 0; i<9 ; i++) { %>
-                    <div class="card w-1/2 mb-8 border-box">
-                        <div class="w-1/4">
-                            <img src="/images/achieve.png" class="rounded-full w-full" alt="">
+        <div class="main-content flex flex-col w-5/6 px-8 mb-8">
+            <h1 class="my-8 py-2 border-b border-t border-grey-light font-normal text-grey-darker">
+                Challenge Name
+                <span class="text-blue text-sm ml-4">4 Participants</span>
+            </h1>
+            <ul class="list-reset flex flex-col">
+                <% for(var i=0; i < 5; i++) {%>
+                    <li class="card flex justify-between items-center mt-3">
+                        <div class="flex items-center">
+                            <img src="/images/achieve.png" class="rounded-full w-16" />
+                            <p class="text-grey-darker ml-4">name</p>
                         </div>
-                        <div class="w-3/4 ml-4">
-                            <h3 class="text-grey-darker text-md font-normal tracking-wide">Medal</h3>
-                            <p class="text-grey-dark text-sm mt-1 mb-10">30 days streak</p>
-                            <div class="h-5 bg-grey-light flex items-center px-1 rounded-full">
-                                <div class="progress h-3 bg-blue rounded-full w-full"></div>
-                            </div>
-                        </div>
-                    </div>
+                        <a class="px-2 py-1 bg-blue text-white rounded">IHL Score</a>
+                    </li>
                 <% } %>
-            </div>
+            </ul>
         </div>
     </main>
     <% include partials/footer %>
 </body>
-<style>
-    
-</style>
 </html>

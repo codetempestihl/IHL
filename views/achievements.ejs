@@ -37,8 +37,29 @@
 
 
         <!-- main-content -->
+<<<<<<< Updated upstream
         <div class="main-content flex flex-col w-5/6 px-8 mb-8">
             <h1 class="my-8 py-2 border-b border-t border-grey-light text-grey-darker">Achievements</h1>
+=======
+        <div class="main-content flex flex-col w-full    w-5/6 px-8 mb-8">
+            <h1 class="my-8 py-2 border-bborder-grey-light font-normal text-grey-darker">Achievements</h1>
+            <div class="achieve w-full flex flex-wrap">
+                <% for(var i = 0; i<9 ; i++) { %>
+                    <div class="card w-1/2 mb-8 border-box">
+                        <div class="w-1/4">
+                            <img src="/images/achieve.png" class="rounded-full w-full" alt="">
+                        </div>
+                        <div class="w-3/4 ml-4">
+                            <h3 class="text-grey-darker text-md font-normal tracking-wide">Medal</h3>
+                            <p class="text-grey-dark text-sm mt-1 mb-10">30 days streak</p>
+                            <div class="h-5 bg-grey-light flex items-center px-1 rounded-full">
+                                <div class="progress h-3 bg-blue rounded-full w-full"></div>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+>>>>>>> Stashed changes
         </div>
     </main>
     <% include partials/footer %>

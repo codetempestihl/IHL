@@ -138,6 +138,7 @@ router.get('/leaderboard', redirectlogin, function(req, res){
 
 // route for settings
 router.get('/settings', redirectlogin, function(req, res){
+<<<<<<< Updated upstream
 	res.render('settings', {loggedIn: req.session.user});
 })
 
@@ -145,6 +146,91 @@ router.get('/logout',function(req,res){
 	req.session.destroy();
 	res.redirect('/');
 });
+=======
+	client.get('/activities/goals/daily.json', req.session.user[0].fitbit.access_token).then(result =>{
+			var steps=result[0].goals.steps;
+			var calories=result[0].goals.caloriesOut;
+			console.log(req.session.user[0].bio);
+			client.get('/profile.json', req.session.user[0].fitbit.access_token).then(results =>{
+				 var weight=results[0]['user']['weight'];
+				 res.render('settings', {
+	 				firstname:req.session.user[0].first_name,
+	 				lastname:req.session.user[0].last_name,
+	 				profileimg:req.session.user[0].profilepic,
+	 				steps:steps,
+	 				calories:calories,
+	 				weight:weight,
+	 				bio:req.session.user[0].bio,
+	 				loggedIn: req.session.user});
+	 			})
+			}).catch(err => {
+				res.render('settings', {
+				 firstname:req.session.user[0].first_name,
+				 lastname:req.session.user[0].last_name,
+				 profileimg:req.session.user[0].profilepic,
+				 steps:null,
+				 calories:null,
+				 weight:null,
+				 bio:req.session.user[0].bio,
+				 loggedIn: req.session.user});
+			 })
+		 })
+/*	res.render('settings', {
+		firstname:req.session.user[0].first_name,
+		lastname:req.session.user[0].last_name,
+		profileimg:req.session.user[0].profilepic,
+		//weight:weight,
+		bio:req.session.user[0].bio,
+		loggedIn: req.session.user});
+}*/
+
+router.post('/settings',function(req,res){
+	if (req.body.details!=null){
+	if (req.session.user[0].first_name!=req.body.firstName){
+		if(req.body.firstName!=''){
+		User.updateOne({email:req.session.user[0].email},{$set:{first_name:req.body.firstName}},{ upsert: true },function(err){});
+		req.session.user[0].first_name=req.body.firstName;
+	}}
+	if (req.session.user[0].last_name!=req.body.lastName){
+		User.updateOne({email:req.session.user[0].email},{$set:{last_name:req.body.lastName}},{ upsert: true },function(err){});
+		req.session.user[0].last_name=req.body.lastName;
+	}
+	if (req.session.user[0].bio!=req.body.bio){
+		User.updateOne({email:req.session.user[0].email},{$set:{bio:req.body.bio}},{ upsert: true },function(err){});
+		req.session.user[0].bio=req.body.bio;
+	}
+	if (req.body.new_pass!='') {
+		if(passwordhash.verify(req.body.old_pass,req.session.user[0].password)==true){
+			User.updateOne({email:req.session.user[0].email},{$set:{password:passwordhash.generate(req.body.new_pass)}},{ upsert: true },function(err){});
+}}
+	/*client.get('/activities/goals/daily.json', req.session.user[0].fitbit.access_token).then(results =>{
+		if(results[0].weight[0].weight != req.body.weight){
+				data={"weightLog": [
+        {
+            "date": "2012-03-05",
+            "weight": 73,
+            "source": "API"
+        }}
+				client.post('body/log/weight.json',req.session.user[0].fitbit.access_token,data);
+		}
+}).catch(err => {
+		console.log(err);
+});*/
+}
+	else{
+		/*data={goals:
+		{
+			caloriesOut:req.body.calories,
+			steps:req.body.Steps
+		}}*/
+		//client.post('activities/goals/daily.json',req.session.user[0].fitbit.access_token,data).catch(err =>{
+		// 	console.log("not updated");
+		// });
+	}
+res.redirect('/settings');
+}
+)
+>>>>>>> Stashed changes
 
 router.get('/logout',function(req,res){
 	req.session.destroy();

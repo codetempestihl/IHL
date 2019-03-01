@@ -39,103 +39,167 @@
         <!-- main-content -->
         <div class="main-content flex flex-col w-5/6 px-8 mb-8">
             <h1 class="my-8 py-2 border-b border-t border-grey-light text-grey-darker">Challenges</h1>
+            <div id="challenge-modal" class="fixed pin-x pin-y hidden items-center justify-center" style="background-color: rgba(0, 0, 0, 0.5);">
+                    <div class="modal-body bg-white rounded flex">
+                        <div class="recent flex flex-col m-4 border-b">
+                            <h3 class="text-blue font-normal mb-2">Recents
+                                <span>
+                                    <a href="#"><i class="close fas fa-times float-right text-blue"></i></a>
+                                </span>
+                            </h3>
+                            <ul class="list-reset flex">
+                                <% for(var i=0; i < 5; i++) {%>
+                                    <li class="w-16 mr-4">
+                                        <input type="checkbox" id="myCheckbox1" />
+                                        <label for="myCheckbox1"><img src="/images/achieve.png" class="rounded-full" /></label>
+                                    </li>
+                                <% } %>
+                            </ul>
+                        </div>
+                        <div class="invite">
+
+                        </div>
+                    </div>
+            </div>
             <div class="challenge-box flex flex-col p-4">
-                <div id="tab" class="flex">
-                    <a class="px-4 py-2 tab-active bg-grey hover:bg-blue text-white rounded-l">Live</a>
-                    <a class="px-4 py-2 bg-grey hover:bg-blue text-white border-l border-r rounded-r">Upcoming</a>
-                </div>
-                <div id="live" class="tab-content flex mt-8">
-                    <div class="daily-goal card w-1/3 flex flex-col items-center">
-                        <div>
-                            <img src="/images/target.png" class="challenge-img" alt="">
-                        </div>
-                        <h2 class="text-grey-dark text-center mt-4">Daily Goal</h2>
-                        <p class="text-grey-dark mt-1"><i class="fas fa-calendar-alt"></i> 1 day</p>
-                        <div class="flex w-full justify-center mt-4">
-                            <div class="flex flex-col items-center">
-                                <p class="text-xs mb-1">Time Remaining</p>
-                                <p class="flex justify-between text-green">
-                                    <i class="far fa-clock"></i>
-                                    <span>12 hrs</span>
-                                </p>
+                <div class="flex flex-col">
+                    <div class="flex">
+                        <div class="card w-1/2 flex">
+                            <div class="w-1/3">
+                                <img src="/images/target.png" class="challenge-img" alt="">
                             </div>
-                            <div class="flex items-center">
-                                <a href="" class="flex-1 rounded px-4 py-2 ml-4 bg-red text-white">Leave</a>
+                            <div class="w-2/3 ml-4">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-grey-darker font-normal ">Daily challenge</h3>
+                                    <!-- if  -->
+                                    <p class="text-green text-sm float-right">Active Now</p>
+                                </div>
+                                <p class="text-grey-dark text-sm mt-1"><i class="fas fa-calendar-alt"></i> 1 day</p>
+                                <p class="text-blue text-sm mt-2 cursor-pointer">rules</p>
+                                <div class="flex justify-between text-grey-darker text-sm my-2">
+                                    <p>1 participant <a class="text-blue cursor-pointer">View</a></p>
+                                    <a class="text-blue cursor-pointer">Add participants</a>
+                                </div>
+                                <div class="flex w-full justify-between mt-4">
+                                    <div class="flex text-xs items-center my-2">
+                                        <p class="text-grey-dark mb-1">Time Remaining</p>
+                                        <p class="flex text-green ml-2">
+                                            <i class="far fa-clock mr-2"></i>
+                                            <span>12 hrs</span>
+                                        </p>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <a href="" class="flex-1 rounded px-4 py-2 ml-4 bg-red text-white">Leave</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card w-1/2 flex mx-4">
+                            <div class="w-1/3">
+                                <img src="/images/target.png" class="challenge-img" alt="">
+                            </div>
+                            <div class="w-2/3 ml-4">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-grey-darker font-normal ">Daily challenge</h3>
+                                    <!-- if  -->
+                                    <p class="text-green text-sm float-right">Active Now</p>
+                                </div>
+                                <p class="text-grey-dark text-sm mt-1"><i class="fas fa-calendar-alt"></i> 1 day</p>
+                                <p class="text-blue text-sm mt-2 cursor-pointer">rules</p>
+                                <div class="flex justify-between text-grey-darker text-sm my-2">
+                                    <p>1 participant <a class="text-blue cursor-pointer">View</a></p>
+                                    <a class="text-blue cursor-pointer">Add participants</a>
+                                </div>
+                                <div class="flex w-full justify-between mt-4">
+                                    <div class="flex text-xs items-center my-2">
+                                        <p class="text-grey-dark mb-1">Time Remaining</p>
+                                        <p class="flex text-green ml-2">
+                                            <i class="far fa-clock mr-2"></i>
+                                            <span>12 hrs</span>
+                                        </p>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <a href="" class="flex-1 rounded px-4 py-2 ml-4 bg-red text-white">Leave</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="weekend-goal card w-1/3 flex flex-col items-center mx-8">
-                        <div>
-                            <img src="/images/target.png" class="challenge-img" alt="">
-                        </div>
-                        <h2 class="text-grey-dark text-center mt-4">weekend Goal</h2>
-                        <p class="text-grey-dark mt-1"><i class="fas fa-calendar-alt"></i> 2 day</p>
-                        <div class="flex w-full justify-center mt-4">
-                                <div class="flex flex-col items-center">
-                                    <p class="text-xs mb-1">Time Remaining</p>
-                                    <p class="flex justify-between text-green">
-                                        <i class="far fa-clock"></i>
-                                        <span>12 hrs</span>
-                                    </p>
+                    <div class="flex mt-10">
+                        <div class="card w-1/2 flex">
+                            <div class="w-1/3">
+                                <img src="/images/target.png" class="challenge-img" alt="">
+                            </div>
+                            <div class="w-2/3 ml-4">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-grey-darker font-normal ">Challenge</h3>
+                                    <!-- if  -->
+                                    <p class="text-green text-sm float-right">Active Now</p>
                                 </div>
-                                <div class="flex items-center">
-                                    <a href="" class="flex-1 rounded px-4 py-2 ml-4 bg-red text-white">Leave</a>
+                                <p class="text-grey-dark text-sm mt-1"><i class="fas fa-calendar-alt"></i> 1 day</p>
+                                <p class="text-blue text-sm mt-2 cursor-pointer">rules</p>
+                                <div class="flex justify-between text-grey-darker text-sm my-2">
+                                    <p>1 participant <a class="text-blue cursor-pointer">View</a></p>
+                                    <a class="text-blue cursor-pointer">Add participants</a>
+                                </div>
+                                <div class="flex w-full justify-between mt-4">
+                                    <div class="flex text-xs items-center my-2">
+                                        <p class="text-grey-dark mb-1">Time Remaining</p>
+                                        <p class="flex text-green ml-2">
+                                            <i class="far fa-clock mr-2"></i>
+                                            <span>12 hrs</span>
+                                        </p>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <a href="" class="flex-1 rounded px-4 py-2 ml-4 bg-red text-white">Leave</a>
+                                    </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="card w-1/2 flex mx-4">
+                            <div class="w-1/3">
+                                <img src="/images/target.png" class="challenge-img" alt="">
+                            </div>
+                            <div class="w-2/3 ml-4">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-grey-darker font-normal ">Challenge Name</h3>
+                                    <!-- if  -->
+                                    <p class="text-red text-sm float-right">Inactive</p>
+                                </div>
+                                <p class="text-grey-dark text-sm mt-1"><i class="fas fa-calendar-alt"></i> 1 day</p>
+                                <p class="text-blue text-sm mt-2 cursor-pointer">rules</p>
+                                <div class="flex justify-between text-grey-darker text-sm my-2 invisible">
+                                    <p>View participants</p>
+                                    <p>Add participants</p>
+                                </div>
+                                <div class="flex w-full justify-between mt-4">
+                                    <div class="flex text-xs items-center my-2 invisible">
+                                        <p class="text-grey-dark mb-1">Time Remaining</p>
+                                        <p class="flex text-green ml-2">
+                                            <i class="far fa-clock mr-2"></i>
+                                            <span>12 hrs</span>
+                                        </p>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <a href="" class="flex-1 rounded px-4 py-2 ml-4 bg-red text-white hidden">Leave</a>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <a href="" class="flex-1 rounded px-4 py-2 ml-4 bg-green text-white" data-toggle-modal="#challenge-modal">Start</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="hustler card w-1/3 flex flex-col items-center">
-                        <div>
-                            <img src="/images/target.png" class="challenge-img" alt="">
-                        </div>
-                        <h2 class="text-grey-dark text-center mt-4">Challenge Name</h2>
-                        <p class="text-grey-dark mt-1"><i class="fas fa-calendar-alt"></i> 1 day</p>
-                        <div class="flex w-full justify-center mt-4">
-                                <div class="flex flex-col items-center">
-                                    <p class="text-xs mb-1">Time Remaining</p>
-                                    <p class="flex justify-between text-green">
-                                        <i class="far fa-clock"></i>
-                                        <span>12 hrs</span>
-                                    </p>
-                                </div>
-                                <div class="flex items-center">
-                                    <a href="" class="flex-1 rounded px-4 py-2 ml-4 bg-red text-white">Leave</a>
-                                </div>
-                            </div>
-                    </div>
-                </div>
-                <div id="upcoming" class="tab-content flex mt-8">
-                        <div class="daily-goal card w-1/3 flex flex-col items-center">
-                            <div>
-                                <img src="/images/target.png" class="challenge-img" alt="">
-                            </div>
-                            <h2 class="text-grey-dark text-center mt-4">Daily Goal</h2>
-                            <p class="text-grey-dark mt-1"><i class="fas fa-calendar-alt"></i> 1 day</p>
-                            <a href="#" class="text-grey my-4">Rules</a>
-                            <a href="#" class="bg-green  rounded px-6 py-2 text-white">Start</a>
-                        </div>
-                        <div class="weekend-goal card w-1/3 flex flex-col items-center mx-8">
-                            <div>
-                                <img src="/images/target.png" class="challenge-img" alt="">
-                            </div>
-                            <h2 class="text-grey-dark text-center mt-4">weekend Goal</h2>
-                            <p class="text-grey-dark mt-1"><i class="fas fa-calendar-alt"></i> 2 day</p>
-                            <a href="#" class="text-grey my-4">Rules</a>
-                            <a href="#" class="bg-green  rounded px-6 py-2 text-white">Start</a>
-                        </div>
-                        <div class="hustler card w-1/3 flex flex-col items-center">
-                            <div>
-                                <img src="/images/target.png" class="challenge-img" alt="">
-                            </div>
-                            <h2 class="text-grey-dark text-center mt-4">Challenge Name</h2>
-                            <p class="text-grey-dark mt-1"><i class="fas fa-calendar-alt"></i> 1 day</p>
-                            <a href="#" class="text-grey my-4">Rules</a>
-                            <a href="#" class="bg-green  rounded px-6 py-2 text-white">Start</a>
-                        </div>
                 </div>
             </div>
         </div>
     </main>
     <% include partials/footer %>
 </body>
+<<<<<<< Updated upstream
 <style src=""></style>
 </html>
+=======
+<script src="/js/modal.js"></script>
+</html>
+>>>>>>> Stashed changes

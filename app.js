@@ -55,68 +55,70 @@ io.on('connection', function(socket){
         var endDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getDate()
         var startDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + (date.getDate() - 7)
 
+        var deviceRequest = client.get('/devices.json', access_token).then(results => {
+                                data['deviceName'] = results[0][0]['deviceVersion'];
+                            }).catch(err => {
+                                data['err'].push(err)
+                            })
+
+        var sleepRequest  = client.get('/sleep/date/' + startDate + '/' + endDate + '.json', access_token).then(results => {
+                                data['sleep'] = results[0]['sleep']
+                            }).catch(err => {
+                                data['err'].push(err)
+                            })
+        
+        var profileRequest =    client.get('/profile.json', access_token).then(results => {
+                                    data['weight'] = results[0]['user']['weight']
+                                }).catch(err => {
+                                    data['err'].push(err)
+                                })
+        
+        var recentActivityRequest = client.get('/activities/recent.json', access_token).then(results => {
+                                        data['recentActivities'] = [];
+                                        results[0].forEach(element => {
+                                            data['recentActivities'].push({name: element['name'], duration:element['duration']})
+                                        });
+                                    }).catch(err => {
+                                        data['err'].push(err)
+                                    })
+        
+        var pastSleepRequest =  client.get('/activities/steps/date/today/7d.json', access_token).then(results => {
+                                    data['pastSteps'] = results[0]['activities-steps'];
+                                }).catch(err => {
+                                    data['err'].push(err)
+                                })
+                            
+        var pastDistanceRequest =  client.get('/activities/distance/date/today/7d.json', access_token).then(results => {
+                                    data['pastDistance'] = results[0]['activities-distance'];
+                                }).catch(err => {
+                                    data['err'].push(err)
+                                })
+
+        var pastCaloriesRequest =  client.get('/activities/calories/date/today/7d.json', access_token).then(results => {
+                                    data['pastCalories'] = results[0]['activities-calories'];
+                                }).catch(err => {
+                                    data['err'].push(err)
+                                })
+
         user = socket.handshake.session.user
         if(socket.handshake.session.user){
             access_token = user[0].fitbit.access_token;
             refresh_token = user[0].fitbit.refresh_token;
 
             var data = {}
-            client.get('/devices.json', access_token).then(results => {
-                data['deviceName'] = results[0][0]['deviceVersion'];
-                client.get('/sleep/date/' + startDate + '/' + endDate + '.json', access_token).then(results => {
-                    data['sleep'] = results[0]['sleep']
-                    client.get('/profile.json', access_token).then(results => {
-                        data['weight'] = results[0]['user']['weight']
-                        client.get('/activities/recent.json', access_token).then(results => {
-                            data['recentActivities'] = [];
-                            results[0].forEach(element => {
-                                data['recentActivities'].push({name: element['name'], duration:element['duration']})
-                            });
-                            client.get('/activities/steps/date/today/7d.json', access_token).then(results => {
-                                data['pastSteps'] = results[0]['activities-steps'];
-                                client.get('/activities/distance/date/today/7d.json', access_token).then(results => {
-                                    data['pastDistance'] = results[0]['activities-distance'];
-                                    client.get('/activities/calories/date/today/7d.json', access_token).then(results => {
-                                        data['pastCalories'] = results[0]['activities-calories'];
-                                        io.emit('slowData', data)
-                                    }).catch(err => {
-                                        data['err'] = err
-                                        io.emit('data', data);
-                                    });
-                                }).catch(err => {
-                                    data['err'] = err
-                                    io.emit('data', data);
-                                });
-                            }).catch(err => {
-                                data['err'] = err
-                                io.emit('data', data);
-                            });
-                        }).catch(err => {
-                            data['err'] = err
-                            io.emit('data', data);
-                        });
-                    }).catch(err => {
-                        data['err'] = err
-                        io.emit('data', data);
-                    });
-                }).catch(err => {
-                    data['err'] = err
-                    io.emit('data', data);
-                })
-            }).catch(err => {
-                client.refreshAccessToken(access_token, refresh_token).then(result => {
-                    socket.handshake.session.user[0].fitbit.access_token = result.access_token
-                    socket.handshake.session.user[0].fitbit.refresh_token = result.refresh_token
-                    socket.handshake.session.save()
-
-                    User.updateOne({email: user[0].email},{$set:{fitbit: {access_token: result.access_token, refresh_token: result.refresh_token}}},{ upsert: true },function(err){});
-                    console.log("Refreshed")
-                }).catch(err => {
-                    data['err'] = err
-                });
-                data['err'] = err
-                io.emit('data', data);
+            
+            Promise.all([deviceRequest, sleepRequest, profileRequest, recentActivityRequest, pastSleepRequest, pastCaloriesRequest, pastDistanceRequest]).then(result => {
+                io.emit('slowData', data)
             })
+
+            // client.refreshAccessToken(access_token, refresh_token).then(result => {
+            //     socket.handshake.session.user[0].fitbit.access_token = result.access_token
+            //     socket.handshake.session.user[0].fitbit.refresh_token = result.refresh_token
+            //     socket.handshake.session.save()
+
+            //     User.updateOne({email: user[0].email},{$set:{fitbit: {access_token: result.access_token, refresh_token: result.refresh_token}}},{ upsert: true },function(err){});
+            // })
+
         }
     });
 });

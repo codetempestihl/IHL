@@ -7,7 +7,7 @@ var routes = require('./routes.js');
 var session=require('express-session')({secret:'key',saveUninitialized:false ,resave:true});
 var sharedsession = require("express-socket.io-session");
 var client = require('./fitbit.js')
-var User = require('./user.js')
+var User = require('./schema.js')
 
 var app = express();
 var http = require('http').Server(app);
@@ -51,26 +51,30 @@ io.on('connection', function(socket){
     });
     socket.on('getSlowData', function(){
 
-        var date = new Date()
-        var endDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + date.getDate()
-        var startDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + (date.getDate() - 7)
+        var data = {}
+
+        var date = new Date() 
+        var endDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2)
+        
+        date.setDate(date.getDate() - 7)
+        var startDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2)
 
         var deviceRequest = client.get('/devices.json', access_token).then(results => {
                                 data['deviceName'] = results[0][0]['deviceVersion'];
                             }).catch(err => {
-                                data['err'].push(err)
+                                data['err'] = err
                             })
 
         var sleepRequest  = client.get('/sleep/date/' + startDate + '/' + endDate + '.json', access_token).then(results => {
                                 data['sleep'] = results[0]['sleep']
                             }).catch(err => {
-                                data['err'].push(err)
+                                data['err'] = err
                             })
         
         var profileRequest =    client.get('/profile.json', access_token).then(results => {
                                     data['weight'] = results[0]['user']['weight']
                                 }).catch(err => {
-                                    data['err'].push(err)
+                                    data['err'] = err
                                 })
         
         var recentActivityRequest = client.get('/activities/recent.json', access_token).then(results => {
@@ -79,33 +83,31 @@ io.on('connection', function(socket){
                                             data['recentActivities'].push({name: element['name'], duration:element['duration']})
                                         });
                                     }).catch(err => {
-                                        data['err'].push(err)
+                                        data['err'] = err
                                     })
         
         var pastSleepRequest =  client.get('/activities/steps/date/today/7d.json', access_token).then(results => {
                                     data['pastSteps'] = results[0]['activities-steps'];
                                 }).catch(err => {
-                                    data['err'].push(err)
+                                    data['err'] = err
                                 })
                             
         var pastDistanceRequest =  client.get('/activities/distance/date/today/7d.json', access_token).then(results => {
                                     data['pastDistance'] = results[0]['activities-distance'];
                                 }).catch(err => {
-                                    data['err'].push(err)
+                                    data['err'] = err
                                 })
 
         var pastCaloriesRequest =  client.get('/activities/calories/date/today/7d.json', access_token).then(results => {
                                     data['pastCalories'] = results[0]['activities-calories'];
                                 }).catch(err => {
-                                    data['err'].push(err)
+                                    data['err'] = err
                                 })
 
         user = socket.handshake.session.user
         if(socket.handshake.session.user){
             access_token = user[0].fitbit.access_token;
             refresh_token = user[0].fitbit.refresh_token;
-
-            var data = {}
             
             Promise.all([deviceRequest, sleepRequest, profileRequest, recentActivityRequest, pastSleepRequest, pastCaloriesRequest, pastDistanceRequest]).then(result => {
                 io.emit('slowData', data)

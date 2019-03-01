@@ -234,5 +234,8 @@
         setInterval(function(){
             socket.emit('getSlowData');
         }, 1000 * 60 * 10)
+
+
+        console.log(<%- JSON.stringify(kiosk_data) %>)
     </script>
 </html>

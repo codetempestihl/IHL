@@ -1,7 +1,8 @@
 var express = require('express')
 var router = express.Router()
 var passwordhash=require('password-hash');
-var User = require('./user.js')
+var User = require('./schema.js').User
+var Kiosk = require('./schema.js').Kiosk
 var client = require('./fitbit.js')
 
 const redirecthome=(req,res,next)=>{
@@ -73,7 +74,6 @@ router.post('/', function(req, res){
 			else if( user[0].fblinked!=true){
 				User.updateOne({email:req.body.email},{$set:{fblinked:true}},{ upsert: true },function(err){});
 				// console.log(user[0]);
-
 				req.session.user=user;
 				res.redirect('/home');
 			}
@@ -92,7 +92,6 @@ router.post('/', function(req, res){
 			if(Object.keys(user).length!=0){
 				if(passwordhash.verify(pass,user[0].password)==true){
 					req.session.user=user;
-					// console.log(user[0]);
 					res.redirect('/home');
 				}
 				else{
@@ -113,9 +112,14 @@ router.post('/', function(req, res){
 // route for home
 router.get('/home',redirectlogin, function(req, res){
 	if(req.session.user[0].fitbit.access_token != null){
-		res.render('home', {name:req.session.user[0].first_name,
-			profileimg:req.session.user[0].profilepic,
-			loggedIn: req.session.user})
+		Kiosk.find({user_id: req.session.user[0]._id}, function(err, data){
+			console.log(data.length)
+			res.render('home', {name:req.session.user[0].first_name,
+				profileimg:req.session.user[0].profilepic,
+				loggedIn: req.session.user,
+				kiosk_data: data
+			})
+		})
 	}else{
 		res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'http://localhost:8080/callback'));
 	}

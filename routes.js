@@ -138,15 +138,6 @@ router.get('/leaderboard', redirectlogin, function(req, res){
 
 // route for settings
 router.get('/settings', redirectlogin, function(req, res){
-<<<<<<< Updated upstream
-	res.render('settings', {loggedIn: req.session.user});
-})
-
-router.get('/logout',function(req,res){
-	req.session.destroy();
-	res.redirect('/');
-});
-=======
 	client.get('/activities/goals/daily.json', req.session.user[0].fitbit.access_token).then(result =>{
 			var steps=result[0].goals.steps;
 			var calories=result[0].goals.caloriesOut;
@@ -230,7 +221,6 @@ router.post('/settings',function(req,res){
 res.redirect('/settings');
 }
 )
->>>>>>> Stashed changes
 
 router.get('/logout',function(req,res){
 	req.session.destroy();

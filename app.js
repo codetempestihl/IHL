@@ -3,6 +3,7 @@ var bodyParser = require("body-parser");
 var path = require("path");
 var routes = require('./routes.js');
 //var settings=require('./setting.js');
+// var $ = require('jquery');
 var session=require('express-session')({secret:'key',saveUninitialized:false ,resave:true});
 var sharedsession = require("express-socket.io-session");
 var client = require('./fitbit.js')

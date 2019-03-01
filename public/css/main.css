@@ -535,6 +535,28 @@ table {
   max-height: 200px;
 }
 
+.carousel {
+  background: #ddd;
+  overflow: hidden;
+}
+
+.carousel img {
+  height: 552px;
+}
+
+.carousel-item {
+  width: inherit;
+  height: inherit;
+  float: left;
+  display: none;
+}
+
+.carousel-controls {
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
 a {
   text-decoration: none;
   color: #3490dc;

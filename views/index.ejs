@@ -58,9 +58,24 @@
         </div>
         <div id="signup-modal" class="fixed pin-x pin-y hidden items-center justify-center" style="background-color: rgba(0, 0, 0, 0.5);">
             <div class="signup modal-body w-1/2 bg-white rounded flex overflow-hidden">
+                <div class="w-1/2 bg-blue relative">
+                    <img src="/images/yoga.jpg" class="h-full" alt="">
+                    <a href="#" class="text-sm"><i class="close absolute top-0 fas fa-times float-right font-light text-white"></i></a>
+                    <div id="overlay" class="absolute h-full w-full"></div>
+                    <div id="social" class="flex flex-col items-center z-10 mt-3 absolute w-full">
+                        <p class="inline text-white font-bold mb-2 mx-2 text-center">signup with</p>
+                        <div class="flex justify-center">
+                            <span class="fb cursor-pointer inline-flex justify-center items-center h-8 rounded-full mx-1" onclick = "signupWithFacebook()"><i class="fab fa-facebook-f"></i></span>
+                            <span class="cursor-pointer bg-orange-dark text-white inline-flex justify-center items-center h-8 rounded-full mx-1"><i class="fab fa-google"></i></span>
+                        </div>
+                    </div>
+                </div>
                 <div class="w-2/3 px-8 mr-4 pb-4 mt-2">
                     <h2 class="text-blue my-2 font-normal">
                         Signup
+                        <span>
+                            <a href="#"><i class="close fas fa-times float-right font-light text-blue"></i></a>
+                        </span>
                     </h2>
                     <form action="/" method = "post"  class="flex-col">
                         <div class="flex w-full pr-2">
@@ -81,18 +96,6 @@
                             </div>
                         </div>
                 </div>
-                <div class="w-1/2 bg-blue relative">
-                    <img src="/images/yoga.jpg" class="h-full" alt="">
-                    <a href="#" class="text-sm"><i class="close absolute top-0 fas fa-times float-right font-light text-white"></i></a>
-                    <div id="overlay" class="absolute h-full w-full"></div>
-                    <div id="social" class="flex flex-col items-center z-10 mt-3 absolute w-full">
-                        <p class="inline text-white mb-2 mx-2 text-center">signup with</p>
-                        <div class="flex justify-center">
-                            <span class="fb cursor-pointer inline-flex justify-center items-center h-8 rounded-full mx-1" onclick = "signupWithFacebook()"><i class="fab fa-facebook-f"></i></span>
-                            <span class="cursor-pointer bg-orange-dark text-white inline-flex justify-center items-center h-8 rounded-full mx-1"><i class="fab fa-google"></i></span>
-                        </div>
-                    </div>
-                    </div>
                 </form>
                 </div>
             </div>

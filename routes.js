@@ -240,6 +240,10 @@ router.get('/logout',function(req,res){
 	res.redirect('/');
 });
 
+router.get('/participants',function(req,res){
+	res.render('viewParticipants');
+});
+
 // handle the callback from the Fitbit authorization flow
 router.get("/callback", (req, res) => {
 	// exchange the authorization code we just received for an access token

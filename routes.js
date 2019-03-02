@@ -115,7 +115,6 @@ router.post('/', function(req, res){
 router.get('/home', redirectlogin, function(req, res){
 	if(req.session.user[0].fitbit.access_token != null){
 		Kiosk.find({user_id: req.session.user[0]._id}, function(err, data){
-			console.log(data.length)
 			res.render('home', {name:req.session.user[0].first_name,
 				profileimg:req.session.user[0].profilepic,
 				loggedIn: req.session.user,
@@ -153,7 +152,6 @@ router.get('/settings', redirectlogin, function(req, res){
 	client.get('/activities/goals/daily.json', req.session.user[0].fitbit.access_token).then(result =>{
 			var steps=result[0].goals.steps;
 			var calories=result[0].goals.caloriesOut;
-			console.log(req.session.user[0].bio);
 			client.get('/profile.json', req.session.user[0].fitbit.access_token).then(results =>{
 				 var weight=results[0]['user']['weight'];
 				 res.render('settings', {
@@ -209,9 +207,9 @@ router.post('/settings',function(req,res){
 			steps: req.body.steps
 		}
 		client.post('/activities/goals/daily.json', req.session.user[0].fitbit.access_token, data).then(result => {
-			console.log(result)
+			// console.log(result)
 		}).catch(err =>{
-			console.log("not updated");
+			// console.log("not updated");
 		});
 	}
 	res.redirect('/settings');

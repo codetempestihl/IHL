@@ -6,15 +6,7 @@ var myChart = new Chart(canvas, {
         datasets: [{
             label: "Calories",
             backgroundColor: "#9ad0f5",
-            data: [3, 7, 4, 1, 3, 2, 8]
-          }, {
-            label: "Steps",
-            backgroundColor: "#ffb0c1",
-            data: [4, 3, 5, 2, 6, 8, 1]
-          }, {
-            label: "Distance",
-            backgroundColor: "#ffe6aa",
-            data: [7, 2, 6, 2, 5, 7, 8]
+            data  : [3, 7, 4, 1, 3, 2, 8]
           }
         ]
     },

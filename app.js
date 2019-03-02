@@ -39,6 +39,10 @@ io.on('connection', function(socket){
             refresh_token = user[0].fitbit.refresh_token;
             var data = {}
             client.get('/activities/date/today.json', access_token).then(results => {
+                data['goalSteps'] = results[0]['goals']['steps'];
+                data['goalDistance'] = results[0]['goals']['distance'];
+                data['goalCalories'] = results[0]['goals']['calories'];
+
                 data['steps'] = results[0]['summary']['steps'];
                 data['distance'] = results[0]['summary']['distance'];
                 data['calories'] = results[0]['summary']['calories']['total'];

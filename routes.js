@@ -232,7 +232,6 @@ router.get('/participants',redirectlogin, function(req,res){
 });
 
 router.get("/fitbit", (req, res) => {
-	console.log('toggle')
 	res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'http://localhost:8080/callback'));
 })
 

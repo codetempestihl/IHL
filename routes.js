@@ -240,7 +240,7 @@ router.get('/logout',function(req,res){
 	res.redirect('/');
 });
 
-router.get('/participants',function(req,res){
+router.get('/participants',redirectlogin, function(req,res){
 	res.render('viewParticipants');
 });
 

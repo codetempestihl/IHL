@@ -141,7 +141,7 @@ router.get('/friends', redirectlogin, function(req, res){
 
 // route for challenges
 router.get('/challenges', redirectlogin, function(req, res){
-	res.render('challenges', {loggedIn: req.session.user});
+	res.render('challenges', {loggedIn: req.session.user, profileimg: req.session.user[0].profileimg});
 })
 
 // route for achievements
@@ -223,9 +223,6 @@ router.post('/settings',function(req,res){
 })
 
 router.get('/logout',function(req,res){
-	req.session.user[0].access_token = null
-	req.session.user[0].refresh_token = null
-	User.updateOne({email: req.session.user[0].email},{$set:{fitbit: {access_token: null, refresh_token: null}}},{ upsert: true },function(err){});
 	req.session.destroy();
 	res.redirect('/');
 });
@@ -234,12 +231,21 @@ router.get('/participants',redirectlogin, function(req,res){
 	res.render('viewParticipants');
 });
 
+router.get("/fitbit", (req, res) => {
+	console.log('toggle')
+	res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'http://localhost:8080/callback'));
+})
+
 // handle the callback from the Fitbit authorization flow
 router.get("/callback", (req, res) => {
 	// exchange the authorization code we just received for an access token
 	client.getAccessToken(req.query.code, 'http://localhost:8080/callback').then(result => {
+		
+		req.session.fitbit = {}
+
 		req.session.fitbit.access_token = result.access_token
 		req.session.fitbit.refresh_token = result.refresh_token
+		req.session.user[0].activeDevice = 'fitbit'
 
 		res.redirect('/home')
 	}).catch(err => {

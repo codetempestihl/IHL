@@ -31,7 +31,7 @@ modalToggles.forEach(function(button) {
 
         window.addEventListener('click', function(event) {
             // console.log('closing Modal');
-            event.preventDefault();
+            // event.preventDefault();
             closeModal();
         });
     }

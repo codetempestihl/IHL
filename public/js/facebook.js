@@ -37,10 +37,10 @@ function loginWithFacebook(){
             // console.log('Good to see you, ' + response.name + '.');
                 console.log(response);
                 document.getElementById('loginmail').value = response.email;
+                document.getElementById("f2").value="true";
+                lform=document.getElementById("loginform");
+                lform.submit();
             });
-			document.getElementById("f2").value="true";
-			lform=document.getElementById("loginform");
-			lform.submit();
         }
 		else {
             // console.log('User cancelled login or did not fully authorize.');

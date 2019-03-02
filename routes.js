@@ -5,27 +5,28 @@ var User = require('./schema.js').User
 var Kiosk = require('./schema.js').Kiosk
 var client = require('./fitbit.js')
 
-const redirecthome=(req,res,next)=>{
-	if(req.session.user)
-	{
-		res.redirect('/home');
-	}
-	else{
-		next();
-	}
+var loginParam = {
+	loggedIn: null,
+	errSignUp: null,
+	errLogin: null,
+	errMsg: null
 }
-const redirectlogin=(req,res,next)=>{
-	if(!req.session.user)
-	{
-		res.redirect('/');
-	}
-	else{
-		next();
+
+const redirectlogin = function(req, res, next){
+	if(req.session.user){
+		next()
+	}else{
+		res.redirect('/')
 	}
 }
 
-router.get('/',redirecthome, function(req, res){
-	res.render('index', {loggedIn: req.session.user});
+router.get('/', function(req, res){
+	if(req.session.user){
+		res.redirect('/home')
+	}else{
+		loginParam.loggedIn = req.session.user
+		res.render('index', loginParam);
+	}
 })
 
 router.post('/', function(req, res){
@@ -33,7 +34,6 @@ router.post('/', function(req, res){
 	if (req.body.fblinksignup != null){
 		var pass=String(req.body.password[0]);
 		hashedpassword=passwordhash.generate(pass);
-			console.log(req.body.profileUrl);
 		User.find({ email: req.body.email }, function(err, user){
 			if (err) throw err;
 
@@ -54,23 +54,24 @@ router.post('/', function(req, res){
 
 				userdata.save(function(err){
 					if(err) throw err;
-					console.log("user created");
+					req.session.user = [userdata];
+					res.redirect('/home');
 				});
-				req.session.user = [userdata];
-				res.redirect('/home');
 			}else{
-				console.log("user already exist");
+				loginParam.loggedIn = req.session.user
+				loginParam.errSignUp = true
+				loginParam.errMsg = 'User Already Exists'
+				res.render('index', loginParam)
 			}
 		});
 
 	}
-	else if(req.body.fblinklogin=="true")
-	{
+	else if(req.body.fblinklogin=="true"){
 		User.find({email:req.body.email},function(err,user){
-			console.log(user);
 			if (err) throw err;
-			if (Object.keys(user).length==0)
-			{console.log("user doessnt exist sign up please");}
+			if (Object.keys(user).length==0){
+				console.log("user doessnt exist sign up please");
+			}
 			else if( user[0].fblinked!=true){
 				User.updateOne({email:req.body.email},{$set:{fblinked:true}},{ upsert: true },function(err){});
 				// console.log(user[0]);
@@ -95,14 +96,15 @@ router.post('/', function(req, res){
 					res.redirect('/home');
 				}
 				else{
-					console.log("wrong password");
-					res.redirect('/');
+					loginParam.errLogin = true
+					loginParam.errMsg = "Wrong Password"
+					res.render('index', loginParam);
 				}
 			}
-			else
-			{
-				console.log("user doesnt exist");
-				res.redirect('/');
+			else{
+				loginParam.errLogin = true
+				loginParam.errMsg = "No User Found. SignUp to continue"
+				res.render('index', loginParam);
 			}
 		})
 	}
@@ -110,7 +112,7 @@ router.post('/', function(req, res){
 })
 
 // route for home
-router.get('/home',redirectlogin, function(req, res){
+router.get('/home', redirectlogin, function(req, res){
 	if(req.session.user[0].fitbit.access_token != null){
 		Kiosk.find({user_id: req.session.user[0]._id}, function(err, data){
 			console.log(data.length)

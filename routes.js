@@ -163,7 +163,9 @@ router.get('/settings', redirectlogin, function(req, res){
 	 				weight:weight,
 	 				bio:req.session.user[0].bio,
 	 				loggedIn: req.session.user});
-	 			})
+	 			}).catch(err => {
+					 console.log(err)
+				 })
 			}).catch(err => {
 				res.render('settings', {
 				 firstname:req.session.user[0].first_name,
@@ -176,61 +178,42 @@ router.get('/settings', redirectlogin, function(req, res){
 				 loggedIn: req.session.user});
 			 })
 		 })
-/*	res.render('settings', {
-		firstname:req.session.user[0].first_name,
-		lastname:req.session.user[0].last_name,
-		profileimg:req.session.user[0].profilepic,
-		//weight:weight,
-		bio:req.session.user[0].bio,
-		loggedIn: req.session.user});
-}*/
 
 router.post('/settings',function(req,res){
 	if (req.body.details!=null){
-	if (req.session.user[0].first_name!=req.body.firstName){
-		if(req.body.firstName!=''){
-		User.updateOne({email:req.session.user[0].email},{$set:{first_name:req.body.firstName}},{ upsert: true },function(err){});
-		req.session.user[0].first_name=req.body.firstName;
-	}}
-	if (req.session.user[0].last_name!=req.body.lastName){
-		User.updateOne({email:req.session.user[0].email},{$set:{last_name:req.body.lastName}},{ upsert: true },function(err){});
-		req.session.user[0].last_name=req.body.lastName;
-	}
-	if (req.session.user[0].bio!=req.body.bio){
-		User.updateOne({email:req.session.user[0].email},{$set:{bio:req.body.bio}},{ upsert: true },function(err){});
-		req.session.user[0].bio=req.body.bio;
-	}
-	if (req.body.new_pass!='') {
-		if(passwordhash.verify(req.body.old_pass,req.session.user[0].password)==true){
-			User.updateOne({email:req.session.user[0].email},{$set:{password:passwordhash.generate(req.body.new_pass)}},{ upsert: true },function(err){});
-}}
-	/*client.get('/activities/goals/daily.json', req.session.user[0].fitbit.access_token).then(results =>{
-		if(results[0].weight[0].weight != req.body.weight){
-				data={"weightLog": [
-        {
-            "date": "2012-03-05",
-            "weight": 73,
-            "source": "API"
-        }}
-				client.post('body/log/weight.json',req.session.user[0].fitbit.access_token,data);
+		if (req.session.user[0].first_name!=req.body.firstName){
+			if(req.body.firstName!=''){
+			User.updateOne({email:req.session.user[0].email},{$set:{first_name:req.body.firstName}},{ upsert: true },function(err){});
+			req.session.user[0].first_name=req.body.firstName;
+			}
 		}
-}).catch(err => {
-		console.log(err);
-});*/
-}
-	else{
-		/*data={goals:
-		{
-			caloriesOut:req.body.calories,
-			steps:req.body.Steps
-		}}*/
-		//client.post('activities/goals/daily.json',req.session.user[0].fitbit.access_token,data).catch(err =>{
-		// 	console.log("not updated");
-		// });
+		if (req.session.user[0].last_name!=req.body.lastName){
+			User.updateOne({email:req.session.user[0].email},{$set:{last_name:req.body.lastName}},{ upsert: true },function(err){});
+			req.session.user[0].last_name=req.body.lastName;
+		}
+		if (req.session.user[0].bio!=req.body.bio){
+			User.updateOne({email:req.session.user[0].email},{$set:{bio:req.body.bio}},{ upsert: true },function(err){});
+			req.session.user[0].bio=req.body.bio;
+		}
+		if (req.body.new_pass!='') {
+			if(passwordhash.verify(req.body.old_pass,req.session.user[0].password)==true){
+				User.updateOne({email:req.session.user[0].email},{$set:{password:passwordhash.generate(req.body.new_pass)}},{ upsert: true },function(err){});
+			}
+		}
 	}
-res.redirect('/settings');
-}
-)
+	else{
+		data = {
+			caloriesOut: req.body.calories,
+			steps: req.body.steps
+		}
+		client.post('/activities/goals/daily.json', req.session.user[0].fitbit.access_token, data).then(result => {
+			console.log(result)
+		}).catch(err =>{
+			console.log("not updated");
+		});
+	}
+	res.redirect('/settings');
+})
 
 router.get('/logout',function(req,res){
 	req.session.user[0].access_token = null

@@ -2,25 +2,32 @@
 <title>IHL</title>
 </head>
 <body class="min-h-screen flex-col">
-    <% include partials/nav %>
     <main class="flex flex-1 min-h-screen">
         <!-- side bar -->
         <% include partials/sidebar %>
         
         <!-- main-content -->
         <div class="main-content flex flex-col w-5/6 px-8 mb-8">
-            <h1 class="my-8 py-2 border-b border-t border-grey-light font-normal text-grey-darker">
+            <h2 class="my-8 py-2 border-b border-grey-light font-normal text-grey-darker">
                 Challenge Name
                 <span class="text-blue text-sm ml-4">4 Participants</span>
-            </h1>
+            </h2>
             <ul class="list-reset flex flex-col">
                 <% for(var i=0; i < 5; i++) {%>
                     <li class="card flex justify-between items-center mt-3">
+                        <% if(i<3) {%>
+                            <div>
+                                <img src="/images/achieve.png" class="rounded-full w-16" />    
+                            </div>
+                        <% } else{ %>
+                            <p class="text-grey-dark mr-4">Rank</p>
+                        <% } %>
                         <div class="flex items-center">
                             <img src="/images/achieve.png" class="rounded-full w-16" />
-                            <p class="text-grey-darker ml-4">name</p>
+                            <p class="text-blue ml-4 Capitalize">name</p>
                         </div>
-                        <a class="px-2 py-1 bg-blue text-white rounded">IHL Score</a>
+                        <p class="text-grey-dark">1200 steps</p>
+                        <p class="text-grey-dark">IHL Score</p>
                     </li>
                 <% } %>
             </ul>

@@ -141,7 +141,9 @@ router.get('/friends', redirectlogin, function(req, res){
 
 // route for challenges
 router.get('/challenges', redirectlogin, function(req, res){
-	res.render('challenges', {loggedIn: req.session.user});
+	res.render('challenges', {
+		profileimg:req.session.user[0].profilepic,
+		loggedIn: req.session.user});
 })
 
 // route for achievements

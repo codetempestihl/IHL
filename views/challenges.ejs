@@ -17,18 +17,25 @@
                             <span>
                                 <a href="#"><i class="close fas fa-times float-right text-blue"></i></a>
                             </span>
+                            <select class="appearance-none">
+                                <option value="steps">Steps</option>
+                                <option value="calories">Calories</option>
+                            </select> 
                         </h3>
                         <ul class="list-reset flex flex-col overflow-auto pb-4 ml-4" style="height:400px">
-                            <% for(var i=0; i < 8; i++) {%>
+                            <% for(var user of users) {%>
                                 <li class="mr-4 flex justify-between items-center mt-3">
                                     <div class="flex items-center">
                                         <img src="/images/achieve.png" class="rounded-full w-16" />
-                                        <p class="text-grey-darker ml-4">name</p>
+                                        <p class="text-grey-darker ml-4"><%= user.email %></p>
                                     </div>
-                                    <a id="chbtn" class="px-2 py-1 bg-blue text-white rounded" onclick="challenge()">Challenge</a>
+                                    <a class="px-2 py-1 bg-blue text-white rounded" onclick="challenge(this, '<%= user._id %>')">Challenge</a>
                                 </li>
                             <% } %>
                         </ul>
+                        <!-- <div class="flex w-full justify-end"> -->
+                            <a class="px-3 py-3 bg-green text-white rounded text-center">Start Challenge</a>
+                        <!-- </div> -->
                     </div>
                 </div>
             </div>
@@ -108,4 +115,23 @@
     <% include partials/footer %>
 </body>
 <script src="/js/modal.js"></script>
+<script>
+    users = []
+    function challenge(obj, userId){
+        if(obj.innerText == 'Challenge'){
+            obj.innerText = 'Invited'
+            obj.classList.remove('bg-blue')
+            obj.classList.add('bg-green')
+            users.push(userId)
+        }else if(obj.innerText == 'Invited'){
+            obj.innerText = 'Challenge'
+            obj.classList.remove('bg-green')
+            obj.classList.add('bg-blue')
+            index = users.indexOf(userId)
+            if(index > -1){
+                users.splice(index, 1)
+            }
+        }
+    }
+</script>
 </html>

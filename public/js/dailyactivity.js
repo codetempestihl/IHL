@@ -19,7 +19,8 @@ var recentChart = new Chart(recentActivity, {
             display: false,
         }
     }
-});
+})
+
 
 var steps = document.getElementById('stepsCanvas');
 var stepsGraph = new Chart(steps, {
@@ -86,5 +87,4 @@ var sleepGraph = new Chart(sleepCanvas, {
       }
     }
   });
-  
   

@@ -28,13 +28,13 @@
         <div id="login-modal" class="fixed pin-x pin-y hidden items-center justify-center" style="background-color: rgba(0, 0, 0, 0.5);">
             <div class="login modal-body w-1/2 bg-white rounded flex overflow-hidden">
                 <div class="w-1/2 bg-blue">
-
+                    <img src="/images/login.jpg" class="h-full" alt="">
                 </div>
                 <div class="px-16 pb-8">
-                    <h2 class="text-blue my-4">
+                    <h2 class="text-blue my-4 font-normal">
                         Login
                         <span>
-                            <a href="#"><i class="close fas fa-times float-right text-blue"></i></a>
+                            <a href="#"><i class="close fas fa-times float-right font-light text-blue"></i></a>
                         </span>
                     </h2>
                     <form action="/" method = "post" id="loginform"  class="flex-col">
@@ -58,37 +58,42 @@
         </div>
         <div id="signup-modal" class="fixed pin-x pin-y hidden items-center justify-center" style="background-color: rgba(0, 0, 0, 0.5);">
             <div class="signup modal-body w-1/2 bg-white rounded flex overflow-hidden">
-                <div class="w-1/2 bg-blue">
-                </div>
-                <div class="px-16 pb-8">
-                    <h2 class="text-blue my-4">
+                <div class="w-2/3 px-8 mr-4 pb-4 mt-2">
+                    <h2 class="text-blue my-2 font-normal">
                         Signup
-                        <span>
-                            <a href="#"><i class="close fas fa-times float-right text-blue"></i></a>
-                        </span>
                     </h2>
                     <form action="/" method = "post"  class="flex-col">
-                        <div class="w-full flex">
+                        <div class="flex w-full pr-2">
                             <input type="text" class="p-2 border-b border-blue w-1/2" name="firstname" placeholder="Firstname" id="fname">
-                            <input type="text" class="p-2 border-b border-blue ml-4 w-1/2" name="lastname" placeholder="Lastname" id="lname">
+                            <input type="text" class="p-2 border-b border-blue ml-2 w-1/2" name="lastname" placeholder="Lastname" id="lname">
                         </div>
-                        <input type="email" class="my-3 p-2 border-b border-blue w-full" name="email" placeholder="Enter your email" id = "signUpEmail">
-                        <input type="password" class="my-3 p-2 border-b border-blue w-full" name="password" placeholder="Enter your password">
-                        <input type="password" class="my-3 p-2 border-b border-blue w-full" name="password" placeholder="confirm password">
+                        <input type="email" class="my-4 p-2 border-b border-blue w-full" name="email" placeholder="Enter your email" id = "signUpEmail">
+                        <input type="password" class="my-4 p-2 border-b border-blue w-full" name="password" placeholder="Enter your password">
+                        <input type="password" class="my-4 p-2 border-b border-blue w-full" name="password" placeholder="confirm password">
                         <input style="display:none" type="text" value="" name="profileUrl" id="profileurl" >
                         <input style="display:none" type="text" value="false" name="fblinksignup" id="f1" >
                         <% if(errSignUp){ %>
                             <p class="text-red w-full"><%= errMsg %></p>
                         <% } %>
-                        <div class="flex items-center mt-6 justify-between">
-                            <button type="submit" class="px-4 py-1 block rounded-full border border-blue text-blue" name = "signup" value = "true">Signup</button>
+                        <div class="flex mt-2 justify-center w-full">
                             <div>
-                                <p class="inline text-grey-dark mx-2">or signup with</p>
-                                <span class="fb cursor-pointer inline-flex justify-center items-center h-8 w-8 rounded-full mx-1" onclick = "signupWithFacebook()"><i class="fab fa-facebook-f"></i></span>
-                                <span class="cursor-pointer bg-orange-dark text-white inline-flex justify-center items-center h-8 w-8 rounded-full mx-1"><i class="fab fa-google"></i></span>
+                                <button type="submit" class="px-4 py-1 block rounded-full border border-blue text-blue" name = "signup" value = "true">Signup</button>
                             </div>
-                        </form>
+                        </div>
+                </div>
+                <div class="w-1/2 bg-blue relative">
+                    <img src="/images/yoga.jpg" class="h-full" alt="">
+                    <a href="#" class="text-sm"><i class="close absolute top-0 fas fa-times float-right font-light text-white"></i></a>
+                    <div id="overlay" class="absolute h-full w-full"></div>
+                    <div id="social" class="flex flex-col items-center z-10 mt-3 absolute w-full">
+                        <p class="inline text-white mb-2 mx-2 text-center">signup with</p>
+                        <div class="flex justify-center">
+                            <span class="fb cursor-pointer inline-flex justify-center items-center h-8 rounded-full mx-1" onclick = "signupWithFacebook()"><i class="fab fa-facebook-f"></i></span>
+                            <span class="cursor-pointer bg-orange-dark text-white inline-flex justify-center items-center h-8 rounded-full mx-1"><i class="fab fa-google"></i></span>
+                        </div>
                     </div>
+                    </div>
+                </form>
                 </div>
             </div>
         </div>

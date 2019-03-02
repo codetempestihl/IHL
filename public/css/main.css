@@ -557,6 +557,23 @@ table {
           transform: translateY(-50%);
 }
 
+#overlay {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(52, 144, 228, .5);
+  z-index: 2;
+}
+
+#social {
+  top: 60%;
+}
+
+#social span {
+  width: 60px;
+}
+
 a {
   text-decoration: none;
   color: #3490dc;

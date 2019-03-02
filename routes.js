@@ -31,11 +31,19 @@ router.get('/', function(req, res){
 
 router.post('/', function(req, res){
 	// hanlde signup and login process
-	if (req.body.fblinksignup != null){
+	if (req.body.signup){
 		var pass=String(req.body.password[0]);
 		hashedpassword=passwordhash.generate(pass);
 		User.find({ email: req.body.email }, function(err, user){
 			if (err) throw err;
+
+			socialHandle = null
+			linkedId = null
+
+			if(req.body.socialHandle != null){
+				socialHandle = req.body.socialHandle
+				linkedId = req.body.email
+			}
 
 			if (Object.keys(user).length==0){
 				userdata=new User({
@@ -46,10 +54,12 @@ router.post('/', function(req, res){
 					profilepic:req.body.profileUrl,
 					fblinked: req.body.fblinksignup,
 					bio:'',
-					fitbit:{
-						access_token: null,
-						refresh_token: null
-					}
+					socialMedia: [{
+						socialHandle: socialHandle,
+						linkedId: linkedId
+					}],
+					devices: [],
+					activeDevice: null
 				});
 
 				userdata.save(function(err){
@@ -66,22 +76,13 @@ router.post('/', function(req, res){
 		});
 
 	}
-	else if(req.body.fblinklogin=="true"){
-		User.find({email:req.body.email},function(err,user){
+	else if(req.body.loginHandle){
+		User.find({'socialMedia.socialHandle': req.body.loginHandle, 'socialMedia.linkedId': req.body.email},function(err,user){
 			if (err) throw err;
 			if (Object.keys(user).length==0){
 				console.log("user doessnt exist sign up please");
-			}
-			else if( user[0].fblinked!=true){
-				User.updateOne({email:req.body.email},{$set:{fblinked:true}},{ upsert: true },function(err){});
-				// console.log(user[0]);
+			}else{
 				req.session.user=user;
-				res.redirect('/home');
-			}
-			else{
-				req.session.user=user;
-				console.log(user);
-				// console.log(user,"logged in");
 				res.redirect('/home');
 			}
 		})
@@ -108,24 +109,30 @@ router.post('/', function(req, res){
 			}
 		})
 	}
-
 })
 
 // route for home
 router.get('/home', redirectlogin, function(req, res){
-	if(req.session.user[0].fitbit.access_token != null){
+	activeDevice = req.session.user[0].activeDevice
+	if(activeDevice == "kiosk"){
 		Kiosk.find({user_id: req.session.user[0]._id}, function(err, data){
 			res.render('home', {name:req.session.user[0].first_name,
 				profileimg:req.session.user[0].profilepic,
 				loggedIn: req.session.user,
-				kiosk_data: data
+				kiosk_data: data,
+				activeDevice: activeDevice
 			})
 		})
 	}else{
-		res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'http://localhost:8080/callback'));
+		res.render('home', {name:req.session.user[0].first_name,
+			profileimg:req.session.user[0].profilepic,
+			loggedIn: req.session.user,
+			kiosk_data: null,
+			activeDevice: activeDevice
+		})
+		// res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'http://localhost:8080/callback'));
 	}
 })
-
 
 // route for friends
 router.get('/friends', redirectlogin, function(req, res){
@@ -149,10 +156,10 @@ router.get('/leaderboard', redirectlogin, function(req, res){
 
 // route for settings
 router.get('/settings', redirectlogin, function(req, res){
-	client.get('/activities/goals/daily.json', req.session.user[0].fitbit.access_token).then(result =>{
+	client.get('/activities/goals/daily.json', req.session.fitbit.access_token).then(result =>{
 			var steps=result[0].goals.steps;
 			var calories=result[0].goals.caloriesOut;
-			client.get('/profile.json', req.session.user[0].fitbit.access_token).then(results =>{
+			client.get('/profile.json', req.session.fitbit.access_token).then(results =>{
 				 var weight=results[0]['user']['weight'];
 				 res.render('settings', {
 	 				firstname:req.session.user[0].first_name,
@@ -206,7 +213,7 @@ router.post('/settings',function(req,res){
 			caloriesOut: req.body.calories,
 			steps: req.body.steps
 		}
-		client.post('/activities/goals/daily.json', req.session.user[0].fitbit.access_token, data).then(result => {
+		client.post('/activities/goals/daily.json', req.session.fitbit.access_token, data).then(result => {
 			// console.log(result)
 		}).catch(err =>{
 			// console.log("not updated");
@@ -227,10 +234,8 @@ router.get('/logout',function(req,res){
 router.get("/callback", (req, res) => {
 	// exchange the authorization code we just received for an access token
 	client.getAccessToken(req.query.code, 'http://localhost:8080/callback').then(result => {
-		req.session.user[0].fitbit.access_token = result.access_token
-		req.session.user[0].fitbit.refresh_token = result.refresh_token
-
-		User.updateOne({email: req.session.user[0].email},{$set:{fitbit: {access_token: result.access_token, refresh_token: result.refresh_token}}},{ upsert: true },function(err){});
+		req.session.fitbit.access_token = result.access_token
+		req.session.fitbit.refresh_token = result.refresh_token
 
 		res.redirect('/home')
 	}).catch(err => {

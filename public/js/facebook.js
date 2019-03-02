@@ -6,11 +6,11 @@ function signupWithFacebook(){
                 console.log(response)
                 document.getElementById('fname').value=response.first_name;
                 document.getElementById('lname').value=response.last_name;
-                document.getElementById('profileurl').value=response.picture.data.url;
+                // document.getElementById('profileurl').value=response.picture.data.url;
                 document.getElementById('signUpEmail').value = response.email;
-                console.log(response.picture.data.url);
+                // console.log(response.picture.data.url);
             });
-			document.getElementById("f1").value="true";
+			document.getElementById("socialHandle").value = "facebook";
         }
 		else {
             // console.log('User cancelled login or did not fully authorize.');
@@ -35,9 +35,8 @@ function loginWithFacebook(){
             // console.log('Welcome!  Fetching your information.... ');
             FB.api('/me?fields=id,name,email', function(response) {
             // console.log('Good to see you, ' + response.name + '.');
-                console.log(response);
                 document.getElementById('loginmail').value = response.email;
-                document.getElementById("f2").value="true";
+                document.getElementById("loginHandle").value="facebook";
                 lform=document.getElementById("loginform");
                 lform.submit();
             });

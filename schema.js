@@ -12,12 +12,13 @@ var userSchema = new mongoose.Schema({
 	email: {type: String,required :true},
 	password: {type:String,required:true},
 	profilepic:String,
-	fblinked: Boolean,
 	bio:String,
-	fitbit: {
-		access_token: String,
-		refresh_token: String
-	}
+    socialMedia: [{
+        socialHandle: String,
+        linkedId: String
+    }],
+    devices: [],
+    activeDevice: String
 });
 
 var kiosk_data = new mongoose.Schema({

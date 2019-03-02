@@ -40,7 +40,7 @@
                     <form action="/" method = "post" id="loginform"  class="flex-col">
                         <input type="email" class="my-3 p-2 border-b border-blue w-full" name="email" placeholder="Enter your email" id="loginmail">
                         <input type="password" class="my-3 p-2 border-b border-blue w-full" name="password" placeholder="Enter your password">
-                        <input style="display:none" type="text" value="false" name="fblinklogin" id="f2" >
+                        <input class="hidden" type="text" value="null" name="loginHandle" id="loginHandle" >
                         <% if(errLogin){ %>
                             <p class="text-red w-full"><%= errMsg %></p>
                         <% } %>
@@ -75,8 +75,8 @@
                         <input type="email" class="my-3 p-2 border-b border-blue w-full" name="email" placeholder="Enter your email" id = "signUpEmail">
                         <input type="password" class="my-3 p-2 border-b border-blue w-full" name="password" placeholder="Enter your password">
                         <input type="password" class="my-3 p-2 border-b border-blue w-full" name="password" placeholder="confirm password">
-                        <input style="display:none" type="text" value="" name="profileUrl" id="profileurl" >
-                        <input style="display:none" type="text" value="false" name="fblinksignup" id="f1" >
+                        <!-- <input style="display:none" type="text" value="" name="profileUrl" id="profileurl" > -->
+                        <input class="hidden" type="text" value="null" name="socialHandle" id="socialHandle" >
                         <% if(errSignUp){ %>
                             <p class="text-red w-full"><%= errMsg %></p>
                         <% } %>

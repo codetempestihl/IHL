@@ -41,7 +41,9 @@
                         <input type="email" class="my-3 p-2 border-b border-blue w-full" name="email" placeholder="Enter your email" id="loginmail">
                         <input type="password" class="my-3 p-2 border-b border-blue w-full" name="password" placeholder="Enter your password">
                         <input style="display:none" type="text" value="false" name="fblinklogin" id="f2" >
-
+                        <% if(errLogin){ %>
+                            <p class="text-red w-full"><%= errMsg %></p>
+                        <% } %>
                         <div class="flex items-center mt-6 justify-between">
                             <button type="submit" class="px-4 py-1 block rounded-full border border-blue text-blue" name = "login" value = "true">Login</button>
                             <div>
@@ -75,7 +77,10 @@
                         <input type="password" class="my-3 p-2 border-b border-blue w-full" name="password" placeholder="confirm password">
                         <input style="display:none" type="text" value="" name="profileUrl" id="profileurl" >
                         <input style="display:none" type="text" value="false" name="fblinksignup" id="f1" >
-						<div class="flex items-center mt-6 justify-between">
+                        <% if(errSignUp){ %>
+                            <p class="text-red w-full"><%= errMsg %></p>
+                        <% } %>
+                        <div class="flex items-center mt-6 justify-between">
                             <button type="submit" class="px-4 py-1 block rounded-full border border-blue text-blue" name = "signup" value = "true">Signup</button>
                             <div>
                                 <p class="inline text-grey-dark mx-2">or signup with</p>
@@ -93,6 +98,16 @@
 <script src="/js/google.js"> </script>
 <script src="/js/modal.js"></script>
 <script>
+var errSignUp= "<%- errSignUp %>"
+var errLogin= "<%- errLogin %>"
+if(errSignUp){
+    $('#signup-modal').removeClass('hidden');
+    $('#signup-modal').addClass('flex');
+}
+if(errLogin){
+    $('#login-modal').removeClass('hidden');
+    $('#login-modal').addClass('flex');
+}
 // Variables:
 var nItems = 0;
 var iCurrentSlide = 1;
@@ -110,86 +125,10 @@ $(document).ready(function () {
     function() {
       // onmouseover
       window.clearInterval(looper);
-      document.getElementById('status-indicator').innerText = 'stopped';
     },
     function() {
       // onmouseout
       startSlider();
-      document.getElementById('status-indicator').innerText = 'started';
-    });
-
-});
-
-
-function startSlider() {
-  nItems = $('.carousel > div').length;
-
-  looper = setInterval(function() {
-    if(iNextSlide > nItems) {
-      iCurrentSlide = 1;
-      iNextSlide = 1;
-    }
-
-    $('.carousel > div').hide();
-    $('.carousel > #item' + iNextSlide).show();
-
-    iCurrentSlide = iNextSlide;
-    iNextSlide++;
-  }, iSlideInterval * 1000);
-}
-
-function showSlide(isPrev) {
-  window.clearInterval(looper);
-
-  var iNewSlide = 0;
-
-  if(isPrev) {
-    // Show previous slide:
-    iNewSlide = --iCurrentSlide;
-  }
-  else {
-    // Show next slide:
-    iNewSlide = ++iCurrentSlide;
-  }
-
-  if(iNewSlide > nItems)
-    iNewSlide = 1;
-  else if(iNewSlide < 1)
-    iNewSlide = nItems;
-
-  $('.carousel > div').hide();
-  $('.carousel > #item' + iNewSlide).show();
-
-  iCurrentSlide = iNewSlide;
-  iNextSlide = iNewSlide + 1;
-
-  startSlider();
-}
-</script>
-<script>
-// Variables:
-var nItems = 0;
-var iCurrentSlide = 1;
-var iNextSlide = 2;
-var iSlideInterval = 3; // in seconds
-var looper = null;
-
-$(document).ready(function () {
-  // Show the first slide and start the slide show:
-  $('.carousel > #item1').show();
-  startSlider();
-
-  // Make the slide show stop on slide hover:
-  $('.carousel > div').hover(
-    function() {
-      // onmouseover
-      window.clearInterval(looper);
-      document.getElementById('status-indicator').innerText = 'stopped';
-    },
-    function() {
-      // onmouseout
-      startSlider();
-      document.getElementById('status-indicator').innerText = 'started';
     });
 
 });

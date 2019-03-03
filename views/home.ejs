@@ -8,15 +8,6 @@
         <!-- side bar -->
         <% include partials/sidebar %>
 
-        <div id="report-modal" class="fixed pin-x pin-y hidden items-center justify-center" style="background-color: rgba(0, 0, 0, 0.5);">
-            <div class="report modal-body w-64 bg-white rounded flex overflow-hidden">
-                <div class="card p-16 flex flex-col">
-                    <h2 class="text-blue w-full">Health Report</h2>
-                    <p class="px-3 mt-4 rounded text-center py-2 bg-blue text-white" onclick="download()">Download</p>
-                </div>
-            </div>
-        </div>
-
         <!-- main-content -->
         <div class="main-content flex w-full px-8 mb-8">
             <!-- main-content leftside -->
@@ -173,13 +164,7 @@
     <script src="/js/pastActivity.js"></script>
     <script src="/js/dailyactivity.js"></script>
     <script src="/js/vitals.js"></script>
-    <script src="/js/modal.js"></script>
     <script>
-
-        var reportData
-        function download(){
-
-        }
 
         var active = null
 
@@ -253,8 +238,6 @@
             console.log(data);
             $('#steps').text(data.steps)
 
-            reportData = data
-
             stepsData = []
             stepsData.push(data.steps)
             stepsData.push(data.goalSteps)
@@ -291,7 +274,10 @@
             socket.emit('getFitbitSlowData');
         }, 1000 * 60 * 10)
 
-        window.fbAsyncInit = function() {
+        var badge = "<%= loggedIn[0].signup %>"
+
+        if(badge == true){
+            window.fbAsyncInit = function() {
             FB.init({
                 appId      : '245532369664721',
                 cookie     : true,
@@ -302,15 +288,14 @@
             FB.AppEvents.logPageView();
 
             FB.ui({
-            method: 'share',
-            href:'http://localhost:8080',
-            action_properties: JSON.stringify({
+                method: 'share_open_graph',
+                action_type: 'og.likes',
+                action_properties: JSON.stringify({
+                    object:'https://vikashprajapati.github.io/notification.html',
             })
-            }, function(response){
+            }, function(response){});
 
-            });
-            
-            }
+            };
 
             (function(d, s, id){
                 var js, fjs = d.getElementsByTagName(s)[0];
@@ -319,6 +304,7 @@
                 js.src = "https://connect.facebook.net/en_US/sdk.js";
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
+        }
 
         // console.log('<%- JSON.stringify(kiosk_data) %>')
     </script>

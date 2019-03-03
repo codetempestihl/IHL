@@ -188,6 +188,7 @@ router.get('/settings', redirectlogin, function(req, res){
 			 })
 		 })
 
+
 router.post('/settings',function(req,res){
 	if (req.body.details!=null){
 		if (req.session.user[0].first_name!=req.body.firstName){

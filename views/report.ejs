@@ -1,0 +1,39 @@
+<% include partials/header %>
+<title>IHL | Achievements</title>
+</head>
+<body class="min-h-screen flex-col">
+    <% include partials/nav %>
+    <main class="flex flex-1 min-h-screen">
+        <% include partials/sidebar %>
+        <div id="report-modal" class="fixed pin-x pin-y hidden items-center justify-center" style="background-color: rgba(0, 0, 0, 0.5);">
+            <div class="login modal-body w-1/2 bg-white rounded flex overflow-hidden">
+                <div class="w-1/2 bg-blue">
+                    <img src="/images/login.jpg" class="h-full" alt="">
+                </div>
+            </div>
+        </div>
+        <!-- main-content -->
+        <div class="main-content flex flex-col w-full    w-5/6 px-8 mb-8">
+            <h1 class="my-8 py-2 border-bborder-grey-light font-normal text-grey-darker">Achievements</h1>
+            <div class="achieve w-full flex flex-wrap">
+                <% for(var i = 0; i<1 ; i++) { %>
+                    <div class="card w-1/2 mb-8 border-box">
+                        <div class="w-1/4">
+                            <img src="/images/achieve.png" class="rounded-full w-full" alt="">
+                        </div>
+                        <div class="w-3/4 ml-4">
+                            <h3 class="text-grey-darker text-md font-normal tracking-wide">Medal</h3>
+                            <p class="text-grey-dark text-sm mt-1 mb-10">30 days streak</p>
+                            <div class="h-5 bg-grey-light flex items-center px-1 rounded-full">
+                                <div class="progress h-3 bg-blue rounded-full w-full"></div>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </main>
+    <% include partials/footer %>
+</body>
+<script src="/js/modal.js"></script>
+</html>

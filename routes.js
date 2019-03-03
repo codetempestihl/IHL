@@ -140,6 +140,9 @@ router.get('/friends', redirectlogin, function(req, res){
 	res.render('friends', {loggedIn: req.session.user, profileimg: req.session.user[0].profileimg});
 })
 
+router.get('/report', redirectlogin, function(req, res){
+	res.render('report', {loggedIn: req.session.user, profileimg: req.session.user[0].profileimg});
+})
 // route for challenges
 router.get('/challenges', redirectlogin, function(req, res){
 	User.find({email: {$ne:req.session.user[0].email}}, function(err, users){
@@ -248,21 +251,22 @@ router.get('/logout',function(req,res){
 	res.redirect('/');
 });
 
-router.get('/participants',redirectlogin, function(req,res){
-	// if(req.session.fitbit.access_token){
-	// 	Challenges.find({_id: req.body.id}, function(err, challenge){
-	// 		var leaderboard = {}
-	// 		challenge.users.forEach(userEmail => {
-	// 			User.find({ email: userEmail, function(err, user){
-	// 				var steps=client.get('/activities/' + challenge.type + '/date/' + challenge.start_date + '/' + challenge.duration, req.session.fitbit.access_token, user.devices.user_id).then(results =>{
-	// 					leaderboard[user.name]=results[0]['activities-'+challenge.type];
-	// 				}
-	// 			})
-	// 		});
-	// 		console.log(leaderboard);
-	// 	})
-	// }
-});
+// router.get('/participants',redirectlogin, function(req,res){
+// 	if(req.session.fitbit.access_token){
+// 		Challenges.find({_id: req.body.id}, function(err, challenge){
+// 			var leaderboard = {}
+// 			challenge.users.forEach(userEmail => {
+// 				User.find({ email: userEmail, function(err, user){
+
+// 					var steps=client.get('/activities/' + challenge.type + '/date/' + challenge.start_date + '/' + challenge.duration, req.session.fitbit.access_token, user.devices.user_id).then(results =>{
+// 						leaderboard[user.name]=results[0]['activities-'+challenge.type];
+// 					})
+// 				})
+// 			});
+// 			console.log(leaderboard);
+// 		})
+// 	}
+// });
 
 router.get("/fitbit", (req, res) => {
 	res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'http://localhost:8080/callback'));

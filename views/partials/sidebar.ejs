@@ -29,3 +29,23 @@
         </ul>
     </div>
 </div>
+<script src="https://secure-spire-88730.herokuapp.com/assets/modules/channel-web/inject.js"></script>
+<script>
+
+        window.botpressWebChat.init({
+        host: 'https://secure-spire-88730.herokuapp.com',
+        botId: 'fitbot', //The ID for your bot
+        botName: 'Fitbot', // Name of your bot
+        botAvatarUrl: 'https://s3.amazonaws.com/mywhistler/fitbot.png', 
+        botConvoTitle: 'Healthcare', // Title of the first conversation with the bot
+        botConvoDescription: '',
+        backgroundColor: '#ffffff', // Color of the background
+        textColorOnBackground: '#666666', // Color of the text on the background
+        foregroundColor: '#0176ff', // Element background color (header, composer, button..)
+        textColorOnForeground: '#ffffff', // Element text color (header, composer, button..)
+        showConversationsButton: true, // Whether or not to show the conversations button
+        showUserName: false, // Whether or not to show the user's name
+        showUserAvatar: false, // Whether or not to show the user's avatar
+        enableTranscriptDownload: false // Whether or not to show the transcript download button
+      })
+        </script>

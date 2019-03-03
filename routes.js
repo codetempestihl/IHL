@@ -136,22 +136,24 @@ router.get('/home', redirectlogin, function(req, res){
 
 // route for friends
 router.get('/friends', redirectlogin, function(req, res){
-	res.render('friends', {loggedIn: req.session.user});
+	res.render('friends', {loggedIn: req.session.user, profileimg: req.session.user[0].profileimg});
 })
 
 // route for challenges
 router.get('/challenges', redirectlogin, function(req, res){
-	res.render('challenges', {loggedIn: req.session.user, profileimg: req.session.user[0].profileimg});
+	User.find({_id: {$ne:req.session.user._id}}, function(err, users){
+		res.render('challenges', {loggedIn: req.session.user, profileimg: req.session.user[0].profileimg, users: users});
+	})
 })
 
 // route for achievements
 router.get('/achievements', redirectlogin, function(req, res){
-	res.render('achievements', {loggedIn: req.session.user});
+	res.render('achievements', {loggedIn: req.session.user, profileimg: req.session.user[0].profileimg});
 })
 
 // route for leaderboard
 router.get('/leaderboard', redirectlogin, function(req, res){
-	res.render('leaderboard', {loggedIn: req.session.user});
+	res.render('leaderboard', {loggedIn: req.session.user, profileimg: req.session.user[0].profileimg});
 })
 
 // route for settings
@@ -228,7 +230,7 @@ router.get('/logout',function(req,res){
 });
 
 router.get('/participants',redirectlogin, function(req,res){
-	res.render('viewParticipants');
+	res.render('viewParticipants', {profileimg: req.session.user[0].profileimg});
 });
 
 router.get("/fitbit", (req, res) => {

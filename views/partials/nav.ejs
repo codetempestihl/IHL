@@ -7,9 +7,9 @@
             <li class="mx-6 my-3 sm:my-0"><a href="" class="text-blue">Blog</a></li>
             <% if(loggedIn){ %>
                 <!-- <li class="mx-6 my-3 sm:my-0"><a href="" class="text-blue">New Challenge</a></li> -->
+                <li class="py-4 px-4 cursor-pointer"><a class="text-blue" href="" data-toggle-modal="#report-modal">Health report</a></li>
                 <li class="mx-6 my-3 sm:my-0"><a href="" class="text-blue">Notifications</a></li>
                 <li class="py-4 px-4"><a class="text-blue" href="/logout">Logout</a></li>
-                <li class="py-4 px-4"><a class="text-blue" href="" data-toggle-modal="#report-modal">Health report</a></li>
             <% } %>
             <% if(!loggedIn){ %>
                 <li class="mx-6 my-3 sm:my-0"><a href="" data-toggle-modal="#signup-modal" class="text-blue">Signup</a></li>

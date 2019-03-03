@@ -160,11 +160,22 @@
     <script src="/js/dailyactivity.js"></script>
     <script src="/js/vitals.js"></script>
     <script src="/js/modal.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
     <script>
 
-        var reportData
+        var reportData1
+        var reportData2
         function download(){
-
+            var doc = new jsPDF();
+            var result = 'IHL HEALTH REPORT\n\n'+
+            '---------------------------------------------------------------------------------------'+
+            '\nFIRST NAME : '+ '<%= name %>' +
+            '\nSTEPS : '+reportData1.steps+
+            '\nCALORIES : '+reportData1.calories+
+            '\nWEIGHT : '+reportData2.weight+
+            '\nSLEEP : '+reportData2.sleep;
+            doc.text(result, 10, 10);
+            doc.save('health report.pdf');
         }
 
         var active = null
@@ -239,7 +250,7 @@
             console.log(data);
             $('#steps').text(data.steps)
 
-            reportData = data
+            reportData1 = data
 
             stepsData = []
             stepsData.push(data.steps)
@@ -255,6 +266,8 @@
             console.log(data);
             $('#deviceName').text(data.deviceName)
             $('#weight').text(data.weight)
+
+            reportData2 = data
 
             updateRecentActivity(recentChart, data['recentActivities'])
             updateSleep(sleepGraph, data['sleep'])

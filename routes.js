@@ -249,20 +249,19 @@ router.get('/logout',function(req,res){
 });
 
 router.get('/participants',redirectlogin, function(req,res){
-	if(req.session.fitbit.access_token){
-		Challenges.find({_id: req.body.id}, function(err, challenge){
-			var leaderboard = {}
-			challenge.users.forEach(userEmail => {
-				User.find({ email: userEmail, function(err, user){
-
-					var steps=client.get('/activities/' + challenge.type + '/date/' + challenge.start_date + '/' + challenge.duration, req.session.fitbit.access_token, user.devices.user_id).then(results =>{
-						leaderboard[user.name]=results[0]['activities-'+challenge.type];
-					})
-				})
-			});
-			console.log(leaderboard);
-		})
-	}
+	// if(req.session.fitbit.access_token){
+	// 	Challenges.find({_id: req.body.id}, function(err, challenge){
+	// 		var leaderboard = {}
+	// 		challenge.users.forEach(userEmail => {
+	// 			User.find({ email: userEmail, function(err, user){
+	// 				var steps=client.get('/activities/' + challenge.type + '/date/' + challenge.start_date + '/' + challenge.duration, req.session.fitbit.access_token, user.devices.user_id).then(results =>{
+	// 					leaderboard[user.name]=results[0]['activities-'+challenge.type];
+	// 				}
+	// 			})
+	// 		});
+	// 		console.log(leaderboard);
+	// 	})
+	// }
 });
 
 router.get("/fitbit", (req, res) => {

@@ -3,6 +3,7 @@ var router = express.Router()
 var passwordhash=require('password-hash');
 var User = require('./schema.js').User
 var Kiosk = require('./schema.js').Kiosk
+var Challenges = require('./schema.js').Challenges
 var client = require('./fitbit.js')
 
 var loginParam = {
@@ -31,7 +32,7 @@ router.get('/', function(req, res){
 
 router.post('/', function(req, res){
 	// hanlde signup and login process
-	if (req.body.signup){
+	if(req.body.signup){
 		var pass=String(req.body.password[0]);
 		hashedpassword=passwordhash.generate(pass);
 		User.find({ email: req.body.email }, function(err, user){
@@ -141,9 +142,26 @@ router.get('/friends', redirectlogin, function(req, res){
 
 // route for challenges
 router.get('/challenges', redirectlogin, function(req, res){
-	User.find({_id: {$ne:req.session.user._id}}, function(err, users){
-		res.render('challenges', {loggedIn: req.session.user, profileimg: req.session.user[0].profileimg, users: users});
+	User.find({email: {$ne:req.session.user[0].email}}, function(err, users){
+		Challenges.find({users: req.session.user[0].email}, function(err, challenges){
+			res.render('challenges', {loggedIn: req.session.user, profileimg: req.session.user[0].profileimg, users: users, challenges: challenges});
+		})
 	})
+})
+
+router.post('/createChallenge', redirectlogin, function(req, res){
+	challenge=new Challenges({
+		type: req.body.type,
+		created_by: req.body.created_by,
+		duration: req.body.duration,
+		start_date: req.body.start_date,
+		users: JSON.parse(req.body.users)
+	});
+
+	challenge.save(function(err){
+		if(err) throw err;
+		res.redirect('/home');
+	});
 })
 
 // route for achievements
@@ -230,7 +248,20 @@ router.get('/logout',function(req,res){
 });
 
 router.get('/participants',redirectlogin, function(req,res){
-	res.render('viewParticipants', {profileimg: req.session.user[0].profileimg});
+	if(req.session.fitbit.access_token){
+		Challenges.find({_id: req.body.id}, function(err, challenge){
+			var leaderboard = {}
+			challenge.users.forEach(userEmail => {
+				User.find({ email: userEmail, function(err, user){
+
+					var steps=client.get('/activities/' + challenge.type + '/date/' + challenge.start_date + '/' + challenge.duration, req.session.fitbit.access_token, user.devices.user_id).then(results =>{
+						leaderboard[user.name]=results[0]['activities-'+challenge.type];
+					})
+				})
+			});
+			console.log(leaderboard);
+		})
+	}
 });
 
 router.get("/fitbit", (req, res) => {
@@ -241,13 +272,25 @@ router.get("/fitbit", (req, res) => {
 router.get("/callback", (req, res) => {
 	// exchange the authorization code we just received for an access token
 	client.getAccessToken(req.query.code, 'http://localhost:8080/callback').then(result => {
-		
 		req.session.fitbit = {}
 
 		req.session.fitbit.access_token = result.access_token
 		req.session.fitbit.refresh_token = result.refresh_token
 		req.session.user[0].activeDevice = 'fitbit'
-
+		req.session.user[0].devices.push({
+			name: 'fitbit',
+			user_id: result['user_id']
+		})
+		User.find({'devices.name':{$in: ['fitbit']},email:req.session.user[0].email},function(err,devices){
+			console.log(devices)
+			if (devices.length>0){
+			User.updateOne({},{$set:{devices:{user_id:result['user_id']}}}, function(err){})	
+			}
+			else{
+				User.updateMany({email:req.session.user[0].email},{$push:{devices:{name:'fitbit',user_id:result['user_id']}}},function(){})
+			}	
+	})
+		
 		res.redirect('/home')
 	}).catch(err => {
 		res.status(err.status).send(err);

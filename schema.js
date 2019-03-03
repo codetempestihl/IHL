@@ -17,7 +17,10 @@ var userSchema = new mongoose.Schema({
         socialHandle: String,
         linkedId: String
     }],
-    devices: [],
+    devices: [{
+        name: String,
+        user_id: String
+    }],
     activeDevice: String
 });
 
@@ -43,5 +46,14 @@ var kiosk_data = new mongoose.Schema({
     user_id : String
 });
 
+var challengeSchema = new mongoose.Schema({
+    type: String,
+    created_by: String,
+    duration: String,
+    start_date: Date,
+    users: [String],
+});
+
 module.exports.User = mongoose.model('User', userSchema, 'users');
 module.exports.Kiosk = mongoose.model('Kiosk', kiosk_data, 'kiosk_data');
+module.exports.Challenges = mongoose.model('Challenges', challengeSchema, 'challenges');

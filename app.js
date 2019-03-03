@@ -130,4 +130,4 @@ io.on('connection', function(socket){
 
 http.listen(8080, function(){
     console.log("server started at port 8080...");
-});
+})

@@ -13,13 +13,13 @@
             <ul class="list-reset flex flex-col">
                     <% for(var i=0; i < 5; i++) {%>
                         <li class="card flex justify-between items-center mt-3">
-                            <% if(i<3) {%>
+                            <!-- <% if(i<3) {%>
                                 <div>
                                     <img src="/images/achieve.png" class="rounded-full w-16" />    
                                 </div>
-                            <% } else{ %>
-                                <p class="text-grey-dark mr-4">Rank</p>
-                            <% } %>
+                            <% } else{ %> -->
+                                <p class="text-grey-dark mr-4">Rank <%= i+1 %></p>
+                            <!-- <% } %> -->
                             <div class="flex items-center">
                                 <img src="/images/achieve.png" class="rounded-full w-16" />
                                 <p class="text-blue ml-4 Capitalize">name</p>

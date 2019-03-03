@@ -32,9 +32,9 @@ function signupWithFacebook(){
 function loginWithFacebook(){
     FB.login(function(response) {
         if (response.status==='connected') {
-            // console.log('Welcome!  Fetching your information.... ');
+            acess_token = response.acess_token
             FB.api('/me?fields=id,name,email', function(response) {
-            // console.log('Good to see you, ' + response.name + '.');
+
                 document.getElementById('loginmail').value = response.email;
                 document.getElementById("loginHandle").value="facebook";
                 lform=document.getElementById("loginform");

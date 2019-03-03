@@ -84,6 +84,8 @@ router.post('/', function(req, res){
 				console.log("user doessnt exist sign up please");
 			}else{
 				req.session.user=user;
+				if(req.body.loginHandle == 'facebook')
+					req.session.user.signup = true
 				res.redirect('/home');
 			}
 		})
@@ -208,6 +210,7 @@ router.get('/settings', redirectlogin, function(req, res){
 				 loggedIn: req.session.user});
 			 })
 		 })
+
 
 router.post('/settings',function(req,res){
 	if (req.body.details!=null){

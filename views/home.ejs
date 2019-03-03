@@ -30,8 +30,8 @@
                                     <a class="px-4 py-1 mt-4 hover:bg-blue hover:text-white active:bg-blue active:text-white text-blue rounded-full" onclick="setActiveDevice(this)" id = "kiosk">Kiosk</a>
                                 </div>
                                 <div class="device-img w-1/2 flex-1">
-                                    <!-- <img src="/images/device.png" class="h-32" alt=""> -->
-                                    <img src="/images/kiosk.png" class="h-32" alt="">
+                                    <img src="/images/device.png" class="h-32" alt="">
+                                    <!-- <img src="/images/kiosk.png" class="h-32" alt=""> -->
                                     <p class="text-blue w-full text-center" id = "deviceName">Alta</p>
                                 </div>
                             </div>
@@ -70,7 +70,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex my-8 justify-between">
+                    <div class="flex mb-8 mt-16 justify-between">
                         <div class="bmi flex flex-col card flex-1 mr-8">
                             <h4 class="text-grey-dark mb-4">BMI</h4>
                             <canvas id="bmi" style="height: 200px" ></canvas>
@@ -103,7 +103,7 @@
                     <div class="flex my-8 justify-between">
                         <div class="calories flex-col card w-1/3">
                             <h4 class="text-grey-dark">Calories</h4>
-                            <div class="mt-8">
+                            <div class="mt-4">
                                 <div class="calories-chart">
                                     <canvas id="caloriesChart"></canvas>
                                 </div>
@@ -119,34 +119,34 @@
                                 </div>
                                 <div class="flex flex-col items-center">
                                     <p class="text-xs text-center mb-1 text-grey-darker" id = "calories"></p>
-                                    <p class="text-xss text-center mt-1 text-grey-darker">20 Kcal more to loose  </p>
+                                    <p class="text-xs text-center mt-2 text-grey-darker">20 Kcal more to loose  </p>
                                 </div>
                             </div>
                         </div>
                         <div class="sleep flex flex-col card w-2/3 ml-4">
                             <h4 class="text-grey-dark mb-4">Sleep Activity</h4>
-                            <canvas id="sleepCanvas" ></canvas>
+                            <canvas id="sleepCanvas" style="height:200px"></canvas>
                             <div class="flex flex-col items-center">
                                 <div class="walking w-8 mx-2 h-1"></div>
                                 <p class="text-xs text-center mt-1 text-grey-darker">Sleep Log</p>
                             </div>
                         </div>
                     </div>
-                    <div class="flex flex-col mt-2">
-                        <div class="card flex flex-col items-center">
+                    <div class="flex flex-col">
+                        <div class="card flex mt-8 flex-col items-center">
                             <h3 class="text-grey-dark mb-4">pastActivity</h3>
                             <div class="flex w-full justify-center mb-4">
                                 <div class="flex flex-col justify-center mr-4">
                                     <div class="w-8 mx-2 h-1"></div>
-                                    <a class="text-sm px-3 py-1 bg-blue hover: text-center mt-1 text-grey-darker hover:text-blue" onclick="updatePastData(myChart, 'calories')">Calories</a>
+                                    <a class="text-sm px-3 py-1 bg-blue hover: text-center mt-1 text-white rounded" onclick="updatePastData(myChart, 'calories')">Calories</a>
                                 </div>
                                 <div class="flex flex-col justify-center mr-4 ">
                                     <div class="w-8 mx-2 h-1"></div>
-                                    <a class="text-sm px-3 py-1 bg-blue hover: text-center mt-1 text-grey-darker hover:text-blue" onclick="updatePastData(myChart, 'steps')">Steps</a>
+                                    <a class="text-sm px-3 py-1 bg-blue hover: text-center mt-1 text-white rounded" onclick="updatePastData(myChart, 'steps')">Steps</a>
                                 </div>
                                 <div class="flex flex-col justify-center">
                                     <div class="w-8 mx-2 h-1"></div>
-                                    <a class="text-sm px-3 py-1 bg-blue hover: text-center mt-1 text-grey-darker hover:text-blue" onclick="updatePastData(myChart, 'distance')">Distance</a>
+                                    <a class="text-sm px-3 py-1 bg-blue hover: text-center mt-1 text-white rounded" onclick="updatePastData(myChart, 'distance')">Distance</a>
                                 </div>
                             </div>
                             <canvas id="pastActivity" class="h-64 max-w-md" width="400">

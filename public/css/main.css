@@ -531,6 +531,10 @@ table {
   background: #b3b198;
 }
 
+#report-modal .report {
+  width: 500px;
+}
+
 .challenge-box .challenge-img {
   max-height: 200px;
 }

@@ -8,6 +8,15 @@
         <!-- side bar -->
         <% include partials/sidebar %>
 
+        <div id="report-modal" class="fixed pin-x pin-y hidden items-center justify-center" style="background-color: rgba(0, 0, 0, 0.5);">
+            <div class="report modal-body w-64 bg-white rounded flex overflow-hidden">
+                <div class="card p-16 flex flex-col">
+                    <h2 class="text-blue w-full">Health Report</h2>
+                    <p class="px-3 mt-4 rounded text-center py-2 bg-blue text-white" onclick="download()">Download</p>
+                </div>
+            </div>
+        </div>
+
         <!-- main-content -->
         <div class="main-content flex w-full px-8 mb-8">
             <!-- main-content leftside -->
@@ -150,7 +159,13 @@
     <script src="/js/pastActivity.js"></script>
     <script src="/js/dailyactivity.js"></script>
     <script src="/js/vitals.js"></script>
+    <script src="/js/modal.js"></script>
     <script>
+
+        var reportData
+        function download(){
+
+        }
 
         var active = null
 
@@ -223,6 +238,8 @@
         socket.on('fitbitFastData', function(data){
             console.log(data);
             $('#steps').text(data.steps)
+
+            reportData = data
 
             stepsData = []
             stepsData.push(data.steps)
